@@ -28,7 +28,7 @@
 	app.use(logger('dev'));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({extended: true}));
-	app.use(cookieParser('Quiz2'));								// semilla que llevara la cookie
+	app.use(cookieParser('incipro'));								// semilla que llevara la cookie
 	app.use(session());
 	app.use(methodOverride('_method'));							// para utilizar en edit.ejs y encapsular el post como put
 	app.use(express.static(path.join(__dirname, 'public')));
