@@ -1,0 +1,86 @@
+
+<div class="container">
+
+	<form class="form-horizontal" method="get" action="/quizes/<%= quiz.id %>/answer">         	<!- cuando submit, llama a export.answer del quiz_controller.js ->
+		<div class="form-group">
+			<h3>Pregunta: <%= quiz.pregunta %> </h3>
+			<input type="text" name="respuesta" placeholder="Responda aquí"/>					<!- se genera la variable respuesta para enviar en GET req ->
+			<input type="submit" value="Enviar">
+		</div>
+	</form>
+
+	<form class="form-horizontal" method="get" action="/quizes/<%= quiz.id %>/image">         	<!- cuando submit, llama a export.answer del quiz_controller.js ->
+		<div class="form-group">
+			<%if (quiz.image) {%>
+				<img class="img-responsive" src="/quizes/<%=quiz.id%>/image">  
+			<%}%>
+		</div>
+	</form>
+
+	<div class="container" style="max-width: 660px">
+
+		<p><strong>Comentarios:</strong></p>
+		<div class="panel panel-default table-responsive">
+			<table class="table table-hover">
+				<% for (var index in quiz.comments) {%>
+					<tr>
+						<% if (!session.user && quiz.comments[index].publicado) {%>
+							<td class="comment-panel">
+								<div class="container-fluid">
+									<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+								</div>
+								<div class="container-fluid">
+									<h6><span class="badge">#<%=quiz.comments[index].id%></span>
+									<small><%=quiz.comments[index].createdAt.toLocaleString()%></small></h6>
+								</div>
+							</td>
+						<%}%>
+						<% if (session.user) {%>
+							<td class="comment-panel">
+								<div class="container-fluid">
+									<% if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
+										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
+										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
+									<%} else if (quiz.comments[index].publicado) {%>
+										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
+										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
+									<%}%>
+								</div>
+								<div class="container-fluid">
+									<%if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
+							 			<%if (!quiz.comments[index].publicado) {%>
+											<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>/publish">
+												<button class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Publicar">
+													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+												</button>
+											</a>
+										<%} else if	(quiz.comments[index].publicado) {%>
+											<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>/unpublish">
+												<button class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Ocultar">
+													<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+												</button>
+											</a>
+										<%}%>
+										<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>/destroy">
+											<button class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar">
+												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+											</button>
+										</a></h6>
+									<%}%>			
+								</div>
+							</td>
+						<%}%>
+					</tr>
+				<%}%>
+			</table>
+		</div>
+
+		<p><a href="/quizes/<%= quiz.id %>/comments/new"><button type="button" class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo comentario</button></a>
+		</p>
+
+	</div>
+
+</div>
