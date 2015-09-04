@@ -1,15 +1,21 @@
 
 <div class="container">
 
-	<form class="form-horizontal" method="get" action="/quizes/<%= quiz.id %>/answer">         	<!- cuando submit, llama a export.answer del quiz_controller.js ->
+	<form class="form-horizontal">         	
 		<div class="form-group">
-			<h3>Pregunta: <%= quiz.pregunta %> </h3>
-			<input type="text" name="respuesta" placeholder="Responda aquí"/>					<!- se genera la variable respuesta para enviar en GET req ->
-			<input type="submit" value="Enviar">
+
+			<h3>Parte nº: <%= quiz.id %> </h3>
+			<h3>Incidencia: <%= quiz.pregunta %> </h3>
+			<h3>Proveedor: <%= quiz.proveedor %> </h3>
+
+					<h3>Status: <%= quiz.proceso %> </h3>
+			
+			
+
 		</div>
 	</form>
 
-	<form class="form-horizontal" method="get" action="/quizes/<%= quiz.id %>/image">         	<!- cuando submit, llama a export.answer del quiz_controller.js ->
+	<form class="form-horizontal" method="get" action="/quizes/<%= quiz.id %>/image">         	
 		<div class="form-group">
 			<%if (quiz.image) {%>
 				<img class="img-responsive" src="/quizes/<%=quiz.id%>/image">  

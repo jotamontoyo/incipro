@@ -2,20 +2,28 @@
 
 	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
 		return sequelize.define('Quiz', { 
-			pregunta: {
+			pregunta: {														// guarda el titulo de la incidencia
 				type: DataTypes.STRING,
 				validate: {notEmpty: {msg: "--> Falta Pregunta"}}
 			},
-			respuesta: {
-				type: DataTypes.STRING,
-				validate: {notEmpty: {msg: "--> Falta Respuesta"}}
+			respuesta: {											
+				type: DataTypes.STRING
 			},
-			tema: {
+			tema: {															// guarda el centro que la graba
 				type: DataTypes.STRING,
-				validate: {notEmpty: {msg: "--> Falta Tema"}}
+				validate: {notEmpty: {msg: "--> Falta Centro"}}
 			},
 			image: {
 				type: DataTypes.BLOB
-			}
+			},
+			proveedor: {													// guarda el proveedor que la origina
+				type: DataTypes.STRING,
+				validate: {notEmpty: {msg: "--> Falta Prorveedor"}}
+			},
+			proceso: {
+				type: DataTypes.BOOLEAN,
+				defaultValue: true
+			},
+
 		})
 	};

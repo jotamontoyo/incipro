@@ -82,7 +82,7 @@
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
 			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId", "proveedor"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};
@@ -96,6 +96,8 @@
 		req.quiz.pregunta = req.body.quiz.pregunta;
 		req.quiz.respuesta = req.body.quiz.respuesta;
 		req.quiz.tema = req.body.quiz.tema;
+		req.quiz.proveedor = req.body.quiz.proveedor;
+		req.quiz.proceso = req.body.quiz.proceso;
 		if (req.file) {
 			req.quiz.image = req.file.buffer;
 		};
@@ -107,7 +109,7 @@
 			res.render('quizes/edit', {quiz: req.quiz, errors: errores});
 		} else {
 			req.quiz 															// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "image"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "image", "proveedor", "proceso"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};
