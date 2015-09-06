@@ -27,21 +27,18 @@
 		).catch(function(error) {next(error);});
 	};
 
-	exports.index = function(req, res) {																	// GET /quizes	
-		var search = '%' + (req.query.search || '').replace(/ /g,'%') + '%';    							// con req de la peticion GET monta la ruta + el valor introducido de req.query.search
-		if (req.query.search) {
-			models.Quiz.findAll({where: ["pregunta like ?", search], order:'pregunta ASC'}).then(    		// findAll() selecciona con sql
-				function(quizes) {
-					res.render('quizes/index.ejs', {quizes: quizes, errors: []});			
-				}
-			)
-		} else {
-			models.Quiz.findAll().then(
-				function(quizes) {
-					res.render('quizes/index.ejs', {quizes: quizes, errors: []});			// findAll() renderiza toda la lista de preguntas que se genera en /quizes/index.ejs
-				}
-			).catch(function(error) {next(error);});
-		};
+	// GET /quizes   										--->>> GET sin req.user 
+	// GET /users/:userId/quizes							--->>> GET con req.user
+	exports.index = function(req, res) {  
+		var options = {};
+	  	if(req.user){										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+		    options.where = {UserId: req.user.id}			
+	  	};
+	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+	    	function(quizes) {
+	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	    	}
+	  	).catch(function(error){next(error)});
 	};
 
 	exports.show = function(req, res) {											// GET /quizes/:id
