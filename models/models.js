@@ -53,8 +53,8 @@
 	        Quiz.count().then(function(count) {
 	          if(count === 0) {   																			// la tabla se inicializa solo si está vacía
 	            Quiz.bulkCreate( 
-	              [ {pregunta: 'faltas', respuesta: 'Roma', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2}, 			// estos quizes pertenecen al usuario pepe (2)
-	                {pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2}
+	              [ {pregunta: 'faltas', respuesta: 'Roma', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe'}, 			// estos quizes pertenecen al usuario pepe (2)
+	                {pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe'}
 	              ]
 	            ).then(function(){console.log('Base de datos (tabla parte) inicializada')});
 	          };

@@ -7,7 +7,6 @@
         <tr>
           <th>#</th>
           <th>User</th>
-<!--          <th>Name</th>  -->
           <th>Tema</th>
           <th>Pregunta</th>
           <th>Respuesta</th>
@@ -19,8 +18,7 @@
   		  <% var i; for (i=0; i < results.length; i++) {%>
          	<tr>
      		    <td><%=results[i].id%></td>
-            <td><%=results[i].UserId%></td>
-<!--            <td><%=results[i].username%></td>  -->
+            <td><%=results[i].UserName%></td>
      		    <td><a href="/temas/<%=results[i].tema %>"><%=results[i].tema%></a></td>
      		    <td><a href="/quizes/<%=results[i].id %>"><%=results[i].pregunta%></a></td>
      		    <td><%=results[i].respuesta%></td>

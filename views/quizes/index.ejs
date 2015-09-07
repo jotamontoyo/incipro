@@ -8,6 +8,7 @@
 			<thead>
 				<tr>
 					<th>Centro</th>
+					<th>User</th>
 					<th>Parte</th>
 					<th>Proveedor</th>
 					<th>Incidencia</th>
@@ -18,6 +19,7 @@
 					<tr>
 						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td>
 						<td><%= quizes[i].id %></td>
+						<td><%= quizes[i].UserName %></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].proveedor %> </a></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %> </a></td>
 						<% if (session.user) {

@@ -24,6 +24,8 @@
 				type: DataTypes.BOOLEAN,
 				defaultValue: true
 			},
-
+			UserName: {
+				type: DataTypes.STRING
+			}
 		})
 	};

@@ -67,6 +67,7 @@
 		        
 	exports.create = function(req, res) {										// POST /quizes/create ----->>>> alternativo 	
 		req.body.quiz.UserId = req.session.user.id;								// referenciamos el quiz con el UserId
+		req.body.quiz.UserName = req.session.user.username;
 		var quiz = models.Quiz.build( req.body.quiz );							// construccion de objeto quiz para luego introducir en la tabla
 		if (req.file) {
 			req.quiz.image = req.file.filename;
@@ -79,7 +80,7 @@
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
 			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId", "proveedor"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId", "UserName", "proveedor"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};
