@@ -7,9 +7,8 @@
         <tr>
           <th>#</th>
           <th>User</th>
-          <th>Tema</th>
-          <th>Pregunta</th>
-          <th>Respuesta</th>
+          <th>Centro</th>
+          <th>Título</th>
           <th>Fecha Creación</th>
           <th>Fecha Actualización</th>
         </tr>
@@ -21,7 +20,6 @@
             <td><%=results[i].UserName%></td>
      		    <td><a href="/temas/<%=results[i].tema %>"><%=results[i].tema%></a></td>
      		    <td><a href="/quizes/<%=results[i].id %>"><%=results[i].pregunta%></a></td>
-     		    <td><%=results[i].respuesta%></td>
      		    <td><%=results[i].createdAt%></td>
      		    <td><%=results[i].updatedAt%></td>
  		      </tr>

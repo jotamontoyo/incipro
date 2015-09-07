@@ -18,8 +18,9 @@
 				<% var i; for (i=0; i < quizes.length; i++) { %>
 					<tr>
 						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td>
-						<td><%= quizes[i].id %></td>
+						
 						<td><%= quizes[i].UserName %></td>
+						<td><%= quizes[i].id %></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].proveedor %> </a></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %> </a></td>
 						<% if (session.user) {
