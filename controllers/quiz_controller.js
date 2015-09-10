@@ -50,18 +50,20 @@
 		if (req.query.respuesta === req.quiz.respuesta) {						// comprueba la variable respuesta de la peticion GET req recibida del form question.ejs vs req.quiz.respuesta, que es la respuesta que devuelve find() del autoload
 			resultado = 'Correcto';											
 		};
-		res.render('quizes/answer', {
+		res.render('quizes/answer', {											// renderiza /views/answer.ejs con el objeto quiz y respuesta
 			quiz: req.quiz, 
 			respuesta: resultado,
 			errors: []
-		});																		// renderiza /views/answer.ejs con el objeto quiz y respuesta
+		});																		
 	};
 
-	exports.new = function(req, res) {											// GET /quizes/new, baja el formulario
-		var quiz = models.Quiz.build( 											// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{pregunta: "Pregunta", respuesta: "Respuesta"}						// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
+	exports.new = function(req, res) {															// GET /quizes/new, baja el formulario
+		var quiz = models.Quiz.build( 															// crea el objeto quiz, lo construye con buid() metodo de sequilize
+			{pregunta: "Pregunta", respuesta: "Respuesta", proveedor: "Proveedor"}				// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
-		res.render('quizes/new', {quiz: quiz, errors: []});						// renderiza la vista quizes/new
+		models.Proveedor.findAll().then(function(proveedor) {
+			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new
+		}); 											
 	};
 
 		        
@@ -87,7 +89,9 @@
 	
 	exports.edit = function(req, res) {											// carga formulario edit.ejs
 		var quiz = req.quiz;													// req.quiz viene del autoload
-		res.render('quizes/edit', {quiz: quiz, errors: []});
+		models.Proveedor.findAll().then(function(proveedor) {
+			res.render('quizes/edit', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/edit
+		});
 	};
 	
 	exports.update = function(req, res) {										// modifica un quiz

@@ -1,8 +1,10 @@
 	// Definicion de modelo
 
+//	var models = require('../models/models.js');
+
 	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
 		return sequelize.define('Quiz', { 
-			pregunta: {														// guarda el titulo de la incidencia
+			pregunta: {														// guarda el motivo de la incidencia
 				type: DataTypes.STRING,
 				validate: {notEmpty: {msg: "--> Falta Pregunta"}}
 			},
@@ -18,7 +20,7 @@
 			},
 			proveedor: {													// guarda el proveedor que la origina
 				type: DataTypes.STRING,
-				validate: {notEmpty: {msg: "--> Falta Prorveedor"}}
+				validate: {notEmpty: {msg: "--> Falta Proveedor"}}
 			},
 			proceso: {
 				type: DataTypes.BOOLEAN,
