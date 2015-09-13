@@ -19,6 +19,7 @@
 	router.param('quizId', 								quizController.load);			// autoload de comandos. peticiones GET con SQL
 	router.param('commentId',							commentController.load);
 	router.param('userId',								userController.load);
+	router.param('proveedorId',							proveedorController.load);
 
 	// Definición de rutas de sesion
 	router.get('/login',  								sessionController.new);     	// formulario login

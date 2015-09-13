@@ -23,7 +23,7 @@
 
 	exports.new = function(req, res) {															// GET /proveedor/new, baja el formulario
 		var proveedor = models.Proveedor.build( 															// crea el objeto proveedor, lo construye con buid() metodo de sequilize
-			{nombre: "Nombre", telefono: "Teléfono", email: "eMail"}				// asigna literales a los campos para que se vea el texto en el <input> cuando creemos el formulario
+			{nombre, telefono, email}													// asigna literales a los campos para que se vea el texto en el <input> cuando creemos el formulario
 		);
 		res.render('proveedores/new', {proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new
 	};
