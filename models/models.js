@@ -27,9 +27,9 @@
 	  }      
 	);
 	
-	var Quiz = sequelize.import(path.join(__dirname, 'quiz'));			// importar estructura y definicion de la tabla Quiz
-	var Comment = sequelize.import(path.join(__dirname, 'comment'));	// importar estructura y definicion de la tabla Comment
-	var User = sequelize.import(path.join(__dirname, 'user'));			// importar estructura y definicion de la tabla User
+	var Quiz = sequelize.import(path.join(__dirname, 'quiz'));				// importar estructura y definicion de la tabla Quiz
+	var Comment = sequelize.import(path.join(__dirname, 'comment'));		// importar estructura y definicion de la tabla Comment
+	var User = sequelize.import(path.join(__dirname, 'user'));				// importar estructura y definicion de la tabla User
 	var Proveedor = sequelize.import(path.join(__dirname, 'proveedor'));	// importar estructura y definicion de la tabla Provider
 
 	Quiz.belongsTo(User);												// integridad referncial. Cada Quiz es hijo de User

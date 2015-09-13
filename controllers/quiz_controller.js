@@ -31,7 +31,7 @@
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res) {  
 		var options = {};
-	  	if(req.user){										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 		    options.where = {UserId: req.user.id}			
 	  	};
 	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
@@ -67,7 +67,7 @@
 	};
 
 		        
-	exports.create = function(req, res) {										// POST /quizes/create ----->>>> alternativo 	
+	exports.create = function(req, res) {										// POST /quizes/create  	
 		req.body.quiz.UserId = req.session.user.id;								// referenciamos el quiz con el UserId
 		req.body.quiz.UserName = req.session.user.username;
 		var quiz = models.Quiz.build( req.body.quiz );							// construccion de objeto quiz para luego introducir en la tabla
@@ -87,10 +87,10 @@
 		};
 	};
 	
-	exports.edit = function(req, res) {											// carga formulario edit.ejs
-		var quiz = req.quiz;													// req.quiz viene del autoload
+	exports.edit = function(req, res) {															// carga formulario edit.ejs
+		var quiz = req.quiz;																	// req.quiz viene del autoload
 		models.Proveedor.findAll().then(function(proveedor) {
-			res.render('quizes/edit', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/edit
+			res.render('quizes/edit', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/edit junto con la lista de todos los proveedores
 		});
 	};
 	
@@ -139,7 +139,7 @@
 	};		
 
 	exports.showbytema = function(req, res){
-		tema = req.params.tema;
+//		tema = req.params.tema;
 		models.Quiz.findAll({
 			where: {tema: req.params.tema}
 		}).then(

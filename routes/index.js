@@ -10,6 +10,7 @@
 	var statisticsController = require('../controllers/statistic_controller');
 	var dbController = require('../controllers/db_controller');
 	var userController = require('../controllers/user_controller');
+	var proveedorController = require('../controllers/proveedor_controller');
 	
 	router.get('/', function(req, res) {												/* GET home page. */
 		res.render('index', {title: 'inciPro', errors: []});								// cuando renderice la vista index.ejs le pasa el objeto title: 'Quiz'
@@ -48,6 +49,15 @@
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);	//   
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/unpublish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.unpublish);	//   
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/destroy',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.destroy);	//   
+
+	// Definición de rutas de proveedor
+	router.get('/proveedores',			 					sessionController.loginRequired, proveedorController.index);												// accede a la lista completa de proveedores
+//	router.get('/proveedor/:proveedorId(\\d+)',				proveedorController.show);												// accede a una pregunta en concreto. envia al proveedorController la peticion GET con el parametro proveedorId (indice)
+	router.get('/proveedores/new',							sessionController.loginRequired, proveedorController.new);				// carga el formulario /proveedores/new si sessionController.loginRequired()
+	router.post('/proveedores/create',						sessionController.loginRequired, proveedorController.create);			// dispara controlador create cuando el boton <salvar> del formulario new.js
+	router.get('/proveedores/:proveedorId(\\d+)/edit',		sessionController.loginRequired, proveedorController.edit);				// carga formulario proveedores/proveedores:Id(\\d+)/edit y dispara el controlador edit de proveedorController
+	router.put('/proveedores/:proveedorId(\\d+)',			sessionController.loginRequired, proveedorController.update);			// dispara controlador update cuando el boton <salvar> del formulario edit.js
+	router.delete('/proveedores/:proveedorId(\\d+)',		sessionController.loginRequired, proveedorController.destroy);
 
 	router.get('/quizes/:quizId(\\d+)/image', 			quizController.image);			// se dispara cuando se carga una img en el formulario show
 	
