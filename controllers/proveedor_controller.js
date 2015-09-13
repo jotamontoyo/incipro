@@ -45,7 +45,7 @@
 
 	exports.edit = function(req, res) {															// carga formulario edit.ejs
 		var proveedor = req.proveedor;	
-		consoleg.log(proveedor);																// req.proveedor viene del autoload
+//		console.log(proveedor);																// req.proveedor viene del autoload
 		res.render('proveedores/edit', {proveedor: proveedor, errors: []});   		// renderiza la vista proveedores/edit
 	};
 	
