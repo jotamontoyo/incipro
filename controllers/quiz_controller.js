@@ -41,8 +41,34 @@
 	  	).catch(function(error){next(error)});
 	};
 
+	// GET /quizes   										--->>> GET sin req.user 
+	// GET /users/:userId/quizes							--->>> GET con req.user
+	exports.abiertos = function(req, res) {  
+	  	models.Quiz.findAll({
+	  		where: {proceso: true, UserId: req.session.user.id}
+	  	}).then(
+	  		function(quizes) {
+	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	    	}
+	  	).catch(function(error){next(error)});
+	};
+
+	exports.cerrados = function(req, res) {  
+	  	models.Quiz.findAll({
+	  		where: {proceso: false, UserId: req.session.user.id}
+	  	}).then(
+	  		function(quizes) {
+	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	    	}
+	  	).catch(function(error){next(error)});
+	};
+
 	exports.show = function(req, res) {											// GET /quizes/:id
-		res.render('quizes/show', {quiz: req.quiz, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
+		models.Proveedor.find({
+			where: 		{nombre: req.quiz.proveedor} 
+		}).then(function(proveedor) {
+			res.render('quizes/show', {quiz: req.quiz, proveedor: proveedor, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
+		});
 	};									          								// req.quiz: instancia de quiz cargada con autoload
 	
 	exports.answer = function(req, res) {										// GET /quizes/answer/:id
@@ -59,7 +85,7 @@
 
 	exports.new = function(req, res) {															// GET /quizes/new, baja el formulario
 		var quiz = models.Quiz.build( 															// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{pregunta: "Pregunta", respuesta: "Respuesta", proveedor: "Proveedor"}				// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
+			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor"}				// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
 		models.Proveedor.findAll().then(function(proveedor) {
 			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new

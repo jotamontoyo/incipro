@@ -74,7 +74,7 @@
 												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 											</button>
 										</a>
-										<a href="mailto:jotamontoyo@hotmail.es?cc=jotamontoyo@hotmail.es&bcc=jotamontoyo@hotmail.es&subject=Incidencia/Reclamacion&body=https://incipro.herokuapp.com/quizes/<%=quiz.id %>" target="_top">
+										<a href="mailto:<%=proveedor.email%>?cc=compras@hotelgala.com&bcc=administracion@alexandre.com&subject=Incidencia/Reclamacion nº <%= quiz.id %>&body=Apreciado proveedor: se ha abierto una incidencia en el hotel <%=quiz.tema%>. Para responder siga este enlace: https://incipro.herokuapp.com/quizes/<%=quiz.id%>" target="_top">
 											<button class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Enviar a proveedor">
 												<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 											</button>
