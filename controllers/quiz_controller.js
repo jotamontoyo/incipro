@@ -43,7 +43,7 @@
 
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
-	exports.abiertos = function(req, res) {  
+	exports.opened = function(req, res) {  
 	  	models.Quiz.findAll({
 	  		where: {proceso: true, UserId: req.session.user.id}
 	  	}).then(
@@ -53,7 +53,7 @@
 	  	).catch(function(error){next(error)});
 	};
 
-	exports.cerrados = function(req, res) {  
+	exports.closed = function(req, res) {  
 	  	models.Quiz.findAll({
 	  		where: {proceso: false, UserId: req.session.user.id}
 	  	}).then(
@@ -83,9 +83,9 @@
 		});																		
 	};
 
-	exports.new = function(req, res) {															// GET /quizes/new, baja el formulario
-		var quiz = models.Quiz.build( 															// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor"}				// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
+	exports.new = function(req, res) {																			// GET /quizes/new, baja el formulario
+		var quiz = models.Quiz.build( 																			// crea el objeto quiz, lo construye con buid() metodo de sequilize
+			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor"}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
 		models.Proveedor.findAll().then(function(proveedor) {
 			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new

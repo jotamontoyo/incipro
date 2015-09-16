@@ -38,7 +38,7 @@
 	};
 
 	exports.new = function(req, res) {														// GET /quizes/:quizId/comments/new, baja el formulario /views/comment.ejs
-		res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []});			// renderiza la vista comments/new del quiz -->> quizid: req.params.quizId
+		res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []}); 			// renderiza la vista comments/new del quiz -->> quizid: req.params.quizId
 	};
 	
 	exports.create = function(req, res, next) {													// POST /quizes/:quizId/comments

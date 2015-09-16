@@ -58,7 +58,6 @@
 
 	exports.create = function(req, res) {									// POST /user
 	    var user = models.User.build( req.body.user );
-	    console.log(user.username, user.password);
 		var errors = user.validate();											// objeto errors no tiene then(
 		if (errors) {
 			var i = 0; 
@@ -71,58 +70,21 @@
 			.then(function() {res.redirect('/user')});
 		};
 	};	    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	    user
-	    .validate()
-	    .then(
-	        function(err){
-	            if (err) {
-	                res.render('user/new', {user: user, errors: err.errors});
-	            } else {
-	                user 																// save: guarda en DB campos username y password de user
-	                .save({fields: ["username", "password", "usertype"]})
-	                .then( function(){
-	                    req.session.user = {id:user.id, username:user.username};		// crea la sesión para que el usuario acceda ya autenticado y redirige a /
-	                    res.redirect('/');
-	                }); 
-	            }
-	        }
-	    ).catch(function(error){next(error)});
-	}; */
 	
 	exports.update = function(req, res, next) {								// PUT /user/:id
-	  req.user.username  = req.body.user.username;
-	  req.user.password  = req.body.user.password;
-
-	  req.user
-	  .validate()
-	  .then(
-	    function(err){
-	      if (err) {
-	        res.render('user/' + req.user.id, {user: req.user, errors: err.errors});
-	      } else {
-	        req.user     													
-	        .save( {fields: ["username", "password"]})						// save: guarda campo username y password en DB
-	        .then( function(){ res.redirect('/');});						// Redirección HTTP a /
-	      }     
-	    }
-	  ).catch(function(error){next(error)});
+		req.user.username  = req.body.user.username;
+	  	req.user.password  = req.body.user.password;
+	  	var errors = req.user.validate();											// objeto errors no tiene then(
+		if (errors) {
+			var i = 0; 
+			var errores = new Array();											// se convierte en [] con la propiedad message por compatibilidad con layout
+			for (var prop in errors) errores[i++] = {message: errors[prop]};        
+			res.render('user/new', {user: req.user, errors: errores});
+		} else {
+			req.user 																// save: guarda en DB campos pregunta y respuesta de quiz
+			.save({fields: ["username", "password", "usertype"]})
+			.then(function() {res.redirect('/user')});
+		};
 	};
 
 	exports.destroy = function(req, res) {									// DELETE /user/:id
