@@ -28,6 +28,9 @@
 			},
 			UserName: {
 				type: DataTypes.STRING
+			},
+			claveinvitado: {
+				type: DataTypes.STRING
 			}
 		})
 	};

@@ -27,6 +27,23 @@
 		).catch(function(error) {next(error);});
 	};
 
+
+/*	exports.loadinvitado = function(req, res, next, claveinvitado) {			// autoload. solo se ejecuta si en la peticion GET existe un :quizId. ayuda a factorizar el codigo del resto de controladores 
+		models.Quiz.find({										// carga de registro quiz
+			where: 		{claveinvitado: claveinvitado},					// where indice principal id <-- quizId recibido del GET
+			include: 	[{model: models.Comment}]				// incluye la tabla Comment como hijo
+			}).then(function(quiz) {
+				if (quiz) {
+					req.quiz = quiz;
+					next();
+				} else {
+					next(new Error('No existe quizId=' + quiz[claveinvitado]));
+				}
+			}
+		).catch(function(error) {next(error);});
+	}; */
+
+
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res) {  
@@ -97,6 +114,7 @@
 		req.body.quiz.UserId = req.session.user.id;								// referenciamos el quiz con el UserId
 		req.body.quiz.UserName = req.session.user.username;
 		var quiz = models.Quiz.build( req.body.quiz );							// construccion de objeto quiz para luego introducir en la tabla
+		quiz.claveinvitado = Math.random();
 		if (req.file) {
 			req.quiz.image = req.file.filename;
 		};
@@ -108,7 +126,7 @@
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
 			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId", "UserName", "proveedor"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "image", "UserId", "UserName", "proveedor", "claveinvitado"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};
