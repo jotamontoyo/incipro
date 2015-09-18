@@ -1,7 +1,7 @@
 		
-//	process.env.DATABASE_URL = "postgres://vqeanmtvzxafve:MX_JgwmFxCJJY1lVzsq0trgvqj@ec2-54-247-170-228.eu-west-1.compute.amazonaws.com:5432/d3231b4qnbtafm?ssl=true"; // URL HerokuPostgres
-//	process.env.DATABASE_STORAGE = "quiz.sqlite";
-//	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
+	process.env.DATABASE_URL = "postgres://eybpveknhpqcir:BhtK9BAu0_AwOZSnA7AI0dyTHe@ec2-54-217-202-108.eu-west-1.compute.amazonaws.com:5432/d9n4anb4gs66l7?ssl=true"; // URL HerokuPostgres
+	process.env.DATABASE_STORAGE = "quiz.sqlite";
+	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
 
 	var express = require('express');
 	var path = require('path');
