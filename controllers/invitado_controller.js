@@ -1,10 +1,10 @@
 
 	var models = require('../models/models.js');
 
-	exports.load = function(req, res, next, quizId, claveinvitado) {			// autoload. solo se ejecuta si en la peticion GET existe un :quizId. ayuda a factorizar el codigo del resto de controladores 
-		models.Quiz.find({										// carga de registro quiz
-			where: 		{id: Number(quizId), claveinvitado: claveinvitado},					// where indice principal id <-- quizId recibido del GET
-			include: 	[{model: models.Comment}]				// incluye la tabla Comment como hijo
+	exports.load = function(req, res, next, claveinvitado) {			
+		models.Quiz.find({												
+			where: 		{claveinvitado: claveinvitado},
+			include: 	[{model: models.Comment}]							
 			}).then(function(quiz) {
 				if (quiz) {
 					req.quiz = quiz;

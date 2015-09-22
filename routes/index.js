@@ -18,7 +18,7 @@
 	});
 
 	router.param('quizId', 								quizController.load);			// autoload de comandos. peticiones GET con SQL
-	router.param('quizId/claveinvitado',				invitadoController.load);			// autoload de comandos. peticiones GET con SQL
+	router.param('claveinvitado',						invitadoController.load);			// autoload de comandos. peticiones GET con SQL
 	router.param('commentId',							commentController.load);
 	router.param('userId',								userController.load);
 	router.param('proveedorId',							proveedorController.load);
@@ -41,7 +41,7 @@
 	router.get('/quizes/opened',			 			quizController.opened);		// accede a la lista completa de preguntas /quizes/index.ejs
 	router.get('/quizes/closed',			 			quizController.closed);		// accede a la lista completa de preguntas /quizes/index.ejs
 	router.get('/quizes/:quizId(\\d+)',					sessionController.loginRequired, quizController.show);			// accede a una pregunta en concreto. envia al quizController la peticion GET con el parametro quizId (indice)
-	router.get('/quizes/:quizId(\\d+)/:claveinvitado',	invitadoController.show);
+	router.get('/quizes/:claveinvitado',				invitadoController.show);
 	router.get('/quizes/:quizId(\\d+)/answer',			quizController.answer);			// se dispara cuando submit del form question.ejs hacia la ruta /quizes/answer. le pasa el id en la peticion GET req
 	router.get('/quizes/new',							sessionController.loginRequired, quizController.new);				// carga el formulario /quizes/new si sessionController.loginRequired()
 	router.post('/quizes/create',						sessionController.loginRequired, upload, quizController.create);	// dispara controlador create cuando el boton <salvar> del formulario new.js
