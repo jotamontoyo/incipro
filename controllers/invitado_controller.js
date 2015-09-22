@@ -16,10 +16,10 @@
 		).catch(function(error) {next(error);});
 	};
 
-	exports.show = function(req, res) {											// GET /quizes/:id
+	exports.show = function(req, res) {							// GET /quizes/:claveinvitado
 		models.Proveedor.find({
 			where: 		{nombre: req.quiz.proveedor} 
 		}).then(function(proveedor) {
-			res.render('invitados/show', {quiz: req.quiz, proveedor: proveedor, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
+			res.render('invitados/show', {quiz: req.quiz, proveedor: proveedor, errors: []});				
 		});
 	};	
