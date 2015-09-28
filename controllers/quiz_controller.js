@@ -27,26 +27,30 @@
 		).catch(function(error) {next(error);});
 	};
 
-
-/*	exports.loadinvitado = function(req, res, next, claveinvitado) {			// autoload. solo se ejecuta si en la peticion GET existe un :quizId. ayuda a factorizar el codigo del resto de controladores 
-		models.Quiz.find({										// carga de registro quiz
-			where: 		{claveinvitado: claveinvitado},					// where indice principal id <-- quizId recibido del GET
-			include: 	[{model: models.Comment}]				// incluye la tabla Comment como hijo
-			}).then(function(quiz) {
-				if (quiz) {
-					req.quiz = quiz;
-					next();
-				} else {
-					next(new Error('No existe quizId=' + quiz[claveinvitado]));
-				}
-			}
-		).catch(function(error) {next(error);});
-	}; */
-
-
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
-	exports.index = function(req, res) {  
+	exports.index = function(req, res, next) {  
+		var cantidadbotones = 0;
+		var boton = 2;
+		var primero = boton * 10;
+		var ultimo = primero + 10;
+
+		Promise.all([														// ejecuta todas las consultas
+			models.Quiz.count(),
+			models.Quiz.findAll({
+				include: [{
+					model: models.Comment
+				}]
+			})
+		]).then(function(results) {
+			cantidadbotones = results[0] / 10;
+			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
+		}).then(next, next);
+	};
+
+
+/*
+
 		var options = {};
 	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 		    options.where = {UserId: req.user.id}			
@@ -56,7 +60,7 @@
 	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
-	};
+	}; */
 
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
@@ -197,7 +201,24 @@
 		res.send(req.quiz.image);
 	};
 	
-	
+	exports.page = function(req, res, next) {
+		var cantidadbotones = 0;
+		var boton = req.body.boton.name;
+		var primero = boton * 10;
+		var ultimo = primero + 10;
+
+		Promise.all([														// ejecuta todas las consultas
+			models.Quiz.count(),
+			models.Quiz.findAll({
+				include: [{
+					model: models.Comment
+				}]
+			})
+		]).then(function(results) {
+			cantidadbotones = results[0] / 10;
+			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
+		}).then(next, next);
+	};
 	
 	
 	

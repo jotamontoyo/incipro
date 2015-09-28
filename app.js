@@ -14,7 +14,9 @@
 	var session = require('express-session');
 
 	var routes = require('./routes/index');
-	// var users = require('./routes/users');
+
+//	var paginate = require('express-paginate');
+//	app.use(paginate.middleware(10, 50));
 
 	var app = express();
 
