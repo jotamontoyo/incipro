@@ -15,9 +15,6 @@
 
 	var routes = require('./routes/index');
 
-//	var paginate = require('express-paginate');
-//	app.use(paginate.middleware(10, 50));
-
 	var app = express();
 
 	// view engine setup

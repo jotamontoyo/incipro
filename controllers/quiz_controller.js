@@ -30,7 +30,7 @@
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {  
-		var cantidadbotones = 0;
+/*		var cantidadbotones = 0;
 		var boton = 2;
 		var primero = boton * 10;
 		var ultimo = primero + 10;
@@ -42,14 +42,12 @@
 					model: models.Comment
 				}]
 			})
-		]).then(function(results) {
-			cantidadbotones = results[0] / 10;
-			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
+		]).then(function(quizes) {
+			cantidadbotones = quizes[0] / 10;
+			res.render('quizes/index.ejs', {quizes: quizes[1], cantidadbotones: cantidadbotones, errors: []});
 		}).then(next, next);
-	};
+	}; */
 
-
-/*
 
 		var options = {};
 	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
@@ -60,7 +58,7 @@
 	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
-	}; */
+	};
 
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
@@ -203,7 +201,7 @@
 	
 	exports.page = function(req, res, next) {
 		var cantidadbotones = 0;
-		var boton = req.body.boton.name;
+		var boton = 2;
 		var primero = boton * 10;
 		var ultimo = primero + 10;
 
