@@ -1,5 +1,6 @@
 
 	var models = require('../models/models.js');
+	var fs = require('fs-extra');       //File System - for file manipulation
 
 	exports.ownershipRequired = function(req, res, next){   	// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 	    var objQuizOwner = req.quiz.UserId;						// userId del quiz
@@ -30,25 +31,6 @@
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {  
-/*		var cantidadbotones = 0;
-		var boton = 2;
-		var primero = boton * 10;
-		var ultimo = primero + 10;
-
-		Promise.all([														// ejecuta todas las consultas
-			models.Quiz.count(),
-			models.Quiz.findAll({
-				include: [{
-					model: models.Comment
-				}]
-			})
-		]).then(function(quizes) {
-			cantidadbotones = quizes[0] / 10;
-			res.render('quizes/index.ejs', {quizes: quizes[1], cantidadbotones: cantidadbotones, errors: []});
-		}).then(next, next);
-	}; */
-
-
 		var options = {};
 	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 		    options.where = {UserId: req.user.id}			
@@ -146,9 +128,9 @@
 		req.quiz.tema = req.body.quiz.tema;
 		req.quiz.proveedor = req.body.quiz.proveedor;
 		req.quiz.proceso = req.body.quiz.proceso;
-		if (req.file) {
+/*		if (req.file) {
 			req.quiz.image = req.file.buffer;
-		};
+		};*/
 		var errors = req.quiz.validate();											
 		if (errors) {
 			var i = 0; 
@@ -217,6 +199,23 @@
 			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
 		}).then(next, next);
 	};
+
+	exports.uploadimg = function (req, res, next) {
+        var fstream;
+        req.pipe(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename) {
+            console.log("Uploading: " + filename);
+
+            //Path where image will be uploaded
+            fstream = fs.createWriteStream('public/img/' + filename);
+            file.pipe(fstream);
+            fstream.on('close', function () {    
+                console.log("Upload Finished of " + filename);              
+                res.redirect('back');           //where to go next
+            });
+        });
+    };
+
 	
 	
 	

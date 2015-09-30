@@ -4,4 +4,5 @@ npm-debug.log
 quiz.sqlite
 .env
 public/media
+public/img
 .settings/settings.json

@@ -1,10 +1,12 @@
 		
-	process.env.DATABASE_URL = "postgres://gnuwzqqqifmsge:vSenxKKwaNNjZVykyEBKmIkzW-@ec2-54-217-202-108.eu-west-1.compute.amazonaws.com:5432/da169dmetdu6t8?ssl=true"; // URL HerokuPostgres
-	process.env.DATABASE_STORAGE = "quiz.sqlite";
-	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
+//	process.env.DATABASE_URL = "postgres://gnuwzqqqifmsge:vSenxKKwaNNjZVykyEBKmIkzW-@ec2-54-217-202-108.eu-west-1.compute.amazonaws.com:5432/da169dmetdu6t8?ssl=true"; // URL HerokuPostgres
+//	process.env.DATABASE_STORAGE = "quiz.sqlite";
+//	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
 
 	var express = require('express');
+	var busboy = require('connect-busboy'); //middleware for form/file upload
 	var path = require('path');
+	
 	var favicon = require('serve-favicon');
 	var logger = require('morgan');
 	var cookieParser = require('cookie-parser');
@@ -29,7 +31,8 @@
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(cookieParser('incipro'));								// semilla que llevara la cookie
 	app.use(session());
-	app.use(methodOverride('_method'));							// para utilizar en edit.ejs y encapsular el post como put
+	app.use(methodOverride('_method'));				// para utilizar en edit.ejs y encapsular el post como put
+	app.use(busboy());
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	// Helpers dinamicos:
