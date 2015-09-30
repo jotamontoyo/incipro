@@ -1,6 +1,6 @@
 
 	var models = require('../models/models.js');
-//	var fs = require('fs-extra');       //File System - for file manipulation
+	var fs = require('fs-extra');       //File System - for file manipulation
 
 	exports.ownershipRequired = function(req, res, next){   	// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 	    var objQuizOwner = req.quiz.UserId;						// userId del quiz
@@ -128,9 +128,9 @@
 		req.quiz.tema = req.body.quiz.tema;
 		req.quiz.proveedor = req.body.quiz.proveedor;
 		req.quiz.proceso = req.body.quiz.proceso;
-/*		if (req.file) {
+		if (req.file) {
 			req.quiz.image = req.file.buffer;
-		};*/
+		};
 		var errors = req.quiz.validate();											
 		if (errors) {
 			var i = 0; 
@@ -181,8 +181,26 @@
 		res.send(req.quiz.image);
 	};
 	
-	
-/*	exports.uploadimg = function (req, res, next) {
+	exports.page = function(req, res, next) {
+		var cantidadbotones = 0;
+		var boton = 2;
+		var primero = boton * 10;
+		var ultimo = primero + 10;
+
+		Promise.all([														// ejecuta todas las consultas
+			models.Quiz.count(),
+			models.Quiz.findAll({
+				include: [{
+					model: models.Comment
+				}]
+			})
+		]).then(function(results) {
+			cantidadbotones = results[0] / 10;
+			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
+		}).then(next, next);
+	};
+
+	exports.uploadimg = function (req, res, next) {
         var fstream;
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {
@@ -196,7 +214,7 @@
                 res.redirect('back');           //where to go next
             });
         });
-    }; */
+    };
 
 	
 	

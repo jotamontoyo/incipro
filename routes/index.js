@@ -52,7 +52,8 @@
 	router.delete('/quizes/:quizId(\\d+)',				sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
 	router.get('/quizes/statistics',					statisticsController.calculate, statisticsController.show);
 	router.get('/quizes/:quizId(\\d+)/image', 			quizController.image);												// se dispara cuando se carga una img en el formulario show
-//	router.post('/quizes/uploadimg',                    quizController.uploadimg);	
+	router.get('/quizes/page',                     		quizController.page);	
+	router.post('/quizes/uploadimg',                    quizController.upload);	
 
 	// Definición de rutas de comments
 	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller
