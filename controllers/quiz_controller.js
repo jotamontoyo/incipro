@@ -1,6 +1,6 @@
 
 	var models = require('../models/models.js');
-	var fs = require('fs-extra');       //File System - for file manipulation
+//	var fs = require('fs-extra');       //File System - for file manipulation
 
 	exports.ownershipRequired = function(req, res, next){   	// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 	    var objQuizOwner = req.quiz.UserId;						// userId del quiz
@@ -200,7 +200,7 @@
 		}).then(next, next);
 	};
 
-	exports.uploadimg = function (req, res, next) {
+/*	exports.uploadimg = function (req, res, next) {
         var fstream;
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {
@@ -214,7 +214,7 @@
                 res.redirect('back');           //where to go next
             });
         });
-    };
+    }; */
 
 	
 	
