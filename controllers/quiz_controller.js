@@ -181,25 +181,7 @@
 		res.send(req.quiz.image);
 	};
 	
-	exports.page = function(req, res, next) {
-		var cantidadbotones = 0;
-		var boton = 2;
-		var primero = boton * 10;
-		var ultimo = primero + 10;
-
-		Promise.all([														// ejecuta todas las consultas
-			models.Quiz.count(),
-			models.Quiz.findAll({
-				include: [{
-					model: models.Comment
-				}]
-			})
-		]).then(function(results) {
-			cantidadbotones = results[0] / 10;
-			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
-		}).then(next, next);
-	};
-
+	
 /*	exports.uploadimg = function (req, res, next) {
         var fstream;
         req.pipe(req.busboy);
