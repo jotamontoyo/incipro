@@ -31,6 +31,7 @@
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {  
+
 		var options = {};
 	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 		    options.where = {UserId: req.user.id}			
@@ -69,8 +70,8 @@
 			where: 		{nombre: req.quiz.proveedor} 
 		}).then(function(proveedor) {
 			res.render('quizes/show', {quiz: req.quiz, proveedor: proveedor, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
-		});
-	};									          								// req.quiz: instancia de quiz cargada con autoload
+		});																								// req.quiz: instancia de quiz cargada con autoload
+	};									          								
 	
 	exports.answer = function(req, res) {										// GET /quizes/answer/:id
 		var resultado = 'Incorrecto';			
@@ -167,7 +168,6 @@
 	};		
 
 	exports.showbytema = function(req, res){
-//		tema = req.params.tema;
 		models.Quiz.findAll({
 			where: {tema: req.params.tema}
 		}).then(
@@ -182,12 +182,9 @@
 	};
 	
 	exports.page = function(req, res, next) {
-		var cantidadbotones = 0;
-		var boton = 2;
-		var primero = boton * 10;
-		var ultimo = primero + 10;
-
-		Promise.all([														// ejecuta todas las consultas
+		var qty_botones = 0;
+		var qty_pagina = 10;
+		Promise.all([									// ejecuta todas las consultas
 			models.Quiz.count(),
 			models.Quiz.findAll({
 				include: [{
@@ -195,8 +192,8 @@
 				}]
 			})
 		]).then(function(results) {
-			cantidadbotones = results[0] / 10;
-			res.render('quizes/index.ejs', {quizes: results[1], cantidadbotones: cantidadbotones, errors: []});
+			qty_botones = Math.ceil(results[0] / qty_pagina);
+			res.render('quizes/index.ejs', {quizes: results[1], qty_botones: qty_botones, qty_pagina: qty_pagina, errors: []});
 		}).then(next, next);
 	};
 
@@ -205,13 +202,11 @@
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {
             console.log("Uploading: " + filename);
-
-            //Path where image will be uploaded
-            fstream = fs.createWriteStream('public/img/' + filename);
+            fstream = fs.createWriteStream('public/img/' + filename);					// Path where image will be uploaded
             file.pipe(fstream);
             fstream.on('close', function () {    
                 console.log("Upload Finished of " + filename);              
-                res.redirect('back');           //where to go next
+                res.redirect('back');           										// where to go next
             });
         });
     };
