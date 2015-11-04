@@ -1,7 +1,4 @@
 
-
-
-
 <div class="container-fluid">
 
 	<h4>Partes</h4>
@@ -34,7 +31,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% var i; for (i=0; i < quizes.length; i++) { %>
+				<% var i; for (i=0; (i < quizes.length) && (i < qty_pagina); i++) { %>
 					<tr>
 						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td>
 						<td><%= quizes[i].UserName %></td>

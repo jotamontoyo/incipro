@@ -31,14 +31,14 @@
 	// GET /quizes   										--->>> GET sin req.user 
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {  
-//		qty_pagina = 10;
+		qty_pagina = 10;
 		var options = {};
 	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 		    options.where = {UserId: req.user.id}			
 	  	};
 	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function(quizes) {
-	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
 	};
@@ -182,25 +182,12 @@
 	};
 	
 	exports.page = function(req, res, next) {
-/*		qty_pagina += 10;
-//		Promise.all([									// ejecuta todas las consultas
-//			models.Quiz.count(),
-/*			models.Quiz.findAll({
-				include: [{
-					model: models.Comment
-				}]
-			})
-//		]) */
-		
-/*		models.Quiz.findAll()
+		qty_pagina += 10;
+		models.Quiz.findAll()
 			.then(function(quizes) {
 	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
 	    	}
-	  	).catch(function(error){next(error)}); */
-/*
-			.then(function(quizes) {
-			res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
-		}).then(next, next); */
+	  	).catch(function(error){next(error)});
 	};
 
 	exports.uploadimg = function (req, res, next) {
