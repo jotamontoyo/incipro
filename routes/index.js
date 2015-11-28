@@ -13,9 +13,7 @@
 	var proveedorController = require('../controllers/proveedor_controller');
 	var invitadoController = require('../controllers/invitado_controller');
 
-	
-	
-	router.get('/', function(req, res) {													/* GET home page. */
+	router.get('/', function (req, res) {													/* GET home page. */
 		res.render('index', {title: 'inciPro', errors: []});								// cuando renderice la vista index.ejs le pasa el objeto title: 'Quiz'
 	});
 
@@ -53,7 +51,8 @@
 	router.get('/quizes/statistics',					statisticsController.calculate, statisticsController.show);
 	router.get('/quizes/:quizId(\\d+)/image', 			quizController.image);												// se dispara cuando se carga una img en el formulario show
 	router.get('/quizes/page',                     		quizController.page);	
-	router.post('/quizes/uploadimg',                    quizController.uploadimg);	
+	router.post('/quizes/uploadimg',                    quizController.uploadimg);
+	router.get('/quizes?search',                    	quizController.search);	
 
 	// Definición de rutas de comments
 	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller

@@ -190,7 +190,7 @@
 	  	).catch(function(error){next(error)});
 	};
 
-	exports.uploadimg = function (req, res, next) {
+	exports.uploadimg = function(req, res, next) {
         var fstream;
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {
@@ -204,7 +204,16 @@
         });
     };
 
-	
+	exports.search = function(req, res, next) {
+		models.Quiz.findAll({
+			where: {pregunta: req.param.search}
+		}).then(
+			function(quizes) {
+				res.render('quizes/index.ejs', { quizes: quizes, errors: []});
+			}
+		).catch(function(error) {next(error)});
+		console.log('hola search');
+	};
 	
 	
 	
