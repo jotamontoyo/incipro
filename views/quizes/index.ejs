@@ -8,10 +8,10 @@
 			<a href="/quizes">
   				<button type="button" class="btn btn-default">Todos</button>
   			</a>
-  			<a href="/quizes/opened">	
+  			<a href="/quizes/opened">
 				<button type="button" class="btn btn-default">Abiertos</button>
 			</a>
-			<a href="/quizes/closed">	
+			<a href="/quizes/closed">
 				<button type="button" class="btn btn-default">Cerrados</button>
 			</a>
 
@@ -25,6 +25,7 @@
 				<tr>
 					<th>Centro</th>
 					<th>User</th>
+					<th>Fecha</th>
 					<th>Parte</th>
 					<th>Proveedor</th>
 					<th>Motivo</th>
@@ -35,6 +36,7 @@
 					<tr>
 						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td>
 						<td><%= quizes[i].UserName %></td>
+						<td><%= quizes[i].fecha %></td>
 						<td><%= quizes[i].id %></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].proveedor %> </a></td>
 						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %> </a></td>
@@ -53,7 +55,7 @@
 								<%} else {%>
 									<td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
 								<%}%>
-							<%}%>	
+							<%}%>
 						<%}%>
 					</tr>
 				<% } %>
@@ -67,6 +69,6 @@
 			<a href="/quizes/page"><button type="button" class="btn btn-primary">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Mas Resultados</button></a>
 		</p>
-	<% } %>	
+	<% } %>
 
 </div>

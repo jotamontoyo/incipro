@@ -1,6 +1,6 @@
 
 	var models = require('../models/models.js');
-		
+
 	exports.ownershipRequired = function(req, res, next){		// MW que permite acciones solamente si el quiz al que pertenece el comentario objeto pertenece al usuario logeado o si es cuenta admin
 	    models.Quiz.find({
 	            where: {
@@ -40,7 +40,7 @@
 	exports.new = function(req, res) {														// GET /quizes/:quizId/comments/new, baja el formulario /views/comment.ejs
 		res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []}); 			// renderiza la vista comments/new del quiz -->> quizid: req.params.quizId
 	};
-	
+
 	exports.create = function(req, res, next) {													// POST /quizes/:quizId/comments
 		if (req.body.comment.texto) {
 			var comment = models.Comment.build({												// construccion objeto comment para lugego introducir en la tabla
@@ -49,20 +49,20 @@
 			});
 			var errors = comment.validate();
 			if (errors) {
-				var i = 0; 
-				var errores = new Array();												
-				for (var prop in errors) errores[i++] = {message: errors[prop]};        
+				var i = 0;
+				var errores = new Array();
+				for (var prop in errors) errores[i++] = {message: errors[prop]};
 				res.render('comments/new', {comment: comment, errors: errores});
 			} else {
 				comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
 				.save()
-				.then(function() {res.redirect('/quizes/' + req.params.quizId)});		
+				.then(function() {res.redirect('/quizes/' + req.params.quizId)});
 			};
 		} else {
 			next(new Error('Introuzca un texto'));
 		};
 	};
-	
+
 	exports.publish = function(req, res) {													// GET /quizes/:quizId/comments/:commentId/publish
 		req.comment.publicado = true;
 		req.comment.save({fields: ["publicado"]})
@@ -82,4 +82,3 @@
 			res.redirect('/quizes/' + req.params.quizId);
 		}).catch(function(error) {next(error)});
 	};
-	

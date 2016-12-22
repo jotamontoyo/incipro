@@ -3,12 +3,12 @@
 //	var models = require('../models/models.js');
 
 	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
-		return sequelize.define('Quiz', { 
+		return sequelize.define('Quiz', {
 			pregunta: {														// guarda el motivo de la incidencia
 				type: DataTypes.STRING,
 				validate: {notEmpty: {msg: "--> Falta Pregunta"}}
 			},
-			respuesta: {											
+			respuesta: {
 				type: DataTypes.STRING
 			},
 			tema: {															// guarda el centro que la graba
@@ -29,7 +29,7 @@
 			UserName: {
 				type: DataTypes.STRING
 			},
-			claveinvitado: {
+			fecha: {
 				type: DataTypes.STRING
 			}
 		})
