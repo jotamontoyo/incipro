@@ -31,6 +31,7 @@
 	var Comment = sequelize.import(path.join(__dirname, 'comment'));		// importar estructura y definicion de la tabla Comment
 	var User = sequelize.import(path.join(__dirname, 'user'));				// importar estructura y definicion de la tabla User
 	var Proveedor = sequelize.import(path.join(__dirname, 'proveedor'));	// importar estructura y definicion de la tabla Provider
+	var Contador = sequelize.import(path.join(__dirname, 'contador'));		// importar estructura y definicion de la tabla Contador
 
 	Quiz.belongsTo(User);												// integridad referncial. Cada Quiz es hijo de User
 	User.hasMany(Quiz);													// cada User puede tener varios Quiz
@@ -42,38 +43,76 @@
 	exports.Comment = Comment;
 	exports.User = User;
 	exports.Proveedor = Proveedor;
+	exports.Contador = Contador;
 
 	sequelize.sync().then(function() {									// sequelize.sync() inicializa tabla de preguntas en DB
-	  User.count().then(function(count) {								// then() ejecuta el manejador una vez creada la tabla
-	    if(count === 0) {   											// la tabla se inicializa solo si está vacía
-	      User.bulkCreate(
-	        [ {username: 'admin', password: '1234', isAdmin: true},
-	          {username: 'pepe', password: '5678'} 					// el valor por defecto de isAdmin es 'false'
-	        ]
-	      ).then(function() {
-	        console.log('Base de datos (tabla user) inicializada');
-	        Quiz.count().then(function(count) {
-	          if(count === 0) {   																			// la tabla se inicializa solo si está vacía
-	            Quiz.bulkCreate(
-	              [ {pregunta: 'faltas', respuesta: 'Roma', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()}, 			// estos quizes pertenecen al usuario pepe (2)
-	                {pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()},
-	                {pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()}
-	              ]
-	            ).then(function(){console.log('Base de datos (tabla parte) inicializada')});
-	          };
-	        });
-	        Proveedor.count().then(function(count) {
-	          if(count === 0) {   																			// la tabla se inicializa solo si está vacía
-	            Proveedor.bulkCreate(
-	              [ {nombre: 'provider1', telefono: '999999999', email: 'somenone@host.com'},
-	                {nombre: 'provider2', telefono: '999999999', email: 'someoneelse@host.com'}
-	              ]
-	            ).then(function(){console.log('Base de datos (tabla proveedor) inicializada')});
-	          };
-	        });
-	      });
-	    };
-	  });
+
+	  	User.count().then(function( count ) {								// then() ejecuta el manejador una vez creada la tabla
+
+	    	if(count === 0) {   											// la tabla se inicializa solo si está vacía
+
+				User.bulkCreate(
+
+	        		[ {username: 'admin', password: '1234', isAdmin: true},
+	          		{username: 'pepe', password: '5678'}] 					// el valor por defecto de isAdmin es 'false'
+
+	        	).then(function() {
+
+	        		console.log('Base de datos: tabla user inicializada');
+	        		Quiz.count().then(function( count ) {
+	          			if(count === 0) {   																			// la tabla se inicializa solo si está vacía
+	            			Quiz.bulkCreate(
+	              				[ {pregunta: 'faltas', respuesta: 'Roma', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()}, 			// estos quizes pertenecen al usuario pepe (2)
+	                			{pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()},
+	                			{pregunta: 'retraso', respuesta: 'Lisboa', tema: 'Central', proveedor: 'Central', proceso: 'true', UserId: 2, UserName: 'pepe', fecha: Date()}]
+	              			).then(function(){console.log('Base de datos: tabla parte inicializada')});
+	          			};
+	        		});
+
+	        		Proveedor.count().then(function( count ) {
+	          			if(count === 0) {   																			// la tabla se inicializa solo si está vacía
+	            			Proveedor.bulkCreate(
+	              				[ {nombre: 'provider1', telefono: '999999999', email: 'somenone@host.com'},
+	                			{nombre: 'provider2', telefono: '999999999', email: 'someoneelse@host.com'}]
+	              		    ).then(function(){console.log('Base de datos: tabla proveedor inicializada')});
+	          			};
+	        		});
+
+					Contador.count().then(function( count ) {
+	          			if(count === 0) {   																			// la tabla se inicializa solo si está vacía
+	            			Contador.bulkCreate(
+
+								[
+									{ codigo: 1,
+									nombre: 'contador 1',
+									marca: 'marca',
+									modelo: 'modelo',
+									ubicaion: 'ubicacion',
+									fecha_revision: 'fecha',
+									lectura_actual: 0,
+									maximo: 0,
+									minimo: 0,
+									medio: 0 },
+
+									{ codigo: 2,
+									nombre: 'contador 2',
+									marca: 'marca',
+									modelo: 'modelo',
+									ubicaion: 'ubicacion',
+									fecha_revision: 'fecha',
+									lectura_actual: 0,
+									maximo: 0,
+									minimo: 0,
+									medio: 0 }
+								]
+
+	              		    ).then(function() {console.log('Base de datos: tabla contador inicializada')});
+	          			};
+	        		});
+
+	      		});
+	    	};
+	  	});
 	});
 
 

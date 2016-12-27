@@ -1,23 +1,15 @@
 
-	// Definicion de modelo
+    // Definicion de modelo
 
-	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
-		return sequelize.define('Comment', {
 
-			texto: {
-				type: DataTypes.STRING
-			},
+    module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
+        return sequelize.define('Contador', {
 
-			publicado: {
-				type: DataTypes.BOOLEAN,
-				defaultValue: false
-			},
-
-			codigo: {
+            codigo: {
                 type: DataTypes.INTEGER
             },
 
-			nombre: {
+            nombre: {
                 type: DataTypes.STRING
 
             },
@@ -39,11 +31,6 @@
                 type: DataTypes.STRING
             },
 
-            lectura_anterior: {
-                type: DataTypes.FLOAT
-
-            },
-
             lectura_actual: {
                 type: DataTypes.FLOAT
             },
@@ -61,6 +48,5 @@
             }
 
 
-
-		})
-	};
+        })
+    };

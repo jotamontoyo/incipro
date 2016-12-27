@@ -1,6 +1,5 @@
 	// Definicion de modelo
 
-//	var models = require('../models/models.js');
 
 	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
 		return sequelize.define('Quiz', {

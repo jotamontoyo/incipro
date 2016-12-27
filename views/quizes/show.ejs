@@ -34,26 +34,62 @@
 						<% if (!session.user && quiz.comments[index].publicado) {%>
 							<td class="comment-panel">
 								<div class="container-fluid">
-									<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+
+									<div class="form-group">
+
+										<h5>id: <%= quiz.comments[index].id %></h5>
+										<h5>Código: <%= quiz.comments[index].codigo %></h5>
+										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
+										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+
+									</div>
+
+<!--									<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
+
 								</div>
 								<div class="container-fluid">
-									<h6><span class="badge">#<%=quiz.comments[index].id%></span>
-									<small><%=quiz.comments[index].createdAt.toLocaleString()%></small></h6>
+									<h6><span class="badge">#<%= quiz.comments[index].id %></span>
+									<small><%= quiz.comments[index].createdAt.toLocaleString() %></small></h6>
 								</div>
 							</td>
 						<%}%>
-<!--						<% if (session.user) {%> -->
+						<% if (session.user) {%>
 							<td class="comment-panel">
 								<div class="container-fluid">
+
 									<% if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
-										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+
+										<h5>id: <%= quiz.comments[index].id %></h5>
+										<h5>Código: <%= quiz.comments[index].codigo %></h5>
+										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
+										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+
+										<form method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
+											<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%=quiz.comments[index].lectura_actual%>" placeholder="lectura_actual"/>
+											<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Enviar</button>
+										</form>
+
+
+<!--										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
 										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
 										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
+
+
 									<%} else if (quiz.comments[index].publicado) {%>
-										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea>
+
+
+										<h5>id: <%= quiz.comments[index].id %></h5>
+										<h5>Código: <%= quiz.comments[index].codigo %></h5>
+										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
+										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+
+<!--										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
 										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
 										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
+
+
 									<%}%>
+
 								</div>
 								<div class="container-fluid">
 									<%if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
@@ -86,7 +122,7 @@
 									<%}%>
 								</div>
 							</td>
-					<!--	<%}%> -->
+						<%}%>
 					</tr>
 				<%}%>
 			</table>

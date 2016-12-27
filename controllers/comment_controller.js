@@ -63,6 +63,57 @@
 		};
 	};
 
+
+
+	exports.edit = function(req, res) {															// carga formulario
+
+		console.log('edit..............:' + req.quiz.comments)
+
+			res.render('comments/edit', {
+				quiz: req.quiz,
+				comment: req.quiz.comments,
+				errors: []
+			});
+
+
+
+
+
+	};
+
+
+
+
+
+
+	exports.update = function(req, res) {
+
+		console.log('lectura_actual:....' + req.body.comment.lectura_actual);
+
+		req.comment.lectura_actual = req.body.comment.lectura_actual;
+//		req.quiz.comments.lectura_actual = req.body.comments.lectura_actual;
+
+
+
+		req.comment.save({fields: ["lectura_actual"]})
+			.then(function() {res.redirect('/quizes/' + req.params.quizId);})
+			.catch(function(error) {next(error)});
+
+
+
+
+	};
+
+
+
+
+
+
+
+
+
+
+
 	exports.publish = function(req, res) {													// GET /quizes/:quizId/comments/:commentId/publish
 		req.comment.publicado = true;
 		req.comment.save({fields: ["publicado"]})

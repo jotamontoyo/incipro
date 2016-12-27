@@ -1,6 +1,6 @@
 
 	var models = require('../models/models.js');
-	var fs = require('fs-extra');       //File System - for file manipulation
+	var fs = require('fs-extra');       						//File System - for file manipulation
 
 	exports.ownershipRequired = function(req, res, next){   	// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 	    var objQuizOwner = req.quiz.UserId;						// userId del quiz
@@ -95,6 +95,7 @@
 
 
 	exports.new = function(req, res) {																			// GET /quizes/new, baja el formulario
+
 		var nueva_fecha = new Date();
 		var dia = nueva_fecha.getUTCDate();
 		var mes = nueva_fecha.getUTCMonth();
@@ -103,9 +104,12 @@
 		var quiz = models.Quiz.build( 																			// crea el objeto quiz, lo construye con buid() metodo de sequilize
 			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", fecha: nueva_fecha}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
+
 		models.Proveedor.findAll().then(function(proveedor) {
 			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new
 		});
+
+
 	};
 
 
@@ -118,12 +122,12 @@
 
 
 	exports.create = function(req, res) {										// POST /quizes/create
+
 		req.body.quiz.UserId = req.session.user.id;								// referenciamos el quiz con el UserId
 		req.body.quiz.UserName = req.session.user.username;
+
 		var quiz = models.Quiz.build( req.body.quiz );							// construccion de objeto quiz para luego introducir en la tabla
-		if (req.file) {
-			req.quiz.image = req.file.filename;
-		};
+
 		var errors = quiz.validate();											// objeto errors no tiene then(
 		if (errors) {
 			var i = 0;
@@ -133,8 +137,48 @@
 		} else {
 			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
 			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha"]})
-			.then(function() {res.redirect('/quizes')});
+			.then(function() {
+
+
+				models.Contador.findAll().then(function( contador ) {
+
+					for (var i in contador) {
+
+						var comment = models.Comment.build({
+
+							codigo: contador[i].codigo,
+							nombre: contador[i].nombre,
+							lectura_actual: 0,
+							publicado: true,
+							QuizId: quiz.id														// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
+
+						});
+
+						var errors = comment.validate();
+						if (errors) {
+							var i = 0;
+							var errores = new Array();
+							for (var prop in errors) errores[i++] = {message: errors[prop]};
+							res.render('comments/new', {comment: comment, errors: errores});
+						} else {
+							comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
+							.save({fields: ["codigo", "nombre", "lectura_actual", "texto", "publicado", "QuizId"]})
+							.then(function() {res.redirect('/quizes')});
+						};
+
+					};
+
+				});
+
+
+				res.redirect('/quizes')
+
+			});
+
 		};
+
+
+
 	};
 
 

@@ -40,7 +40,7 @@
 	router.get('/quizes',			 					sessionController.loginRequired, quizController.index);				// accede a la lista completa de partes /quizes/index.ejs
 	router.get('/quizes/opened',			 			quizController.opened);												// accede a la lista de partes abiertos /quizes/index.ejs
 	router.get('/quizes/closed',			 			quizController.closed);												// accede a la lista de partes cerrados /quizes/index.ejs
-	router.get('/quizes/:quizId(\\d+)',					quizController.show);				// accede a una pregunta en concreto. envia al quizController la peticion GET con el parametro quizId (indice)
+	router.get('/quizes/:quizId(\\d+)',					sessionController.loginRequired, quizController.show);				// accede a una pregunta en concreto. envia al quizController la peticion GET con el parametro quizId (indice)
 //	router.get('/quizes/:claveinvitado/response',		invitadoController.show);											// si la ruta lleva claveinvitado
 	router.get('/quizes/:quizId(\\d+)/answer',			quizController.answer);												// se dispara cuando submit del form question.ejs hacia la ruta /quizes/answer. le pasa el id en la peticion GET req
 	router.get('/quizes/new',							sessionController.loginRequired, quizController.new);				// carga el formulario /quizes/new si sessionController.loginRequired()
@@ -54,12 +54,24 @@
 	router.post('/quizes/uploadimg',                    quizController.uploadimg);
 	router.get('/quizes?search',                    	quizController.search);
 
+
+
+
+
+
 	// Definición de rutas de comments
 	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller
 	router.post('/quizes/:quizId(\\d+)/comments',								commentController.create);					// dispara controlador create cuando el boton <enviar> del formulario /comments/new.ejs
+
+	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/edit',			sessionController.loginRequired, commentController.ownershipRequired, commentController.edit);
+	router.put('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/update',		sessionController.loginRequired, commentController.ownershipRequired, commentController.update);
+
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);	//
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/unpublish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.unpublish);	//
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/destroy',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.destroy);	//
+
+
+
 
 	// Definición de rutas de proveedor
 	router.get('/proveedores',			 					sessionController.loginRequired, proveedorController.index);												// accede a la lista completa de proveedores
