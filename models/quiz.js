@@ -29,7 +29,7 @@
 				type: DataTypes.STRING
 			},
 			fecha: {
-				type: DataTypes.STRING
+				type: DataTypes.DATE
 			}
 		})
 	};

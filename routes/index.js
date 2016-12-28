@@ -63,7 +63,7 @@
 	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller
 	router.post('/quizes/:quizId(\\d+)/comments',								commentController.create);					// dispara controlador create cuando el boton <enviar> del formulario /comments/new.ejs
 
-	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/edit',			sessionController.loginRequired, commentController.ownershipRequired, commentController.edit);
+//	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/edit',			sessionController.loginRequired, commentController.ownershipRequired, commentController.edit);
 	router.put('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/update',		sessionController.loginRequired, commentController.ownershipRequired, commentController.update);
 
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);	//

@@ -28,20 +28,48 @@
 		).catch(function(error) {next(error);});
 	};
 
+
+
+
+
+
 	// GET /quizes   										--->>> GET sin req.user
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {
-		qty_pagina = 10;
-		var options = {};
-	  	if (req.user) {										// req.user se crea en autoload de user_controller si hay un GET con un user logueado
-		    options.where = {UserId: req.user.id}
+
+		qty_pagina = 31;
+
+		var options = {
+
+//			where: {fecha: 10},
+
+			order: [
+				['fecha', 'ASC']
+			]
+		};
+
+	  	if (req.user) {		// lo quito porque siempre hay un loginRequired								// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+			options = {
+				where: {UserId: req.user.id},
+				order: [
+            		['fecha', 'ASC']
+        		]
+			}
 	  	};
-	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+
+	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function(quizes) {
 	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
+
 	};
+
+
+
+
+
+
 
 	// GET /quizes   										--->>> GET sin req.user
 	// GET /users/:userId/quizes							--->>> GET con req.user
@@ -97,10 +125,17 @@
 	exports.new = function(req, res) {																			// GET /quizes/new, baja el formulario
 
 		var nueva_fecha = new Date();
-		var dia = nueva_fecha.getUTCDate();
+/*		var dia = nueva_fecha.getUTCDate();
 		var mes = nueva_fecha.getUTCMonth();
 		var any = nueva_fecha.getUTCFullYear();
-		nueva_fecha = dia + '/' + mes + '/' + any;
+
+		console.log('fecha.....:' + dia);
+		console.log('fecha.....:' + mes);
+		console.log('fecha.....:' + any);
+		var fecha = new Date(dia, mes, any);
+
+
+		nueva_fecha = dia + '/' + mes + '/' + any; */
 		var quiz = models.Quiz.build( 																			// crea el objeto quiz, lo construye con buid() metodo de sequilize
 			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", fecha: nueva_fecha}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
