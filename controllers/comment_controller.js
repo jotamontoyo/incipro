@@ -104,9 +104,6 @@
 
 
 
-
-
-
 	exports.publish = function(req, res) {													// GET /quizes/:quizId/comments/:commentId/publish
 		req.comment.publicado = true;
 		req.comment.save({fields: ["publicado"]})

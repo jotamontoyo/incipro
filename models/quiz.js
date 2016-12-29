@@ -28,8 +28,23 @@
 			UserName: {
 				type: DataTypes.STRING
 			},
+
 			fecha: {
 				type: DataTypes.DATE
+			},
+
+			dia: {
+				type: DataTypes.INTEGER
+			},
+
+			mes: {
+				type: DataTypes.INTEGER
+			},
+
+			any: {
+				type: DataTypes.INTEGER
 			}
+
+
 		})
 	};

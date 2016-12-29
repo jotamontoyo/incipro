@@ -41,7 +41,7 @@
 
 		var options = {
 
-//			where: {fecha: 10},
+//			where: {mes: 12},
 
 			order: [
 				['fecha', 'ASC']
@@ -119,25 +119,15 @@
 
 
 
-
-
-
 	exports.new = function(req, res) {																			// GET /quizes/new, baja el formulario
 
-		var nueva_fecha = new Date();
-/*		var dia = nueva_fecha.getUTCDate();
-		var mes = nueva_fecha.getUTCMonth();
-		var any = nueva_fecha.getUTCFullYear();
+		var fecha = new Date();
+		var dia = fecha.getUTCDate();
+		var mes = fecha.getUTCMonth() + 1;																		// se le añade 1 porque van de 0 a 11
+		var any = fecha.getUTCFullYear();
 
-		console.log('fecha.....:' + dia);
-		console.log('fecha.....:' + mes);
-		console.log('fecha.....:' + any);
-		var fecha = new Date(dia, mes, any);
-
-
-		nueva_fecha = dia + '/' + mes + '/' + any; */
 		var quiz = models.Quiz.build( 																			// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", fecha: nueva_fecha}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
+			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", dia: dia, mes: mes, any: any}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
 
 		models.Proveedor.findAll().then(function(proveedor) {
@@ -152,30 +142,27 @@
 
 
 
+	exports.create = function(req, res) {														// POST /quizes/create
 
-
-
-
-	exports.create = function(req, res) {										// POST /quizes/create
-
-		req.body.quiz.UserId = req.session.user.id;								// referenciamos el quiz con el UserId
+		req.body.quiz.UserId = req.session.user.id;												// referenciamos el quiz con el UserId
 		req.body.quiz.UserName = req.session.user.username;
 
-		var quiz = models.Quiz.build( req.body.quiz );							// construccion de objeto quiz para luego introducir en la tabla
+		var quiz = models.Quiz.build( req.body.quiz );											// construccion de objeto quiz para luego introducir en la tabla
 
-		var errors = quiz.validate();											// objeto errors no tiene then(
+		quiz.fecha = new Date(req.body.quiz.any, req.body.quiz.mes - 1, req.body.quiz.dia);     // captura la fecha del form y la añade al quiz con clase Date()
+
+		var errors = quiz.validate();															// objeto errors no tiene then(
 		if (errors) {
 			var i = 0;
-			var errores = new Array();											// se convierte en [] con la propiedad message por compatibilidad con layout
+			var errores = new Array();															// se convierte en [] con la propiedad message por compatibilidad con layout
 			for (var prop in errors) errores[i++] = {message: errors[prop]};
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
 			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha", "dia", "mes", "any"]})
 			.then(function() {
 
-
-				models.Contador.findAll().then(function( contador ) {
+				models.Contador.findAll().then(function( contador ) {							// crea tantos comment como Contadores
 
 					for (var i in contador) {
 
@@ -240,12 +227,20 @@
 
 
 	exports.update = function(req, res) {										// modifica un quiz
-		req.quiz.fecha = req.body.quiz.fecha;
+//		req.quiz.fecha = req.body.quiz.fecha;
+
+		req.quiz.fecha = new Date(req.body.quiz.any, req.body.quiz.mes - 1, req.body.quiz.dia);
+		req.quiz.dia = req.body.quiz.dia;
+		req.quiz.mes = req.body.quiz.mes;
+		req.quiz.any = req.body.quiz.any;
+
 		req.quiz.pregunta = req.body.quiz.pregunta;
 		req.quiz.respuesta = req.body.quiz.respuesta;
 		req.quiz.tema = req.body.quiz.tema;
 		req.quiz.proveedor = req.body.quiz.proveedor;
 		req.quiz.proceso = req.body.quiz.proceso;
+
+
 /*		if (req.file) {
 			req.quiz.image = req.file.buffer;
 		}; */
@@ -257,7 +252,7 @@
 			res.render('quizes/edit', {quiz: req.quiz, errors: errores});
 		} else {
 			req.quiz 															// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["fecha", "pregunta", "respuesta", "tema", "proveedor", "proceso"]})
+			.save({fields: ["fecha", "pregunta", "respuesta", "tema", "proveedor", "proceso", "fecha", "dia", "mes", "any"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};
