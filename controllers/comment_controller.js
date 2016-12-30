@@ -88,9 +88,13 @@
 
 	exports.update = function(req, res) {								// actualiza la lectura del contador
 
-		req.comment.lectura_actual = req.body.comment.lectura_actual;
 
-		req.comment.save({fields: ["lectura_actual"]})
+		req.comment.lectura_actual = req.body.comment.lectura_actual;
+		req.comment.texto = req.body.comment.texto;
+
+		
+
+		req.comment.save({fields: ["lectura_actual", "texto"]})
 			.then(function() {res.redirect('/quizes/' + req.params.quizId);})
 			.catch(function(error) {next(error)});
 

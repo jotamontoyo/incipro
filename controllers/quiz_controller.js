@@ -39,16 +39,19 @@
 
 		qty_pagina = 31;
 
+//		var fecha = new Date();
+//		var mes = fecha.getUTCMonth() + 1;
+
 		var options = {
 
-//			where: {mes: 12},
+//			where: {mes: mes},
 
 			order: [
 				['fecha', 'ASC']
 			]
 		};
 
-	  	if (req.user) {		// lo quito porque siempre hay un loginRequired								// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
 				where: {UserId: req.user.id},
 				order: [
@@ -64,6 +67,8 @@
 	  	).catch(function(error){next(error)});
 
 	};
+
+
 
 
 
@@ -170,7 +175,9 @@
 
 							codigo: contador[i].codigo,
 							nombre: contador[i].nombre,
+							ubicacion: contador[i].ubicacion,
 							lectura_actual: 0,
+							texto: '',
 							publicado: true,
 							QuizId: quiz.id														// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
 
@@ -184,7 +191,7 @@
 							res.render('comments/new', {comment: comment, errors: errores});
 						} else {
 							comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
-							.save({fields: ["codigo", "nombre", "lectura_actual", "texto", "publicado", "QuizId"]})
+							.save({fields: ["codigo", "nombre", "ubicacion", "lectura_actual", "texto", "publicado", "QuizId"]})
 							.then(function() {res.redirect('/quizes')});
 						};
 

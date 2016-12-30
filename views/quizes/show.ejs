@@ -5,34 +5,27 @@
 		<div class="form-group">
 
 			<h4>Parte nº: <%= quiz.id %> </h4>
-			<h4>Fecha: <%= quiz.fecha %> </h4>
-			<h4>Motivo: <%= quiz.pregunta %> </h4>
-			<h4>Proveedor: <%= quiz.proveedor %> </h4>
-			<h4>Status: <%= quiz.proceso %> </h4>
-			<h4>Imagen: <%= quiz.image %> </h4>
+			<h4>Fecha: <%= quiz.dia %>-<%= quiz.mes %>-<%= quiz.any %> </h4>
+			<h4>Usuario: <%= quiz.UserName %> </h4>
+<!--			<h4>Proveedor: <%= quiz.proveedor %> </h4>
+			<h4>Status: <%= quiz.proceso %> </h4> -->
 
 		</div>
 	</form>
 
-	<form class="form-horizontal">
-		<div class="form-group">
-			<%if (quiz.image) {%>
-				<img class="img-responsive" src="/quizes/<%=quiz.id%>/image">
-			<%}%>
-		</div>
-	</form>
 
-	<div class="container" style="max-width: 660px">
+	<div class="container">
 
 		<p><strong>Contadores:</strong></p>
-		<div class="panel panel-default table-responsive">
-			<table class="table table-hover">
-
 
 				<% for (var index in quiz.comments) {%>
-					<tr>
+
+					<div class="col-sm-4">
+
 						<% if (!session.user && quiz.comments[index].publicado) {%>
-							<td class="comment-panel">
+
+							<div class="comment-panel">
+
 								<div class="container-fluid">
 
 									<div class="form-group">
@@ -51,49 +44,83 @@
 									<h6><span class="badge">#<%= quiz.comments[index].id %></span>
 									<small><%= quiz.comments[index].createdAt.toLocaleString() %></small></h6>
 								</div>
-							</td>
+							</div>
 						<%}%>
 						<% if (session.user) {%>
-							<td class="comment-panel">
+							<div class="comment-panel">
+
 								<div class="container-fluid">
 
 									<% if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
 
-										<h5>id: <%= quiz.comments[index].id %></h5>
-										<h5>Código: <%= quiz.comments[index].codigo %></h5>
+
+										<h5><span class="badge">#<%=quiz.comments[index].id%></span></h5>
+
+
 										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
-										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+										<h5>Número: <%= quiz.comments[index].codigo %></h5>
+										<h5>Ubicación: <%= quiz.comments[index].ubicacion %></h5>
+										<h5>Lectura:</h5>
 
 										<form method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
-											<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%=quiz.comments[index].lectura_actual%>" placeholder="lectura_actual"/>
+
+											<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%=quiz.comments[index].lectura_actual%>" pattern="[0-9]{1,}"/>
+
+											<div class="col-md-12">
+
+					                            <div class="panel-group" id="agregar-comentario" role="tablist" aria-multiselectable="true">
+
+					                                <div class="faq">
+					                                    <div class="panel-heading" role="tab" id="agregar">
+					                                        <h4 class="panel-title">
+					                                            <a id="ver-textaera" role="button" data-toggle="collapse" data-parent="#agregar-comentario" href="#<%=quiz.comments[index].id%>" aria-expanded="true" aria-controls="collapseOne">
+					                                                Añadir comentarios&nbsp;&nbsp;<i class="fa fa-arrow-down"></i>
+					                                            </a>
+					                                        </h4>
+					                                    </div>
+					                                    <div id="<%=quiz.comments[index].id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="agregar">
+					                                        <div class="panel-body">
+
+					                                            <div class="form-group">
+
+					                			    				<textarea class="form-control comment-row" rows="5" name="comment[texto]"><%=quiz.comments[index].texto%></textarea>
+
+					                							</div>
+
+					                                        </div>
+					                                    </div>
+					                                </div>
+
+					                            </div>
+											</div>
+
 											<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Enviar</button>
+
+
 										</form>
-
-
-<!--										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
-										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
-										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
 
 
 									<%} else if (quiz.comments[index].publicado) {%>
 
 
-										<h5>id: <%= quiz.comments[index].id %></h5>
+										<h5><span class="badge">#<%=quiz.comments[index].id%></span></h5>
 										<h5>Código: <%= quiz.comments[index].codigo %></h5>
 										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
 										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
 
-<!--										<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
-										<h6><span class="badge">#<%=quiz.comments[index].id%></span>
-										<small><%=quiz.comments[index].createdAt.toLocaleString()%></small>
+
 
 
 									<%}%>
 
 								</div>
+
+								<br>
+
 								<div class="container-fluid">
 									<%if ((session.user.isAdmin || (session.user && quiz.UserId === session.user.id))) {%>
 							 			<%if (!quiz.comments[index].publicado) {%>
+											<h6>
 											<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.comments[index].id%>/publish">
 												<button class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Publicar">
 													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -111,26 +138,22 @@
 												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 											</button>
 										</a>
-<!--										<a href="mailto:<%=proveedor.email%>?cc=compras@hotelgala.com&bcc=administracion@alexandre.com&subject=Incidencia/Reclamacion nº <%= quiz.id %>&body=Apreciado proveedor: se ha abierto una incidencia en el hotel <%=quiz.tema%>. Para responder siga este enlace: https://incipro.herokuapp.com/quizes/<%= quiz.claveinvitado %>/response" target="_top">
-											<button class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Enviar a proveedor">
-												<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-											</button>
-										</a> -->
 
 										</h6>
 
 									<%}%>
 								</div>
-							</td>
-						<%}%>
-					</tr>
-				<%}%>
-			</table>
-		</div>
 
-		<p><a href="/quizes/<%= quiz.id %>/comments/new"><button type="button" class="btn btn-primary">
+							</div>
+						<%}%>
+					</div>
+				<%}%>
+
+
+
+<!--		<p><a href="/quizes/<%= quiz.id %>/comments/new"><button type="button" class="btn btn-primary">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo comentario</button></a>
-		</p>
+		</p> -->
 
 	</div>
 

@@ -1,6 +1,6 @@
 
 	#main {
-		background: url(/images/fondo01.jpg) no-repeat fixed center;
+/*		background: url(/images/fondo01.jpg) no-repeat fixed center; */
 	}
 
 	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
@@ -18,10 +18,52 @@
 
 	.comment-panel {
 
-		background-color: 	rgba(238, 238, 238, 0.4);
-		border-bottom: 		1px solid #D8D8D8;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		background-color: 	rgba(238, 238, 238, 0.8);
+		border: 		1px solid #D8D8D8;
 	}
 
 	#login, #new-edit {
 		max-width: 			960px;
+	}
+
+
+
+
+	a:hover {
+		text-decoration: none;
+	}
+
+
+
+	#agregar-comentario {
+
+		margin-top: 10px;
+		position: relative;
+
+
+	}
+
+
+	#comentario {
+
+
+
+	}
+
+	.faq {
+
+
+	}
+
+	.faq a:hover {
+		color: #eb9837;
+
+	}
+
+	.faq a:active, .faq a:focus {
+		color: #eb9837;
+		text-decoration: none;
+		outline: none;
 	}
