@@ -22,7 +22,11 @@
 
     exports.index = function(req, res, next) {
 
-	  	models.Contador.findAll().then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+	  	models.Contador.findAll({
+            order: [
+				['codigo', 'ASC']
+			]
+        }).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function( contadores ) {
 	      		res.render('contadores/index.ejs', {contadores: contadores, errors: []});
 	    	}
