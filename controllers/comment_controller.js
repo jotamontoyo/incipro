@@ -37,7 +37,7 @@
 		}).catch(function(error){next(error)});
 	};
 
-	exports.new = function(req, res) {														// GET /quizes/:quizId/comments/new, baja el formulario /views/comment.ejs
+/*	exports.new = function(req, res) {	//********** se elimina porque se crean con el quiz segun los contadores creados en la tabla Contador	// GET /quizes/:quizId/comments/new, baja el formulario /views/comment.ejs
 		res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []}); 			// renderiza la vista comments/new del quiz -->> quizid: req.params.quizId
 	};
 
@@ -61,7 +61,7 @@
 		} else {
 			next(new Error('Introuzca un texto'));
 		};
-	};
+	}; */
 
 
 
@@ -86,15 +86,33 @@
 
 
 
-	exports.update = function(req, res) {								// actualiza la lectura del contador
-
+	exports.update = function(req, res, next) {								// actualiza la lectura del contador
 
 		req.comment.lectura_actual = req.body.comment.lectura_actual;
 		req.comment.texto = req.body.comment.texto;
+		req.comment.codigo = req.body.comment.codigo;
+//		req.comment.fijar_ultima_lectura = req.body.comment.fijar_ultima_lectura;
 
-		
+//		var fecha = req.quiz.fecha;
+//		fecha.setDate(fecha.getDate() - 1);									// fecha anterior
 
-		req.comment.save({fields: ["lectura_actual", "texto"]})
+
+//		if (req.comment.fijar_ultima_lectura) {								// guardar la lectura como ultima_lectura para siguiente parte
+
+			models.Contador.find({
+
+				where: 		{codigo: req.body.comment.codigo}
+
+			}).then(function( contador ) {
+
+				contador.lectura_anterior = req.body.comment.lectura_actual;
+				contador.save({fields: ["lectura_anterior"]});
+
+			}).catch(function(error) {next(error)});
+
+//		};
+
+		req.comment.save({fields: ["lectura_anterior", "lectura_actual", "texto"]})
 			.then(function() {res.redirect('/quizes/' + req.params.quizId);})
 			.catch(function(error) {next(error)});
 

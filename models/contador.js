@@ -31,11 +31,15 @@
                 type: DataTypes.STRING
             },
 
-            lectura_actual: {
+            lectura_anterior: {
                 type: DataTypes.FLOAT
             },
 
-            maximo: {
+            lectura_actual: {
+                type: DataTypes.FLOAT
+            }
+
+/*            maximo: {
                 type: DataTypes.FLOAT
             },
 
@@ -45,7 +49,7 @@
 
             medio: {
                 type: DataTypes.FLOAT
-            }
+            } */
 
 
         })

@@ -1,0 +1,65 @@
+<div class="container">
+
+
+		<div class="form-group">
+
+			<h4>Contador nº: <%= contador.codigo %> </h4>
+			<h4>Nombre: <%= contador.nombre %> </h4>
+
+
+		</div>
+
+
+
+	<div class="container">
+
+		<p><strong>Criterios:</strong></p>
+
+
+
+				<% for (var index in criterios) {%>
+
+					<div class="col-sm-4">
+
+							<div class="comment-panel">
+
+								<div class="container-fluid">
+
+										<h5>Mes: <%= criterios[index].mes %></h5>
+										<h5>Máximo: <%= criterios[index].max %></h5>
+										<h5>Mínimo: <%= criterios[index].min %></h5>
+
+								</div>
+
+								<br>
+
+								<% if (session.user) {
+	                                if (session.user.isAdmin) {%>
+
+										<form method="post" action="/contadores/<%=contador.id%>/criterios/<%=criterios[index].id%>/destroy?_method=delete">
+											<button class="btn btn-danger btn-sm" type="submit" onClick="return confirm('Borrar: <%= criterios[index].mes %>');">
+												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+											</button>
+										</form>
+
+									<%}%>
+								<%}%>
+
+							</div>
+
+					</div>
+
+				<%}%>
+
+
+				<% if (session.user) {
+					if (session.user.isAdmin) {%>
+						<a href="/contadores/<%= contador.id %>/criterios/new"><button type="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo criterio</button>
+						</a>
+					<%}%>
+				<%}%>
+
+	</div>
+
+</div>

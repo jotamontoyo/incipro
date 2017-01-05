@@ -39,8 +39,6 @@
 
 		qty_pagina = 31;
 
-//		var fecha = new Date();
-//		var mes = fecha.getUTCMonth() + 1;
 
 		var options = {
 
@@ -124,19 +122,19 @@
 
 
 
-	exports.new = function(req, res) {																			// GET /quizes/new, baja el formulario
+	exports.new = function(req, res) {																				// GET /quizes/new, baja el formulario
 
 		var fecha = new Date();
-		var dia = fecha.getUTCDate();
-		var mes = fecha.getUTCMonth() + 1;																		// se le añade 1 porque van de 0 a 11
+		var dia = ("0" + fecha.getUTCDate()).slice(-2);
+		var mes = ("0" + (fecha.getUTCMonth() + 1)).slice(-2);														// se le añade 1 porque van de 0 a 11
 		var any = fecha.getUTCFullYear();
 
-		var quiz = models.Quiz.build( 																			// crea el objeto quiz, lo construye con buid() metodo de sequilize
+		var quiz = models.Quiz.build( 																				// crea el objeto quiz, lo construye con buid() metodo de sequilize
 			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", dia: dia, mes: mes, any: any}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
 
 		models.Proveedor.findAll().then(function(proveedor) {
-			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   		// renderiza la vista quizes/new
+			res.render('quizes/new', {quiz: quiz, proveedor: proveedor, errors: []});   							// renderiza la vista quizes/new
 		});
 
 
@@ -153,7 +151,6 @@
 		req.body.quiz.UserName = req.session.user.username;
 
 		var quiz = models.Quiz.build( req.body.quiz );											// construccion de objeto quiz para luego introducir en la tabla
-
 		quiz.fecha = new Date(req.body.quiz.any, req.body.quiz.mes - 1, req.body.quiz.dia);     // captura la fecha del form y la añade al quiz con clase Date()
 
 		var errors = quiz.validate();															// objeto errors no tiene then(
@@ -176,6 +173,8 @@
 							codigo: contador[i].codigo,
 							nombre: contador[i].nombre,
 							ubicacion: contador[i].ubicacion,
+							ultima_lectura: true,
+							lectura_anterior: contador[i].lectura_anterior,
 							lectura_actual: 0,
 							texto: '',
 							publicado: true,
@@ -191,7 +190,7 @@
 							res.render('comments/new', {comment: comment, errors: errores});
 						} else {
 							comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
-							.save({fields: ["codigo", "nombre", "ubicacion", "lectura_actual", "texto", "publicado", "QuizId"]})
+							.save({fields: ["codigo", "nombre", "ubicacion", "ultima_lectura", "lectura_anterior", "lectura_actual", "texto", "publicado", "QuizId"]})
 							.then(function() {res.redirect('/quizes')});
 						};
 
@@ -302,6 +301,7 @@
 			}
 		).catch(function(error) {next(error)});
 	};
+
 
 	exports.image = function(req, res) {				// devuelve en la respuesta la imagen del quizId: solicitado
 		res.send(req.quiz.image);

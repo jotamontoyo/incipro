@@ -39,6 +39,11 @@
                 type: DataTypes.STRING
             },
 
+            fijar_ultima_lectura: {
+                type: DataTypes.BOOLEAN,
+				defaultValue: false
+            },
+
             lectura_anterior: {
                 type: DataTypes.FLOAT
 

@@ -7,6 +7,8 @@
 	var quizController = require('../controllers/quiz_controller');						// importa el controlador quiz_controller.js
 	var commentController = require('../controllers/comment_controller');				// importa el controlador comment_controller.js
 	var sessionController = require('../controllers/session_controller');				// importa el controlador session_controller.js
+	var contadorController = require('../controllers/contador_controller');				// importa el controlador contador_controller.js
+	var criterioController = require('../controllers/criterio_controller');				// importa el controlador criterio_controller.js
 	var statisticsController = require('../controllers/statistic_controller');
 	var dbController = require('../controllers/db_controller');
 	var userController = require('../controllers/user_controller');
@@ -22,6 +24,8 @@
 	router.param('commentId',							commentController.load);
 	router.param('userId',								userController.load);
 	router.param('proveedorId',							proveedorController.load);
+	router.param('contadorId',							contadorController.load);
+	router.param('criterioId',							criterioController.load);
 
 	// Definición de rutas de sesion
 	router.get('/login',  								sessionController.new);     		// formulario login
@@ -57,18 +61,32 @@
 
 
 
-
-
 	// Definición de rutas de comments
-	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller
-	router.post('/quizes/:quizId(\\d+)/comments',								commentController.create);					// dispara controlador create cuando el boton <enviar> del formulario /comments/new.ejs
-
+//	router.get('/quizes/:quizId(\\d+)/comments/new',							commentController.new);						// carga formulario /quizes/:quizId(\\d+)/comments/new y dispara el controlador new de comment_Controller
+//	router.post('/quizes/:quizId(\\d+)/comments',								commentController.create);					// dispara controlador create cuando el boton <enviar> del formulario /comments/new.ejs
 //	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/edit',			sessionController.loginRequired, commentController.ownershipRequired, commentController.edit);
 	router.put('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/update',		sessionController.loginRequired, commentController.ownershipRequired, commentController.update);
-
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);	//
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/unpublish',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.unpublish);	//
 	router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/destroy',   	sessionController.loginRequired, commentController.ownershipRequired, commentController.destroy);	//
+
+
+
+	// Deficion de rutas de Contadores
+	router.get('/contadores',													contadorController.index);
+	router.get('/contadores/new',												contadorController.new);
+	router.post('/contadores/create',											contadorController.create);
+	router.get('/contadores/:contadorId(\\d+)/edit',							contadorController.edit);
+	router.put('/contadores/:contadorId(\\d+)/update',							contadorController.update);
+	router.get('/contadores/:contadorId(\\d+)',									contadorController.show);
+	router.delete('/contadores/:contadorId(\\d+)/destroy',						contadorController.destroy);
+
+
+	// Deficion de rutas de Criterios
+	router.get('/contadores/:contadorId(\\d+)/criterios/new',								criterioController.new);						// carga el formulario new
+	router.post('/contadores/:contadorId(\\d+)/criterios/create',							criterioController.create);
+	router.delete('/contadores/:contadorId(\\d+)/criterios/:criterioId(\\d+)/destroy',   	criterioController.destroy);
+
 
 
 

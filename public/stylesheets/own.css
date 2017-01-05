@@ -2,6 +2,20 @@
 	#main {
 /*		background: url(/images/fondo01.jpg) no-repeat fixed center; */
 	}
+	
+
+	.centrado-v-h {
+		display: flex;							/* necesario para alineacion */
+		align-items: center; 					/* alineacion vertical */
+		justify-content: center;				/* alineacion horizontal */
+	}
+
+	.centrado-v {
+		display: flex;							/* necesario para alineacion */
+		align-items: center; 					/* alineacion vertical */
+	}
+
+
 
 	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
 		background-color: 	rgba(238, 238, 238, 0.6);

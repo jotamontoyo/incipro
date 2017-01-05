@@ -32,6 +32,7 @@
 	var User = sequelize.import(path.join(__dirname, 'user'));				// importar estructura y definicion de la tabla User
 	var Proveedor = sequelize.import(path.join(__dirname, 'proveedor'));	// importar estructura y definicion de la tabla Provider
 	var Contador = sequelize.import(path.join(__dirname, 'contador'));		// importar estructura y definicion de la tabla Contador
+	var Criterio = sequelize.import(path.join(__dirname, 'criterio'));		// importar estructura y definicion de la tabla Criterio
 
 	Quiz.belongsTo(User);												// integridad referncial. Cada Quiz es hijo de User
 	User.hasMany(Quiz);													// cada User puede tener varios Quiz
@@ -39,11 +40,16 @@
 	Comment.belongsTo(Quiz);											// integridad referncial. Cada Comment es hijo de Quiz
 	Quiz.hasMany(Comment);												// el padre puede tener varios hijos
 
+	Criterio.belongsTo(Contador);
+	Contador.hasMany(Criterio);
+
+
 	exports.Quiz = Quiz;												// exportar tablas
 	exports.Comment = Comment;
 	exports.User = User;
 	exports.Proveedor = Proveedor;
 	exports.Contador = Contador;
+	exports.Criterio = Criterio;
 
 	sequelize.sync().then(function() {									// sequelize.sync() inicializa tabla de preguntas en DB
 
@@ -89,6 +95,7 @@
 									modelo: 'modelo',
 									ubicacion: 'ubicacion',
 									fecha_revision: 'fecha',
+									lectura_anterior: 0,
 									lectura_actual: 0,
 									maximo: 0,
 									minimo: 0,
@@ -100,6 +107,7 @@
 									modelo: 'modelo',
 									ubicacion: 'ubicacion',
 									fecha_revision: 'fecha',
+									lectura_anterior: 0,
 									lectura_actual: 0,
 									maximo: 0,
 									minimo: 0,
@@ -111,50 +119,7 @@
 									modelo: 'modelo',
 									ubicacion: 'ubicacion',
 									fecha_revision: 'fecha',
-									lectura_actual: 0,
-									maximo: 0,
-									minimo: 0,
-									medio: 0 },
-
-									{ codigo: 4,
-									nombre: 'contador 4',
-									marca: 'marca',
-									modelo: 'modelo',
-									ubicacion: 'ubicacion',
-									fecha_revision: 'fecha',
-									lectura_actual: 0,
-									maximo: 0,
-									minimo: 0,
-									medio: 0 },
-
-									{ codigo: 5,
-									nombre: 'contador 5',
-									marca: 'marca',
-									modelo: 'modelo',
-									ubicacion: 'ubicacion',
-									fecha_revision: 'fecha',
-									lectura_actual: 0,
-									maximo: 0,
-									minimo: 0,
-									medio: 0 },
-
-									{ codigo: 6,
-									nombre: 'contador 6',
-									marca: 'marca',
-									modelo: 'modelo',
-									ubicacion: 'ubicacion',
-									fecha_revision: 'fecha',
-									lectura_actual: 0,
-									maximo: 0,
-									minimo: 0,
-									medio: 0 },
-
-									{ codigo: 7,
-									nombre: 'contador 7',
-									marca: 'marca',
-									modelo: 'modelo',
-									ubicacion: 'ubicacion',
-									fecha_revision: 'fecha',
+									lectura_anterior: 0,
 									lectura_actual: 0,
 									maximo: 0,
 									minimo: 0,
@@ -165,6 +130,27 @@
 	              		    ).then(function() {console.log('Base de datos: tabla contador inicializada')});
 	          			};
 	        		});
+
+/*					Criterio.count().then(function( count ) {
+	          			if(count === 0) {   																			// la tabla se inicializa solo si está vacía
+	            			Criterio.bulkCreate(
+	              				[
+
+									{ codigo: 1,
+									mes: 1,
+									max: 10,
+									min: 5 },
+
+									{ codigo: 2,
+									mes: 2,
+									max: 20,
+									min: 15 }
+
+
+								]
+	              		    ).then(function(){console.log('Base de datos: tabla criterio inicializada')});
+	          			};
+	        		}); */
 
 	      		});
 	    	};
