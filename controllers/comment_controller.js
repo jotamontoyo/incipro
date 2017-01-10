@@ -91,26 +91,7 @@
 		req.comment.lectura_actual = req.body.comment.lectura_actual;
 		req.comment.texto = req.body.comment.texto;
 		req.comment.codigo = req.body.comment.codigo;
-//		req.comment.fijar_ultima_lectura = req.body.comment.fijar_ultima_lectura;
 
-//		var fecha = req.quiz.fecha;
-//		fecha.setDate(fecha.getDate() - 1);									// fecha anterior
-
-
-//		if (req.comment.fijar_ultima_lectura) {								// guardar la lectura como ultima_lectura para siguiente parte
-
-			models.Contador.find({
-
-				where: 		{codigo: req.body.comment.codigo}
-
-			}).then(function( contador ) {
-
-				contador.lectura_anterior = req.body.comment.lectura_actual;
-				contador.save({fields: ["lectura_anterior"]});
-
-			}).catch(function(error) {next(error)});
-
-//		};
 
 		req.comment.save({fields: ["lectura_anterior", "lectura_actual", "texto"]})
 			.then(function() {res.redirect('/quizes/' + req.params.quizId);})

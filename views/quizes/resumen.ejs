@@ -1,0 +1,34 @@
+
+<div class="container-fluid">
+
+    <div class="panel panel-default table-responsive" id="quizes-panel">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th>Fecha</th>
+                    <th>Lectura</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i in lecturas) { %>
+
+                    <tr>
+
+                        <td><%= lecturas[i].dia %>-<%= lecturas[i].mes %>-<%= lecturas[i].any %></td>
+
+
+
+                        <td><%= lecturas[i].lectura_actual %></td>
+
+                    </tr>
+
+                <%}%>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

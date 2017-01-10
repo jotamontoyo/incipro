@@ -37,13 +37,9 @@
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {
 
-		qty_pagina = 31;
-
+		var qty_pagina = 31;
 
 		var options = {
-
-//			where: {mes: mes},
-
 			order: [
 				['fecha', 'ASC']
 			]
@@ -72,10 +68,106 @@
 
 
 
+	exports.resumen_index = function(req, res, next) {
+
+		var fecha = new Date();
+
+		var resumen = {
+			mes: fecha.getUTCMonth() + 1,
+			any: fecha.getUTCFullYear()
+		};
+
+		res.render('quizes/resumen_index', {resumen: resumen, errors: []});
 
 
-	// GET /quizes   										--->>> GET sin req.user
-	// GET /users/:userId/quizes							--->>> GET con req.user
+	};
+
+
+
+
+
+
+
+	exports.resumen = function(req, res, next) {
+
+
+		var informe = {
+			fecha: 0,
+			contador_general: 0,
+			contador_parking1: 0,
+			contador_parking2: 0
+		};
+
+
+//		console.log('informe::::::::::::::' + sql);
+
+		var options = {
+
+			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
+
+//			include: [{all: true}],
+
+
+			group: 'dia',
+
+
+			order: [
+				['fecha', 'ASC']
+			]
+
+
+		};
+
+
+		models.Comment.findAll(options).then(function(lecturas) {
+
+			console.log('lecturas:::::::::::' + lecturas);
+
+
+
+			res.render('quizes/resumen', {lecturas: lecturas,  errors: []});
+
+		}).catch(function(error){next(error)});
+
+
+/*			for (var i in quizes) {
+
+				models.Comment.findAll({
+
+					where: 		{QuizId: quizes[i].id}
+
+				}).then(function(comments) { */
+
+//					for (var x in comments) {
+
+//						console.log('lectura_actual:::::::' + comments.lectura_actual);
+
+//						quizes[i].lectura_actual = comments[x].lectura_actual;
+
+
+
+//					};
+
+
+/*				}).catch(function(error){next(error)});
+
+
+
+			};
+
+
+		}).catch(function(error){next(error)}); */
+
+
+	};
+
+
+
+
+
+
+
+
 	exports.opened = function(req, res) {
 	  	models.Quiz.findAll({
 	  		where: {proceso: true, UserId: req.session.user.id}
@@ -164,7 +256,11 @@
 			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha", "dia", "mes", "any"]})
 			.then(function() {
 
-				models.Contador.findAll().then(function( contador ) {							// crea tantos comment como Contadores
+				models.Contador.findAll({
+		            order: [
+						['codigo', 'ASC']
+					]
+		        }).then(function( contador ) {							// crea tantos comment como Contadores
 
 					for (var i in contador) {
 
@@ -173,11 +269,13 @@
 							codigo: contador[i].codigo,
 							nombre: contador[i].nombre,
 							ubicacion: contador[i].ubicacion,
-							ultima_lectura: true,
-							lectura_anterior: contador[i].lectura_anterior,
 							lectura_actual: 0,
 							texto: '',
 							publicado: true,
+							fecha: quiz.fecha,
+							dia: quiz.dia,
+							mes: quiz.mes,
+							any: quiz.any,
 							QuizId: quiz.id														// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
 
 						});
@@ -190,14 +288,13 @@
 							res.render('comments/new', {comment: comment, errors: errores});
 						} else {
 							comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
-							.save({fields: ["codigo", "nombre", "ubicacion", "ultima_lectura", "lectura_anterior", "lectura_actual", "texto", "publicado", "QuizId"]})
+							.save({fields: ["codigo", "nombre", "ubicacion", "lectura_actual", "texto", "publicado", "fecha", "dia", "mes", "any", "QuizId"]})
 							.then(function() {res.redirect('/quizes')});
 						};
 
 					};
 
 				});
-
 
 				res.redirect('/quizes')
 

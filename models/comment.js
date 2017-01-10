@@ -39,16 +39,6 @@
                 type: DataTypes.STRING
             },
 
-            fijar_ultima_lectura: {
-                type: DataTypes.BOOLEAN,
-				defaultValue: false
-            },
-
-            lectura_anterior: {
-                type: DataTypes.FLOAT
-
-            },
-
             lectura_actual: {
                 type: DataTypes.FLOAT
             },
@@ -63,7 +53,24 @@
 
             medio: {
                 type: DataTypes.FLOAT
-            }
+            },
+
+			fecha: {
+				type: DataTypes.DATE
+			},
+
+			dia: {
+				type: DataTypes.INTEGER
+			},
+
+			mes: {
+				type: DataTypes.INTEGER
+			},
+
+			any: {
+				type: DataTypes.INTEGER
+			}
+
 
 
 

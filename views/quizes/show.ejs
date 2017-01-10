@@ -37,8 +37,6 @@
 
 									</div>
 
-<!--									<textarea class="form-control comment-row" rows="5"><%=quiz.comments[index].texto%></textarea> -->
-
 								</div>
 								<div class="container-fluid">
 									<h6><span class="badge">#<%= quiz.comments[index].id %></span>
@@ -55,12 +53,10 @@
 
 
 										<h5><span class="badge">#<%=quiz.comments[index].id%></span></h5>
-
-
-										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
+										<h4 class="text-center"><%= quiz.comments[index].nombre %></h4>
 										<h5>Número: <%= quiz.comments[index].codigo %></h5>
 										<h5>Ubicación: <%= quiz.comments[index].ubicacion %></h5>
-										<h5>Lectura anterior: <%= quiz.comments[index].lectura_anterior %></h5>
+
 
 										<form method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
 
