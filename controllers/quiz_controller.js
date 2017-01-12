@@ -88,44 +88,22 @@
 
 
 
+
+
+
 	exports.resumen = function(req, res, next) {
 
 
-		var informe = [
-
-			{
-				fecha: '0/0/0',
-				lectura: [
-					{nombre: 'contador 0', valor: 20},
-					{nombre: 'contador 1', valor: 40}
-				]
-			},
-
-			{
-				fecha: '1/1/1',
-				lectura: [
-					{nombre: 'contador 2', valor: 25},
-					{nombre: 'contador 3', valor: 45}
-				]
-			}
-
-
-		];
 
 
 
 
-		console.log('informe::::::::::::::' + informe[0].fecha);
-//		console.log('informe::::::::::::::' + informe[1].lectura[0].nombre);
-//		console.log('informe::::::::::::::' + informe[1].lectura[0].valor);
 
 		var options = {
 
 			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
 
-//			include: [{all: true}],
-
-//			group: 'dia',
+			include: [{model: models.Comment}],
 
 			order: [
 				['fecha', 'ASC']
@@ -133,53 +111,26 @@
 
 		};
 
-
 		models.Quiz.findAll(options).then(function(quizes) {
 
+			models.Contador.findAll({
 
+				order: [['codigo', 'ASC']]
 
-			for (var i in quizes) {
+			}).then(function(contadores) {
 
-				informe[i].fecha = quizes[i].fecha;
+				res.render('quizes/resumen', {quizes: quizes,  contadores: contadores, errors: []});
 
-
-			};
-
-			res.render('quizes/resumen', {lecturas: informe,  errors: []});
+			}).catch(function(error){next(error)});
 
 		}).catch(function(error){next(error)});
 
-
-/*			for (var i in quizes) {
-
-				models.Comment.findAll({
-
-					where: 		{QuizId: quizes[i].id}
-
-				}).then(function(comments) { */
-
-//					for (var x in comments) {
-
-//						console.log('lectura_actual:::::::' + comments.lectura_actual);
-
-//						quizes[i].lectura_actual = comments[x].lectura_actual;
-
-
-
-//					};
-
-
-/*				}).catch(function(error){next(error)});
-
-
-
-			};
-
-
-		}).catch(function(error){next(error)}); */
-
-
 	};
+
+
+
+
+
 
 
 

@@ -90,10 +90,8 @@
 
 		req.comment.lectura_actual = req.body.comment.lectura_actual;
 		req.comment.texto = req.body.comment.texto;
-		req.comment.codigo = req.body.comment.codigo;
 
-
-		req.comment.save({fields: ["lectura_anterior", "lectura_actual", "texto"]})
+		req.comment.save({fields: ["lectura_actual", "texto"]})
 			.then(function() {res.redirect('/quizes/' + req.params.quizId);})
 			.catch(function(error) {next(error)});
 

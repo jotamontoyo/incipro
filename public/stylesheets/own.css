@@ -2,7 +2,7 @@
 	#main {
 /*		background: url(/images/fondo01.jpg) no-repeat fixed center; */
 	}
-	
+
 
 	.centrado-v-h {
 		display: flex;							/* necesario para alineacion */
@@ -80,4 +80,11 @@
 		color: #eb9837;
 		text-decoration: none;
 		outline: none;
+	}
+
+	#resumen_index_form {
+
+		max-width: 500px;
+		border: 1px solid #000;
+
 	}

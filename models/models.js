@@ -131,54 +131,7 @@
 	          			};
 	        		});
 
-/*					Criterio.count().then(function( count ) {
-	          			if(count === 0) {   																			// la tabla se inicializa solo si está vacía
-	            			Criterio.bulkCreate(
-	              				[
-
-									{ codigo: 1,
-									mes: 1,
-									max: 10,
-									min: 5 },
-
-									{ codigo: 2,
-									mes: 2,
-									max: 20,
-									min: 15 }
-
-
-								]
-	              		    ).then(function(){console.log('Base de datos: tabla criterio inicializada')});
-	          			};
-	        		}); */
-
 	      		});
 	    	};
 	  	});
 	});
-
-
-
-
-
-/*
-
-	sequelize.sync().then(function() {									// sequelize.sync() inicializa tabla de preguntas en DB
-		Quiz.count().then(function(count) {								// success ejecuta el manejador cuando crea la tabla. Quiz.count().success() devuelve el numero de filas
-			if (count === 0) {											// se inicializa solo si esta vacia
-				Quiz.create({
-					pregunta: 'Capital de Italia',
-					respuesta: 'Roma',
-					tema: 'Geografía',
-					image: './images/jota.jpg'
-				});
-				Quiz.create({
-					pregunta: 'Capital de Portugal',
-					respuesta: 'Lisboa',
-					tema: 'Geografía',
-					image: './images/jota.jpg'
-				})
-				.then(function() {console.log('Base creada')});
-			};
-		});
-	}); */

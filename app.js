@@ -1,7 +1,7 @@
 
-//	process.env.DATABASE_URL = "postgres://cwzwntukhncgro:446071143f88d873e401dcacd1457089badd55d8fb90685deb6c2464efb89072@ec2-54-228-235-185.eu-west-1.compute.amazonaws.com:5432/de4lnp6i1fetva?ssl=true"; // URL HerokuPostgres
-//	process.env.DATABASE_STORAGE = "quiz.sqlite";
-//	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
+	process.env.DATABASE_URL = "postgres://xcdqfxsogqvusv:5a163a4f2340a7fcd90f62ae4fdc28496029bf8ffc8dec1d0c8f608812e30d5a@ec2-54-228-189-223.eu-west-1.compute.amazonaws.com:5432/d28amd4sds43v7?ssl=true"; // URL HerokuPostgres
+	process.env.DATABASE_STORAGE = "quiz.sqlite";
+	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
 
 	var express = require('express');
 	var busboy = require('connect-busboy'); //middleware for form/file upload

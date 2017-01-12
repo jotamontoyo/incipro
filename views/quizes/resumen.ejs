@@ -1,25 +1,36 @@
 
 <div class="container-fluid">
 
-    <div class="panel panel-default table-responsive" id="quizes-panel">
+    <div class="panel panel-default table-responsive">
 
-        <table class="table table-hover">
+        <table class="table table-striped">
+
             <thead>
                 <tr>
-
                     <th>Fecha</th>
-                    <th>Lectura</th>
+                    <th>Parte</th>
+                    <% for (var i in contadores) { %>
+                        <th class="text-center"><%= contadores[i].nombre %></th>
+                    <%}%>
 
                 </tr>
             </thead>
+
             <tbody>
-                <% for (var i in lecturas) { %>
+
+                <% for (var i in quizes) { %>
 
                     <tr>
 
-                        <td><%= lecturas[i].fecha></td>
+                        <td> <%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></td>
+                        <td> <%= quizes[i].id %></td>
 
 
+                        <% for (var x in quizes[i].comments) { %>
+
+                            <td class="text-center"> <%= quizes[i].comments[x].lectura_actual %></td>
+
+                        <%}%>
 
 
 
