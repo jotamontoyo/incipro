@@ -91,15 +91,33 @@
 	exports.resumen = function(req, res, next) {
 
 
-		var informe = {
-			fecha: 0,
-			contador_general: 0,
-			contador_parking1: 0,
-			contador_parking2: 0
-		};
+		var informe = [
+
+			{
+				fecha: '0/0/0',
+				lectura: [
+					{nombre: 'contador 0', valor: 20},
+					{nombre: 'contador 1', valor: 40}
+				]
+			},
+
+			{
+				fecha: '1/1/1',
+				lectura: [
+					{nombre: 'contador 2', valor: 25},
+					{nombre: 'contador 3', valor: 45}
+				]
+			}
 
 
-//		console.log('informe::::::::::::::' + sql);
+		];
+
+
+
+
+		console.log('informe::::::::::::::' + informe[0].fecha);
+//		console.log('informe::::::::::::::' + informe[1].lectura[0].nombre);
+//		console.log('informe::::::::::::::' + informe[1].lectura[0].valor);
 
 		var options = {
 
@@ -107,25 +125,27 @@
 
 //			include: [{all: true}],
 
-
-			group: 'dia',
-
+//			group: 'dia',
 
 			order: [
 				['fecha', 'ASC']
 			]
 
-
 		};
 
 
-		models.Comment.findAll(options).then(function(lecturas) {
-
-			console.log('lecturas:::::::::::' + lecturas);
+		models.Quiz.findAll(options).then(function(quizes) {
 
 
 
-			res.render('quizes/resumen', {lecturas: lecturas,  errors: []});
+			for (var i in quizes) {
+
+				informe[i].fecha = quizes[i].fecha;
+
+
+			};
+
+			res.render('quizes/resumen', {lecturas: informe,  errors: []});
 
 		}).catch(function(error){next(error)});
 
