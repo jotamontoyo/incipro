@@ -4,6 +4,8 @@
 	module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
 		return sequelize.define('Comment', {
 
+
+
 			texto: {
 				type: DataTypes.STRING
 			},
@@ -71,8 +73,9 @@
 				type: DataTypes.INTEGER
 			}
 
+		},
 
-
-
+		{
+			timestamps: false
 		})
 	};

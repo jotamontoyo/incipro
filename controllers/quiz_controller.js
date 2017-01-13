@@ -96,20 +96,30 @@
 
 
 
-
-
-
 		var options = {
 
 			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
 
-			include: [{model: models.Comment}],
+			include: [{model: models.Comment, order: 'codigo'}],
 
 			order: [
 				['fecha', 'ASC']
 			]
 
 		};
+
+
+
+/*		models.Quiz.findAll(options)
+
+		.then(function(quizes) {
+
+			var fecha_anterior = quizes[0].fecha;
+
+		}).catch(function(error){next(error)}); */
+
+
+
 
 		models.Quiz.findAll(options).then(function(quizes) {
 

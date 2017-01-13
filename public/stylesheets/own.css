@@ -82,9 +82,17 @@
 		outline: none;
 	}
 
-	#resumen_index_form {
+	#resumen_index {
 
 		max-width: 500px;
-		border: 1px solid #000;
+		margin-top: 10vh;
+
+		border: 1px solid #ccc;
+
+	}
+
+	.form-group {
+
+		margin-bottom: 10px;
 
 	}

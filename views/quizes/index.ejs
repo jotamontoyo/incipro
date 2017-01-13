@@ -27,10 +27,11 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th>Centro</th>
-					<th>User</th>
+<!--					<th>Centro</th> -->
+
 					<th>Fecha</th>
 					<th>Parte</th>
+					<th>User</th>
 					<th>Proveedor</th>
 					<th>Motivo</th>
 				</tr>
@@ -38,12 +39,13 @@
 			<tbody>
 				<% var i; for (i=0; (i < quizes.length) && (i < qty_pagina); i++) { %>
 					<tr>
-						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td>
+<!--						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td> -->
+
+						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></a></td>
+						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
 						<td><%= quizes[i].UserName %></td>
-						<td><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></td>
-						<td><%= quizes[i].id %></td>
-						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].proveedor %> </a></td>
-						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %> </a></td>
+						<td><%= quizes[i].proveedor %></td>
+						<td><%= quizes[i].pregunta %></td>
 						<% if (session.user) {
 							if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 								<td><a href="/quizes/<%= quizes[i].id %>/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
