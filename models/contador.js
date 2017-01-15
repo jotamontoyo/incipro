@@ -7,6 +7,7 @@
 
             codigo: {
                 type: DataTypes.INTEGER
+
             },
 
             nombre: {

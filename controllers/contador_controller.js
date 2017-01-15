@@ -61,6 +61,7 @@
 
 		var contador = models.Contador.build( req.body.contador );											// construccion de objeto quiz para luego introducir en la tabla
 
+
 		var errors = contador.validate();
 
 		if (errors) {
@@ -85,9 +86,7 @@
 
         models.Criterio.findAll({
             where: 		{ContadorId: Number(req.contador.id)},
-            order: [
-				['mes', 'ASC']
-			]
+            order:      [['mes', 'ASC']]
         }).then(function( criterios  ) {
             res.render('contadores/show', {contador: req.contador, criterios: criterios, errors: []});
         });

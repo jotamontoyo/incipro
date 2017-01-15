@@ -100,7 +100,7 @@
 
 			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
 
-			include: [{model: models.Comment, order: 'codigo'}],
+			include: [{model: models.Comment, order: ['codigo', 'ASC']}],
 
 			order: [
 				['fecha', 'ASC']
@@ -149,25 +149,7 @@
 
 
 
-	exports.opened = function(req, res) {
-	  	models.Quiz.findAll({
-	  		where: {proceso: true, UserId: req.session.user.id}
-	  	}).then(
-	  		function(quizes) {
-	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-	    	}
-	  	).catch(function(error){next(error)});
-	};
 
-	exports.closed = function(req, res) {
-	  	models.Quiz.findAll({
-	  		where: {proceso: false, UserId: req.session.user.id}
-	  	}).then(
-	  		function(quizes) {
-	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-	    	}
-	  	).catch(function(error){next(error)});
-	};
 
 	exports.show = function(req, res) {											// GET /quizes/:id
 		models.Proveedor.find({
@@ -177,17 +159,7 @@
 		});																								// req.quiz: instancia de quiz cargada con autoload
 	};
 
-	exports.answer = function(req, res) {										// GET /quizes/answer/:id
-		var resultado = 'Incorrecto';
-		if (req.query.respuesta === req.quiz.respuesta) {						// comprueba la variable respuesta de la peticion GET req recibida del form question.ejs vs req.quiz.respuesta, que es la respuesta que devuelve find() del autoload
-			resultado = 'Correcto';
-		};
-		res.render('quizes/answer', {											// renderiza /views/answer.ejs con el objeto quiz y respuesta
-			quiz: req.quiz,
-			respuesta: resultado,
-			errors: []
-		});
-	};
+
 
 
 
@@ -417,4 +389,35 @@
 			}
 		).catch(function(error) {next(error)});
 		console.log('hola search');
+	};
+
+	exports.opened = function(req, res) {
+		models.Quiz.findAll({
+			where: {proceso: true, UserId: req.session.user.id}
+		}).then(
+			function(quizes) {
+				res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+			}
+		).catch(function(error){next(error)});
+	};
+
+	exports.closed = function(req, res) {
+		models.Quiz.findAll({
+			where: {proceso: false, UserId: req.session.user.id}
+		}).then(
+			function(quizes) {
+				res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+			}
+		).catch(function(error){next(error)});
+	};
+	exports.answer = function(req, res) {										// GET /quizes/answer/:id
+		var resultado = 'Incorrecto';
+		if (req.query.respuesta === req.quiz.respuesta) {						// comprueba la variable respuesta de la peticion GET req recibida del form question.ejs vs req.quiz.respuesta, que es la respuesta que devuelve find() del autoload
+			resultado = 'Correcto';
+		};
+		res.render('quizes/answer', {											// renderiza /views/answer.ejs con el objeto quiz y respuesta
+			quiz: req.quiz,
+			respuesta: resultado,
+			errors: []
+		});
 	};
