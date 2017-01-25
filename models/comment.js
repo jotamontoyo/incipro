@@ -15,7 +15,7 @@
 				defaultValue: false
 			},
 
-			codigo: {
+			codigo: {											// guardara el id del contador
                 type: DataTypes.INTEGER
             },
 

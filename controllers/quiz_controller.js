@@ -100,11 +100,9 @@
 
 			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
 
-			include: [{model: models.Comment, order: ['codigo', 'ASC']}],
+			include: [{model: models.Comment}],
 
-			order: [
-				['fecha', 'ASC']
-			]
+			order: [['fecha', 'ASC'], [models.Comment, 'codigo', 'ASC' ]]
 
 		};
 
@@ -120,18 +118,19 @@
 
 
 
-
 		models.Quiz.findAll(options).then(function(quizes) {
+
 
 			models.Contador.findAll({
 
-				order: [['codigo', 'ASC']]
+				order: [['id', 'ASC']]
 
 			}).then(function(contadores) {
 
-				res.render('quizes/resumen', {quizes: quizes,  contadores: contadores, errors: []});
+				res.render('quizes/resumen', {quizes: quizes, contadores: contadores, errors: []});
 
 			}).catch(function(error){next(error)});
+
 
 		}).catch(function(error){next(error)});
 
@@ -152,12 +151,22 @@
 
 
 	exports.show = function(req, res) {											// GET /quizes/:id
-		models.Proveedor.find({
-			where: 		{nombre: req.quiz.proveedor}
-		}).then(function(proveedor) {
-			res.render('quizes/show', {quiz: req.quiz, proveedor: proveedor, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
-		});																								// req.quiz: instancia de quiz cargada con autoload
+
+		models.Comment.findAll({
+
+			where: {QuizId: Number(req.quiz.id)},
+
+			order: [['codigo', 'ASC' ]]
+
+		}).then(function(comments) {
+
+			res.render('quizes/show', {quiz: req.quiz, comments: comments, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
+
+		}).catch(function(error){next(error)});
+
 	};
+
+	
 
 
 
@@ -211,7 +220,7 @@
 
 				models.Contador.findAll({
 		            order: [
-						['codigo', 'ASC']
+						['id', 'ASC']
 					]
 		        }).then(function( contador ) {							// crea tantos comment como Contadores
 
@@ -219,7 +228,7 @@
 
 						var comment = models.Comment.build({
 
-							codigo: contador[i].codigo,
+							codigo: contador[i].id,
 							nombre: contador[i].nombre,
 							ubicacion: contador[i].ubicacion,
 							lectura_actual: 0,

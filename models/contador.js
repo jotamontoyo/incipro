@@ -5,10 +5,6 @@
     module.exports = function(sequelize, DataTypes) {			// crea la estructura de la tabla
         return sequelize.define('Contador', {
 
-            codigo: {
-                type: DataTypes.INTEGER
-
-            },
 
             nombre: {
                 type: DataTypes.STRING

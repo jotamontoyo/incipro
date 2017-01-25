@@ -24,7 +24,7 @@
 
 	  	models.Contador.findAll({
             order: [
-				['codigo', 'ASC']
+				['id', 'ASC']
 			]
         }).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function( contadores ) {
@@ -41,13 +41,13 @@
 
 
 		var contador = models.Contador.build( 																				// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{codigo: "",
-            nombre: "",
-            marca: "",
-            modelo: "",
-            ubicacion: "",
-            fecha_revision: "",
-            lectura_anterior: 0
+			{
+                nombre: "",
+                marca: "",
+                modelo: "",
+                ubicacion: "",
+                fecha_revision: "",
+                lectura_anterior: 0
             }
 		);
 
@@ -109,7 +109,7 @@
 
     exports.update = function(req, res) {										// modifica un quiz
 
-        req.contador.codigo = req.body.contador.codigo;
+//        req.contador.codigo = req.body.contador.codigo;
         req.contador.nombre = req.body.contador.nombre;
         req.contador.marca = req.body.contador.marca;
         req.contador.modelo = req.body.contador.modelo;
