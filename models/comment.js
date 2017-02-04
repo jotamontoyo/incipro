@@ -45,6 +45,15 @@
                 type: DataTypes.FLOAT
             },
 
+            consumo: {
+                type: DataTypes.FLOAT
+            },
+
+			cumple: {
+				type: DataTypes.BOOLEAN,
+				defaultValue: true
+			},
+
             maximo: {
                 type: DataTypes.FLOAT
             },

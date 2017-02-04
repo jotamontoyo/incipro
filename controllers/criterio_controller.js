@@ -36,7 +36,7 @@
 			mes: req.body.criterio.mes,													// texto que llega del formulario
 			max: req.body.criterio.max,													// texto que llega del formulario
 			min: req.body.criterio.min,													// texto que llega del formulario
-			ContadorId: req.params.contadorId														// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
+			ContadorId: req.params.contadorId											// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
 		});
 
 		var errors = criterio.validate();

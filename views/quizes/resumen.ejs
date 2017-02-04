@@ -1,5 +1,7 @@
 
-<div class="container-fluid">
+<div class="container-fluid animated animated-fast fadeIn">
+
+    <h4>Consumos</h4>
 
     <div class="panel panel-default table-responsive">
 
@@ -28,7 +30,17 @@
 
                         <% for (var x in quizes[i].comments) { %>
 
-                            <td class="text-center"> <%= quizes[i].comments[x].lectura_actual %></td>
+                            <% if (quizes[i].comments[x].cumple) {%>
+
+                                <td class="text-center"> <%= quizes[i].comments[x].consumo %></td>
+
+
+                            <%}%>
+                            <% if (!quizes[i].comments[x].cumple) {%>
+
+                                <td class="text-center" style="color:red"> <%= quizes[i].comments[x].consumo %></td>
+
+                            <%}%>
 
                         <%}%>
 

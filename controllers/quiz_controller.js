@@ -16,7 +16,8 @@
 	exports.load = function(req, res, next, quizId) {			// autoload. solo se ejecuta si en la peticion GET existe un :quizId. ayuda a factorizar el codigo del resto de controladores
 		models.Quiz.find({										// carga de registro quiz
 			where: 		{id: Number(quizId)},					// where indice principal id <-- quizId recibido del GET
-			include: 	[{model: models.Comment}]				// incluye la tabla Comment como hijo
+			include: 	[{model: models.Comment}],				// incluye la tabla Comment como hijo
+			order:		[[models.Comment, 'codigo', 'ASC']]
 			}).then(function(quiz) {
 				if (quiz) {
 					req.quiz = quiz;
@@ -48,10 +49,8 @@
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
 				where: {UserId: req.user.id},
-				order: [
-            		['fecha', 'ASC']
-        		]
-			}
+				order: [['fecha', 'ASC']]
+			};
 	  	};
 
 	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
@@ -68,7 +67,7 @@
 
 
 
-	exports.resumen_index = function(req, res, next) {
+	exports.resumen_index = function(req, res) {
 
 		var fecha = new Date();
 
@@ -94,8 +93,6 @@
 	exports.resumen = function(req, res, next) {
 
 
-
-
 		var options = {
 
 			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
@@ -108,15 +105,6 @@
 
 
 
-/*		models.Quiz.findAll(options)
-
-		.then(function(quizes) {
-
-			var fecha_anterior = quizes[0].fecha;
-
-		}).catch(function(error){next(error)}); */
-
-
 
 		models.Quiz.findAll(options).then(function(quizes) {
 
@@ -126,6 +114,102 @@
 				order: [['id', 'ASC']]
 
 			}).then(function(contadores) {
+
+
+				var anterior = 0;
+
+				for (let i in quizes) {
+
+					if (i > 0) {anterior = i - 1};
+
+					for (let x in quizes[i].comments) {
+
+						quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+
+//						console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
+
+
+
+
+
+/*						var async = require('async');
+						var results = 0;
+						async.doWhilst(function(callback) {
+							//some code
+							models.Criterio.find({
+
+								where: 		{ContadorId: quizes[anterior].comments[x].codigo, mes: quizes[anterior].comments[x].mes}
+
+							}).success(function(result) {
+
+								results = result;
+								callback();
+
+							});
+						}, function() {
+							//use the results variable that is fetched from the database
+							//return true to continue looping or false to stop here
+							return false;
+						}, function(err) {
+						//do some things when the loop finishes
+							if (quizes[anterior].comments[x].consumo > results.max) { quizes[anterior].comments[x].cumple = false };
+							console.log('cumple...: ' + quizes[anterior].comments[x].cumple);
+							console.log('result...: ' + results.max);
+							return true;
+						}); */
+
+
+
+
+
+
+
+
+
+/*						models.Criterio.find({
+
+							where: 		{ContadorId: quizes[anterior].comments[x].codigo, mes: quizes[anterior].comments[x].mes}
+
+
+						}).then(function(criterio) {
+
+							console.log('criterio...: ' + criterio.max);
+							console.log('contadorId...: ' + criterio.ContadorId);
+//							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
+
+							if (quizes[anterior].comments[x].consumo > criterio.max) { quizes[anterior].comments[x].cumple = false };
+
+							console.log('cumple...: ' + quizes[anterior].comments[x].cumple);
+
+
+						}).catch(function(error){next(error)}); */
+
+
+
+
+
+
+						buscarCriterio(quizes[anterior].comments[x].codigo, quizes[anterior].comments[x].mes)
+	      					.then((criterio) => {
+								console.log('criterio.......: ' + criterio.max);
+	        					if (quizes[anterior].comments[x].consumo > criterio.max) {
+	          						quizes[anterior].comments[x].cumple = false;
+									console.log('consumo.......: ' + quizes[anterior].comments[x].consumo);
+									console.log('cumple.......: ' + quizes[anterior].comments[x].cumple);
+	        					}
+	      					}).catch((err) => {
+	        					// manejar el error de Sequelize
+      						});
+
+
+
+
+
+
+
+					};
+
+				};
 
 				res.render('quizes/resumen', {quizes: quizes, contadores: contadores, errors: []});
 
@@ -138,9 +222,40 @@
 
 
 
+	buscarCriterio = function(ContadorId, mes) {
+  		return new Promise((resolve, reject) => {
+    		models.Criterio.find({
+      			where: {
+        			ContadorId: ContadorId,
+        			mes: mes
+      			}
+    		}).then(function(criterio) {
+//				console.log('criterio.......: ' + criterio.max);
+      			resolve(criterio);
+    		}).catch(function(error) {
+      			reject(error)
+    		});
+		});
+	};
 
 
 
+/*	buscarCriterio = function(ContadorId, mes, next) {
+
+		models.Criterio.find({
+
+			where: 		{ContadorId: ContadorId, mes: mes}
+
+		}).then(function(criterio) {
+
+			console.log('criterio...........: ' + criterio.max);
+
+			return criterio;
+
+		}).catch(function(error){next(error)});
+
+
+	}; */
 
 
 
@@ -152,21 +267,11 @@
 
 	exports.show = function(req, res) {											// GET /quizes/:id
 
-		models.Comment.findAll({
-
-			where: {QuizId: Number(req.quiz.id)},
-
-			order: [['codigo', 'ASC' ]]
-
-		}).then(function(comments) {
-
-			res.render('quizes/show', {quiz: req.quiz, comments: comments, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
-
-		}).catch(function(error){next(error)});
+		res.render('quizes/show', {quiz: req.quiz, errors: []});				// renderiza la vista /quizes/show del quizId selecionado con load find()
 
 	};
 
-	
+
 
 
 
@@ -222,7 +327,7 @@
 		            order: [
 						['id', 'ASC']
 					]
-		        }).then(function( contador ) {							// crea tantos comment como Contadores
+		        }).then(function(contador) {							// crea tantos comment como Contadores
 
 					for (var i in contador) {
 
