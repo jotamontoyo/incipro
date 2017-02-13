@@ -116,6 +116,11 @@
 			}).then(function(contadores) {
 
 
+
+
+
+
+
 				var anterior = 0;
 
 				for (let i in quizes) {
@@ -124,11 +129,11 @@
 
 					for (let x in quizes[i].comments) {
 
-						quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+						if (quizes[anterior].comments[x]) {			// por si no hay lectura anterior. para que no dé error undefined
+							quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+						};
 
 //						console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
-
-
 
 
 
@@ -155,8 +160,9 @@
 							if (quizes[anterior].comments[x].consumo > results.max) { quizes[anterior].comments[x].cumple = false };
 							console.log('cumple...: ' + quizes[anterior].comments[x].cumple);
 							console.log('result...: ' + results.max);
+							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
 							return true;
-						}); */
+						});*/
 
 
 
@@ -175,7 +181,8 @@
 
 							console.log('criterio...: ' + criterio.max);
 							console.log('contadorId...: ' + criterio.ContadorId);
-//							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
+							console.log('quiz id...: ' + quizes[anterior].id);
+							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
 
 							if (quizes[anterior].comments[x].consumo > criterio.max) { quizes[anterior].comments[x].cumple = false };
 
@@ -189,7 +196,7 @@
 
 
 
-						buscarCriterio(quizes[anterior].comments[x].codigo, quizes[anterior].comments[x].mes)
+/*						buscarCriterio(quizes[anterior].comments[x].codigo, quizes[anterior].comments[x].mes)
 	      					.then((criterio) => {
 								console.log('criterio.......: ' + criterio.max);
 	        					if (quizes[anterior].comments[x].consumo > criterio.max) {
@@ -199,8 +206,64 @@
 	        					}
 	      					}).catch((err) => {
 	        					// manejar el error de Sequelize
-      						});
+      						}); */
 
+					};
+
+				};
+
+
+/*				for (let i in quizes) {
+
+					for (let x in quizes[i].comments) {
+
+						if (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo) {
+
+							console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+							console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+							quizes[i].comments[x].cumple = false;
+
+						};
+
+
+					};
+				}; */
+
+
+				for (let i in quizes) {
+
+					for (let x in quizes[i].comments) {
+
+
+						buscarCriterio(quizes[i].comments[x].codigo, quizes[i].comments[x].mes)
+							.then((criterio) => {
+
+								console.log('parte id.......: ' + quizes[i].id);
+								console.log('lectura id.......: ' + quizes[i].comments[x].id);
+//								console.log('criterio.......: ' + criterio.max);
+								console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+
+								quizes[i].comments[x].maximo = criterio.max;
+								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+								if (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo) {
+
+//									console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+//									console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+									quizes[i].comments[x].cumple = false;
+
+
+								};
+
+								console.log('cumple...: ' + quizes[i].comments[x].cumple);
+
+
+							}).catch((err) => {
+								// manejar el error de Sequelize
+								next(error);
+							});
 
 
 
@@ -211,9 +274,14 @@
 
 				};
 
+
+
 				res.render('quizes/resumen', {quizes: quizes, contadores: contadores, errors: []});
 
+
+
 			}).catch(function(error){next(error)});
+
 
 
 		}).catch(function(error){next(error)});
@@ -223,39 +291,29 @@
 
 
 	buscarCriterio = function(ContadorId, mes) {
+
   		return new Promise((resolve, reject) => {
+
     		models.Criterio.find({
-      			where: {
-        			ContadorId: ContadorId,
-        			mes: mes
-      			}
+
+      			where: {ContadorId: ContadorId, mes: mes}
+
     		}).then(function(criterio) {
-//				console.log('criterio.......: ' + criterio.max);
+
       			resolve(criterio);
+
     		}).catch(function(error) {
+
       			reject(error)
+
     		});
+
 		});
+
 	};
 
 
 
-/*	buscarCriterio = function(ContadorId, mes, next) {
-
-		models.Criterio.find({
-
-			where: 		{ContadorId: ContadorId, mes: mes}
-
-		}).then(function(criterio) {
-
-			console.log('criterio...........: ' + criterio.max);
-
-			return criterio;
-
-		}).catch(function(error){next(error)});
-
-
-	}; */
 
 
 
@@ -363,7 +421,7 @@
 
 				});
 
-				res.redirect('/quizes')
+				res.redirect('/quizes');
 
 			});
 
