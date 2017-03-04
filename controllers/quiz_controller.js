@@ -123,7 +123,7 @@
 
 				var anterior = 0;
 
-				for (let i in quizes) {
+				for (let i in quizes) {								// hallar consumo
 
 					if (i > 0) {anterior = i - 1};
 
@@ -241,13 +241,13 @@
 
 								console.log('parte id.......: ' + quizes[i].id);
 								console.log('lectura id.......: ' + quizes[i].comments[x].id);
-//								console.log('criterio.......: ' + criterio.max);
+								console.log('maximo.......: ' + criterio.max);
 								console.log('consumo...........: ' + quizes[i].comments[x].consumo);
 
-								quizes[i].comments[x].maximo = criterio.max;
-								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+//								quizes[i].comments[x].maximo = criterio.max;
+//								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
 
-								if (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo) {
+								if (quizes[i].comments[x].consumo > criterio.max) {
 
 //									console.log('consumo...........: ' + quizes[i].comments[x].consumo);
 //									console.log('maximo...........: ' + quizes[i].comments[x].maximo);
@@ -261,7 +261,6 @@
 
 
 							}).catch((err) => {
-								// manejar el error de Sequelize
 								next(error);
 							});
 
