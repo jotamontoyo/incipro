@@ -131,10 +131,9 @@
 
 						if (quizes[anterior].comments[x]) {			// por si no hay lectura anterior. para que no dé error undefined
 							quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+							if (quizes[anterior].comments[x].consumo > quizes[anterior].comments[x].maximo) { quizes[anterior].comments[x].cumple = false };
+
 						};
-
-//						console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
-
 
 
 /*						var async = require('async');
@@ -231,7 +230,7 @@
 				}; */
 
 
-				for (let i in quizes) {
+/*				for (let i in quizes) {
 
 					for (let x in quizes[i].comments) {
 
@@ -271,7 +270,7 @@
 
 					};
 
-				};
+				}; */
 
 
 
@@ -376,45 +375,54 @@
 			for (var prop in errors) errores[i++] = {message: errors[prop]};
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
-			quiz 																// save: guarda en DB campos pregunta y respuesta de quiz
+			quiz
 			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha", "dia", "mes", "any"]})
 			.then(function() {
 
 				models.Contador.findAll({
-		            order: [
-						['id', 'ASC']
-					]
-		        }).then(function(contador) {							// crea tantos comment como Contadores
 
-					for (var i in contador) {
+		            order: [['id', 'ASC']]
 
-						var comment = models.Comment.build({
+		        }).then(function(contador) {
 
-							codigo: contador[i].id,
-							nombre: contador[i].nombre,
-							ubicacion: contador[i].ubicacion,
-							lectura_actual: 0,
-							texto: '',
-							publicado: true,
-							fecha: quiz.fecha,
-							dia: quiz.dia,
-							mes: quiz.mes,
-							any: quiz.any,
-							QuizId: quiz.id														// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
+					for (let i in contador) {											// crea tantas Lecturas como Contadores
+
+						models.Criterio.find({
+
+							where: {ContadorId: contador[i].id, mes: quiz.mes}			// busca criterio del contador segun el mes del parte
+
+						}).then(function(criterio) {
+
+							var comment = models.Comment.build({
+
+								codigo: contador[i].id,
+								nombre: contador[i].nombre,
+								ubicacion: contador[i].ubicacion,
+								lectura_actual: 0,
+								maximo: criterio.max,									// le pasa el comsumo maximo previsto
+								texto: '',
+								publicado: true,
+								fecha: quiz.fecha,
+								dia: quiz.dia,
+								mes: quiz.mes,
+								any: quiz.any,
+								QuizId: quiz.id											// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
+
+							});
+
+							var errors = comment.validate();
+							if (errors) {
+								let i = 0;
+								var errores = new Array();
+								for (var prop in errors) errores[i++] = {message: errors[prop]};
+								res.render('comments/new', {comment: comment, errors: errores});
+							} else {
+								comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
+								.save()
+								.then(function() {res.redirect('/quizes')});
+							};
 
 						});
-
-						var errors = comment.validate();
-						if (errors) {
-							var i = 0;
-							var errores = new Array();
-							for (var prop in errors) errores[i++] = {message: errors[prop]};
-							res.render('comments/new', {comment: comment, errors: errores});
-						} else {
-							comment 																		// save: guarda en DB campos pregunta y respuesta de quiz
-							.save({fields: ["codigo", "nombre", "ubicacion", "lectura_actual", "texto", "publicado", "fecha", "dia", "mes", "any", "QuizId"]})
-							.then(function() {res.redirect('/quizes')});
-						};
 
 					};
 
