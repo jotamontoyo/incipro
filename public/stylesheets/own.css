@@ -45,8 +45,10 @@
 
 
 
-	a:hover {
+	a:active, a:focus, a:hover {
 		text-decoration: none;
+/*		color: #eb9837; */
+		outline: 0;
 	}
 
 

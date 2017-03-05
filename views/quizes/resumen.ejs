@@ -34,8 +34,9 @@
 
                                 <td class="text-center"> <%= quizes[i].comments[x].consumo %></td>
 
-
                             <%}%>
+
+
                             <% if (!quizes[i].comments[x].cumple) {%>
 
                                 <td class="text-center" style="color:red">
@@ -44,12 +45,13 @@
 
 
                                         <a style="color:red" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= quizes[i].comments[x].consumo %> 
+                                            <%= quizes[i].comments[x].consumo %> <i class="fa fa-comment" style="color:#BDBDBD"></i>
                                         </a>
 
                                         <div id="<%= quizes[i].comments[x].id %>" class="panel-collapse collapse" role="tabpanel">
                                             <div class="panel-body">
-                                                <%= quizes[i].comments[x].texto %>
+                                                <pre><%= quizes[i].comments[x].texto %></pre>
+
                                             </div>
                                         </div>
 

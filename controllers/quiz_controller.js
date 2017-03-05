@@ -39,16 +39,38 @@
 	exports.index = function(req, res, next) {
 
 		var qty_pagina = 31;
+		var fecha = new Date();
+
+		var mes = fecha.getUTCMonth() + 1;
+		var any = fecha.getUTCFullYear();
+
+
+/*		if (req.body.mes_index.mes) {
+			mes = req.body.mes_index.mes;
+		} else {
+			mes = fecha.getUTCMonth() + 1;
+		};
+		if (req.body.mes_index.any) {
+			any = req.body.mes_index.any;
+		} else {
+			any = fecha.getUTCFullYear();
+		}; */
+
+
+
 
 		var options = {
-			order: [
-				['fecha', 'ASC']
-			]
+
+//			where: {mes: fecha.getUTCMonth() + 1, any: fecha.getUTCFullYear()},
+			where: {mes: mes, any: any},
+
+			order: [['fecha', 'ASC']]
+
 		};
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
-				where: {UserId: req.user.id},
+				where: {UserId: req.user.id, mes: mes, any: any},
 				order: [['fecha', 'ASC']]
 			};
 	  	};
@@ -58,6 +80,24 @@
 	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
+
+	};
+
+
+
+
+	exports.mes_index = function(req, res) {
+
+		var fecha = new Date();
+
+		var mes_index = {
+			mes: fecha.getUTCMonth() + 1,
+			any: fecha.getUTCFullYear()
+		};
+
+		res.render('quizes/mes_index', {mes_index: mes_index, errors: []});
+
+
 
 	};
 
