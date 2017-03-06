@@ -38,7 +38,7 @@
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {
 
-		var qty_pagina = 31;
+//		var qty_pagina = 31;
 		var fecha = new Date();
 
 		var mes = fecha.getUTCMonth() + 1;
@@ -62,6 +62,7 @@
 		var options = {
 
 //			where: {mes: fecha.getUTCMonth() + 1, any: fecha.getUTCFullYear()},
+
 			where: {mes: mes, any: any},
 
 			order: [['fecha', 'ASC']]
@@ -77,7 +78,7 @@
 
 	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function(quizes) {
-	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
+	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
 
@@ -132,10 +133,25 @@
 
 	exports.resumen = function(req, res, next) {
 
-
 		var options = {
 
-			where: {mes: req.body.resumen.mes, any: req.body.resumen.any},
+			where: [{mes: req.body.resumen.mes, any: req.body.resumen.any}],
+//					{mes: req.body.resumen.mes + 1, any: req.body.resumen.any, dia: 1}],
+
+/*			where: {
+				$or: {
+					$and: {
+						{mes: req.body.resumen.mes},
+						{any: req.body.resumen.any}
+					},
+					$and: {
+						{mes: req.body.resumen.mes + 1},
+						{dia: 1},
+						{any: req.body.resumen.any}
+					}
+				}
+			}, */
+
 
 			include: [{model: models.Comment}],
 
@@ -144,22 +160,13 @@
 		};
 
 
-
-
 		models.Quiz.findAll(options).then(function(quizes) {
-
 
 			models.Contador.findAll({
 
 				order: [['id', 'ASC']]
 
 			}).then(function(contadores) {
-
-
-
-
-
-
 
 				var anterior = 0;
 
@@ -175,178 +182,15 @@
 
 						};
 
-
-/*						var async = require('async');
-						var results = 0;
-						async.doWhilst(function(callback) {
-							//some code
-							models.Criterio.find({
-
-								where: 		{ContadorId: quizes[anterior].comments[x].codigo, mes: quizes[anterior].comments[x].mes}
-
-							}).success(function(result) {
-
-								results = result;
-								callback();
-
-							});
-						}, function() {
-							//use the results variable that is fetched from the database
-							//return true to continue looping or false to stop here
-							return false;
-						}, function(err) {
-						//do some things when the loop finishes
-							if (quizes[anterior].comments[x].consumo > results.max) { quizes[anterior].comments[x].cumple = false };
-							console.log('cumple...: ' + quizes[anterior].comments[x].cumple);
-							console.log('result...: ' + results.max);
-							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
-							return true;
-						});*/
-
-
-
-
-
-
-
-
-
-/*						models.Criterio.find({
-
-							where: 		{ContadorId: quizes[anterior].comments[x].codigo, mes: quizes[anterior].comments[x].mes}
-
-
-						}).then(function(criterio) {
-
-							console.log('criterio...: ' + criterio.max);
-							console.log('contadorId...: ' + criterio.ContadorId);
-							console.log('quiz id...: ' + quizes[anterior].id);
-							console.log('consumo...: ' + quizes[anterior].comments[x].consumo);
-
-							if (quizes[anterior].comments[x].consumo > criterio.max) { quizes[anterior].comments[x].cumple = false };
-
-							console.log('cumple...: ' + quizes[anterior].comments[x].cumple);
-
-
-						}).catch(function(error){next(error)}); */
-
-
-
-
-
-
-/*						buscarCriterio(quizes[anterior].comments[x].codigo, quizes[anterior].comments[x].mes)
-	      					.then((criterio) => {
-								console.log('criterio.......: ' + criterio.max);
-	        					if (quizes[anterior].comments[x].consumo > criterio.max) {
-	          						quizes[anterior].comments[x].cumple = false;
-									console.log('consumo.......: ' + quizes[anterior].comments[x].consumo);
-									console.log('cumple.......: ' + quizes[anterior].comments[x].cumple);
-	        					}
-	      					}).catch((err) => {
-	        					// manejar el error de Sequelize
-      						}); */
-
 					};
 
 				};
 
-
-/*				for (let i in quizes) {
-
-					for (let x in quizes[i].comments) {
-
-						if (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo) {
-
-							console.log('consumo...........: ' + quizes[i].comments[x].consumo);
-							console.log('maximo...........: ' + quizes[i].comments[x].maximo);
-
-							quizes[i].comments[x].cumple = false;
-
-						};
-
-
-					};
-				}; */
-
-
-/*				for (let i in quizes) {
-
-					for (let x in quizes[i].comments) {
-
-
-						buscarCriterio(quizes[i].comments[x].codigo, quizes[i].comments[x].mes)
-							.then((criterio) => {
-
-								console.log('parte id.......: ' + quizes[i].id);
-								console.log('lectura id.......: ' + quizes[i].comments[x].id);
-								console.log('maximo.......: ' + criterio.max);
-								console.log('consumo...........: ' + quizes[i].comments[x].consumo);
-
-//								quizes[i].comments[x].maximo = criterio.max;
-//								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
-
-								if (quizes[i].comments[x].consumo > criterio.max) {
-
-//									console.log('consumo...........: ' + quizes[i].comments[x].consumo);
-//									console.log('maximo...........: ' + quizes[i].comments[x].maximo);
-
-									quizes[i].comments[x].cumple = false;
-
-
-								};
-
-								console.log('cumple...: ' + quizes[i].comments[x].cumple);
-
-
-							}).catch((err) => {
-								next(error);
-							});
-
-
-
-
-
-
-					};
-
-				}; */
-
-
-
 				res.render('quizes/resumen', {quizes: quizes, contadores: contadores, errors: []});
-
-
 
 			}).catch(function(error){next(error)});
 
-
-
 		}).catch(function(error){next(error)});
-
-	};
-
-
-
-	buscarCriterio = function(ContadorId, mes) {
-
-  		return new Promise((resolve, reject) => {
-
-    		models.Criterio.find({
-
-      			where: {ContadorId: ContadorId, mes: mes}
-
-    		}).then(function(criterio) {
-
-      			resolve(criterio);
-
-    		}).catch(function(error) {
-
-      			reject(error)
-
-    		});
-
-		});
 
 	};
 
@@ -394,6 +238,8 @@
 
 
 	};
+
+
 
 
 
@@ -576,14 +422,14 @@
 		res.send(req.quiz.image);
 	};
 
-	exports.page = function(req, res, next) {
+/*	exports.page = function(req, res, next) {
 		qty_pagina += 10;
 		models.Quiz.findAll()
 			.then(function(quizes) {
 	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
 	    	}
 	  	).catch(function(error){next(error)});
-	};
+	}; */
 
 	exports.uploadimg = function(req, res, next) {
         var fstream;
@@ -640,3 +486,90 @@
 			errors: []
 		});
 	};
+
+
+
+
+	/*				for (let i in quizes) {
+
+						for (let x in quizes[i].comments) {
+
+							if (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo) {
+
+								console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+								quizes[i].comments[x].cumple = false;
+
+							};
+
+
+						};
+					}; */
+
+
+	/*				for (let i in quizes) {
+
+						for (let x in quizes[i].comments) {
+
+
+							buscarCriterio(quizes[i].comments[x].codigo, quizes[i].comments[x].mes)
+								.then((criterio) => {
+
+									console.log('parte id.......: ' + quizes[i].id);
+									console.log('lectura id.......: ' + quizes[i].comments[x].id);
+									console.log('maximo.......: ' + criterio.max);
+									console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+
+	//								quizes[i].comments[x].maximo = criterio.max;
+	//								console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+									if (quizes[i].comments[x].consumo > criterio.max) {
+
+	//									console.log('consumo...........: ' + quizes[i].comments[x].consumo);
+	//									console.log('maximo...........: ' + quizes[i].comments[x].maximo);
+
+										quizes[i].comments[x].cumple = false;
+
+
+									};
+
+									console.log('cumple...: ' + quizes[i].comments[x].cumple);
+
+
+								}).catch((err) => {
+									next(error);
+								});
+
+
+
+
+
+
+						};
+
+					}; */
+
+
+
+/*					buscarCriterio = function(ContadorId, mes) {
+
+				  		return new Promise((resolve, reject) => {
+
+				    		models.Criterio.find({
+
+				      			where: {ContadorId: ContadorId, mes: mes}
+
+				    		}).then(function(criterio) {
+
+				      			resolve(criterio);
+
+				    		}).catch(function(error) {
+
+				      			reject(error)
+
+				    		});
+
+						});
+
+					}; */

@@ -42,6 +42,7 @@
 
 	// Definición de rutas de quizes
 	router.get('/quizes',			 					sessionController.loginRequired, quizController.index);				// accede a la lista completa de partes /quizes/index.ejs
+//	router.post('/quizes',			 					sessionController.loginRequired, quizController.index);				// accede a la lista completa de partes /quizes/index.ejs
 	router.get('/quizes/resumen_index',			 		sessionController.loginRequired, quizController.resumen_index);		// formulario para seleccionar mes y año del resumen
 	router.post('/quizes/resumen',			 			sessionController.loginRequired, quizController.resumen);			// genera el informe
 	router.get('/quizes/mes_index',			 			sessionController.loginRequired, quizController.mes_index);		// formulario para seleccionar mes y año del resumen
@@ -57,7 +58,7 @@
 	router.delete('/quizes/:quizId(\\d+)',				sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
 	router.get('/quizes/statistics',					statisticsController.calculate, statisticsController.show);
 	router.get('/quizes/:quizId(\\d+)/image', 			quizController.image);												// se dispara cuando se carga una img en el formulario show
-	router.get('/quizes/page',                     		quizController.page);
+//	router.get('/quizes/page',                     		quizController.page);
 	router.post('/quizes/uploadimg',                    quizController.uploadimg);
 	router.get('/quizes?search',                    	quizController.search);
 

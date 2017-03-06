@@ -40,7 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% var i; for (i=0; (i < quizes.length) && (i < qty_pagina); i++) { %>
+				<% for (var i in quizes) { %>
 					<tr>
 <!--						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td> -->
 
@@ -75,9 +75,9 @@
 	<% if (session.user) { %>
 		<p><a href="/quizes/new"><button type="button" class="btn btn-primary">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear parte</button></a>
-			<a href="/quizes/page"><button type="button" class="btn btn-primary">
+<!--			<a href="/quizes/page"><button type="button" class="btn btn-primary">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Mas Resultados</button></a>
-		</p>
+		</p> -->
 	<% } %>
 
 </div>
