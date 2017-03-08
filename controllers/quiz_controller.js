@@ -133,24 +133,25 @@
 
 	exports.resumen = function(req, res, next) {
 
+
 		var options = {
 
-			where: [{mes: req.body.resumen.mes, any: req.body.resumen.any}],
+//			where: [{mes: req.body.resumen.mes, any: req.body.resumen.any}],
 //					{mes: req.body.resumen.mes + 1, any: req.body.resumen.any, dia: 1}],
 
-/*			where: {
+			where: {
 				$or: {
 					$and: {
-						{mes: req.body.resumen.mes},
-						{any: req.body.resumen.any}
+						mes: req.body.resumen.mes,
+						any: req.body.resumen.any
 					},
 					$and: {
-						{mes: req.body.resumen.mes + 1},
-						{dia: 1},
-						{any: req.body.resumen.any}
+						dia: 1,
+						mes: 1 + Number(req.body.resumen.mes),
+						any: req.body.resumen.any
 					}
 				}
-			}, */
+			},
 
 
 			include: [{model: models.Comment}],

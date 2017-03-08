@@ -38,9 +38,37 @@
 		border: 		1px solid #D8D8D8;
 	}
 
-	#login, #new-edit {
-		max-width: 			960px;
+
+	#login {
+
+
+
+
 	}
+
+	#login-panel {
+
+
+		max-width: 600px;
+
+		margin-top: 10vh;
+		margin-right: auto;
+		margin-left: auto;
+
+
+		padding-top: 10vh;
+		padding-bottom: 10vh;
+
+		border: 		1px solid #D8D8D8
+
+/*		margin-top: 20vh; */
+
+
+	}
+
+
+
+
 
 
 
