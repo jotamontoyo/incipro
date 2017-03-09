@@ -1,4 +1,4 @@
-	
+
 	exports.loginRequired = function(req, res, next){ 												// MW de autorización de accesos HTTP restringidos
 		if (req.session.user) {
 			next();
@@ -20,20 +20,20 @@
 		userController.autenticar(login, password, function(error, user) {							// llamada al callback userController.autenticar().
 			if (error) {  																			// si hay error retornamos mensajes de error de sesión
 				req.session.errors = [{"message": 'Se ha producido un error: ' + error}];
-				res.redirect("/login");        
+				res.redirect("/login");
 				return;
 			}
 			req.session.user = {																	// Crear req.session.user y guardar campos id y username. La sesión se define por la existencia de req.session.user
-				id: 				user.id, 
-				username: 			user.username, 
+				id: 				user.id,
+				username: 			user.username,
 				isAdmin: 			user.isAdmin,
 				lastRequestTime:	Date.now() 														// crea la variable lastRequestTime para guardar a que hora empezo la sesion
-			};		
+			};
 			res.redirect(req.session.redir.toString());												// redirección a path anterior a login
 		});
 	};
-	
-	exports.destroy = function(req, res) {															// DELETE /logout   -- Destruir sesion 
+
+	exports.destroy = function(req, res) {															// DELETE /logout   -- Destruir sesion
 		delete req.session.user;
 		res.redirect(req.session.redir.toString()); 												// redirect a path anterior a login
 	};

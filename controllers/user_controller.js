@@ -39,7 +39,7 @@
 	    		if(user.verifyPassword(password)){
 	            	callback(null, user);
 	        	}
-	        	else { callback(new Error('Password erróneo.')); } 	
+	        	else { callback(new Error('Password erróneo.')); }
 	      	} else { callback(new Error('No existe user=' + login))}
 	    }).catch(function(error){callback(error)});
 	};
@@ -47,10 +47,10 @@
 	exports.edit = function(req, res) {										// GET /user/:id/edit
 	  res.render('user/edit', { user: req.user, errors: []});				// req.user: instancia de user cargada con autoload
 
-	};            
-	
+	};
+
 	exports.new = function(req, res) {										// GET /user
-	    var user = models.User.build( 										// crea objeto user 
+	    var user = models.User.build( 										// crea objeto user
 	        {username: "", password: ""}
 	    );
 	    res.render('user/new', {user: user, errors: []});
@@ -60,25 +60,25 @@
 	    var user = models.User.build( req.body.user );
 		var errors = user.validate();											// objeto errors no tiene then(
 		if (errors) {
-			var i = 0; 
+			var i = 0;
 			var errores = new Array();											// se convierte en [] con la propiedad message por compatibilidad con layout
-			for (var prop in errors) errores[i++] = {message: errors[prop]};        
+			for (var prop in errors) errores[i++] = {message: errors[prop]};
 			res.render('user/new', {user: user, errors: errores});
 		} else {
 			user 																// save: guarda en DB campos pregunta y respuesta de quiz
 			.save({fields: ["username", "password", "usertype"]})
 			.then(function() {res.redirect('/user')});
 		};
-	};	    
-	
+	};
+
 	exports.update = function(req, res, next) {								// PUT /user/:id
 		req.user.username  = req.body.user.username;
 	  	req.user.password  = req.body.user.password;
 	  	var errors = req.user.validate();											// objeto errors no tiene then(
 		if (errors) {
-			var i = 0; 
+			var i = 0;
 			var errores = new Array();											// se convierte en [] con la propiedad message por compatibilidad con layout
-			for (var prop in errors) errores[i++] = {message: errors[prop]};        
+			for (var prop in errors) errores[i++] = {message: errors[prop]};
 			res.render('user/new', {user: req.user, errors: errores});
 		} else {
 			req.user 																// save: guarda en DB campos pregunta y respuesta de quiz

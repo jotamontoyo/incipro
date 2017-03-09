@@ -18,8 +18,8 @@
 
 
 	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
-		background-color: 	rgba(238, 238, 238, 0.6);
-		box-shadow: 		10px 10px 5px #D7D7D7;
+/*		background-color: 	rgba(238, 238, 238, 0.6); 
+		box-shadow: 		10px 10px 5px #D7D7D7; */
 	}
 
 	.comment-row {
@@ -68,15 +68,30 @@
 
 
 
+	/***************************************************************************************************/
+
+	#menu-inicio {
 
 
+	}
+
+
+	/*******************************************************************************************/
 
 
 
 	a:active, a:focus, a:hover {
 		text-decoration: none;
-/*		color: #eb9837; */
+		color: #eb9837;
 		outline: 0;
+	}
+
+	.nav #menu-inicio-item ul li a:active, a:focus, a:hover {
+
+		text-decoration: none;
+		color: #eb9837;
+		outline: 0;
+
 	}
 
 
