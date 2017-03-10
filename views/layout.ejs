@@ -51,27 +51,28 @@
 			<div class="collapse navbar-collapse" id="menu-inicio-items">
 				<ul class="nav navbar-nav">
 
-					<li><a href="/">Inicio <span class="sr-only">(current)</span></a></li>
-					<li><a href="/quizes">Partes </a></li>
-					<li><a href="/contadores">Contadores </a></li>
-					<li><a href="/temas">Centros </a></li>
-					<li><a href="/proveedores">Proveedores </a></li>
-					<li><a href="/quizes/statistics">Estadísticas </a></li>
-					<li><a href="/db/index">DB </a></li>
+					<li><a href="/"><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a></li>
+					<li><a href="/quizes"><i class="fa fa-building-o"></i> Partes </a></li>
+					<li><a href="/contadores"><i class="fa fa-dashboard"></i> Contadores </a></li>
+					<li><a href="/quizes/resumen_index"><i class="fa fa-calculator"></i> Consumos </a></li>
+					<li><a href="/temas"><i class="fa fa-cubes"></i> Centros </a></li>
+					<li><a href="/proveedores"><i class="fa fa-lemon-o"></i> Proveedores </a></li>
+					<li><a href="/quizes/statistics"><i class="fa fa-newspaper-o"></i> Estadísticas </a></li>
+					<li><a href="/db/index"><i class="fa fa-database"></i> DB </a></li>
 
 				</ul>
 
-				<form class="navbar-form navbar-left" method="get" role="search" action="/quizes?search=search">
+<!--				<form class="navbar-form navbar-left" method="get" role="search" action="/quizes?search=search">
 					<div class="form-group">
 						<input name="search" type="text" class="form-control" placeholder="Search">
 					</div>
 					<button type="submit" class="btn btn-default" value="Enviar">Submit</button>
-				</form>
+				</form> -->
 
 				<ul class="nav navbar-nav navbar-right">
 					<div class="form-group" style="color: white">
 						<%if(!session.user){%>
-							<li><a href="/user">Sign up</a> - <a href="/login">Login&nbsp;</a></li>
+							<li><a href="/user"><i class="fa fa-sign-in"></i> Sign up</a> - <a href="/login"><i class="fa fa-key"></i> Login&nbsp;</a></li>
 						<%}else{%>
 							<li><%=session.user.username%> -
 								<a href="/user/<%=session.user.id%>/quizes">

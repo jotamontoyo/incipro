@@ -1,11 +1,11 @@
 
 <div class="container-fluid animated animated-fast fadeIn">
 
-	<h4>Partes</h4>
+	<h4><i class="fa fa-building"></i> Partes</h4>
 
 	<% if (session.user) { %>
 		<div class="btn-group" role="group" aria-label="...">
-			<a href="/quizes">
+<!--			<a href="/quizes">
   				<button type="button" class="btn btn-default">Mes</button>
   			</a>
   			<a href="/quizes/opened">
@@ -13,13 +13,13 @@
 			</a>
 			<a href="/quizes/closed">
 				<button type="button" class="btn btn-default">Cerrados</button>
-			</a>
-			<a href="/quizes/resumen_index">
-				<button type="button" class="btn btn-default">Resumen</button>
-			</a>
+			</a> -->
+
 			<a href="/quizes/mes_index">
-				<button type="button" class="btn btn-default">Mes</button>
+				<button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i> Seleccioinar Mes</button>
 			</a>
+
+
 
 
 		</div><p>
@@ -32,11 +32,11 @@
 				<tr>
 <!--					<th>Centro</th> -->
 
-					<th>Fecha</th>
-					<th>Parte</th>
-					<th>User</th>
-					<th>Proveedor</th>
-					<th>Motivo</th>
+					<th class="text-center">Fecha</th>
+					<th class="text-center">Parte</th>
+					<th class="text-center">User</th>
+<!--					<th>Proveedor</th>
+					<th>Motivo</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -44,11 +44,11 @@
 					<tr>
 <!--						<td><a name="<%= quizes[i].tema %>" href="/temas/<%= quizes[i].tema %>"><%= quizes[i].tema %> </a></td> -->
 
-						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></a></td>
-						<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
-						<td><%= quizes[i].UserName %></td>
-						<td><%= quizes[i].proveedor %></td>
-						<td><%= quizes[i].pregunta %></td>
+						<td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></a></td>
+						<td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
+						<td class="text-center"><%= quizes[i].UserName %></td>
+<!--						<td><%= quizes[i].proveedor %></td>
+						<td><%= quizes[i].pregunta %></td> -->
 						<% if (session.user) {
 							if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 								<td><a href="/quizes/<%= quizes[i].id %>/edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>

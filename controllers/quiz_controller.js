@@ -87,6 +87,8 @@
 
 
 
+
+
 	exports.mes_index = function(req, res) {
 
 		var fecha = new Date();
@@ -101,6 +103,58 @@
 
 
 	};
+
+
+	// GET /quizes   										--->>> GET sin req.user
+	// GET /users/:userId/quizes							--->>> GET con req.user
+	exports.mes_index_show = function(req, res, next) {
+
+//		var qty_pagina = 31;
+		var fecha = new Date();
+
+		var mes = fecha.getUTCMonth() + 1;
+		var any = fecha.getUTCFullYear();
+
+
+		if (req.body.mes_index.mes) {
+			mes = req.body.mes_index.mes;
+		} else {
+			mes = fecha.getUTCMonth() + 1;
+		};
+		if (req.body.mes_index.any) {
+			any = req.body.mes_index.any;
+		} else {
+			any = fecha.getUTCFullYear();
+		};
+
+
+
+
+		var options = {
+
+//			where: {mes: fecha.getUTCMonth() + 1, any: fecha.getUTCFullYear()},
+
+			where: {mes: mes, any: any},
+
+			order: [['fecha', 'ASC']]
+
+		};
+
+	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+			options = {
+				where: {UserId: req.user.id, mes: mes, any: any},
+				order: [['fecha', 'ASC']]
+			};
+	  	};
+
+	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+	    	function(quizes) {
+	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	    	}
+	  	).catch(function(error){next(error)});
+
+	};
+
 
 
 
@@ -133,6 +187,9 @@
 
 	exports.resumen = function(req, res, next) {
 
+		var mes = req.body.resumen.mes,
+			any = req.body.resumen.any;
+
 
 		var options = {
 
@@ -147,11 +204,21 @@
 					},
 					$and: {
 						dia: 1,
-						mes: 1 + Number(req.body.resumen.mes),
+						mes: (1 + Number(req.body.resumen.mes)),
 						any: req.body.resumen.any
 					}
 				}
 			}, */
+
+
+/*			where: {
+			  	mes, any,
+			  		$and: {
+			    		any,
+			    		dia: 1,
+			    		mes: (1 + Number(mes))
+			  		}
+				}, */
 
 
 			include: [{model: models.Comment}],
