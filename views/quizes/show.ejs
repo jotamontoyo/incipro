@@ -36,6 +36,9 @@
 										<h5>Código: <%= quiz.comments[index].codigo %></h5>
 										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
 										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+										<% if (quiz.comments[index].deposito) { %>
+											<h5>Carga: <%= quiz.comments[index].carga %></h5>
+										<%}%>
 
 									</div>
 
@@ -46,6 +49,7 @@
 								</div>
 							</div>
 						<%}%>
+
 						<% if (session.user) {%>
 							<div class="comment-panel">
 
@@ -60,7 +64,7 @@
 										<h5>Ubicación: <%= quiz.comments[index].ubicacion %></h5>
 
 
-										<form method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
+										<form class="form-horizontal" method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
 
 											<input type="text" class="form-control hidden" id="codigo" name="comment[codigo]" value="<%=quiz.comments[index].codigo%>" pattern="[0-9]{1,}"/></h5>
 
@@ -72,6 +76,18 @@
 													<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%=quiz.comments[index].lectura_actual%>" step="0.01"/>
 												</div>
 											</div>
+
+											<% if (quiz.comments[index].deposito) { %>
+												<div class="form-group">
+
+													<div class="col-md-3" style="margin-top: 6px;">
+														<label for="carga">Carga</label>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control" id="carga" name="comment[carga]" value="<%=quiz.comments[index].carga%>" step="0.01"/>
+													</div>
+												</div>
+											<%}%>
 
 
 											<div class="col-md-12">

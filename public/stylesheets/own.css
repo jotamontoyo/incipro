@@ -18,7 +18,7 @@
 
 
 	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
-/*		background-color: 	rgba(238, 238, 238, 0.6); 
+/*		background-color: 	rgba(238, 238, 238, 0.6);
 		box-shadow: 		10px 10px 5px #D7D7D7; */
 	}
 
@@ -93,6 +93,51 @@
 		outline: 0;
 
 	}
+
+
+
+
+	/* ========= FORMULARIO CONTADOR ===================== */
+
+	#contador_form {
+
+		max-width: 600px;
+		padding: 20px 20px 20px 20px;
+
+		border: 1px solid #D8D8D8;
+
+
+	}
+
+	#contadores-panel th, td {
+
+		text-align: center;
+
+
+
+	}
+
+	#criterios {
+
+		margin-bottom: 20px;
+		padding: 20px;
+		border: 		1px solid #D8D8D8;
+	}
+
+	#criterio_form {
+
+		max-width: 500px;
+		margin-bottom: 20px;
+		padding: 20px;
+
+		border: 1px solid #D8D8D8;
+	}
+
+
+
+
+	/* =============================================================== */
+
 
 
 

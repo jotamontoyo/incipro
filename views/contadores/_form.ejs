@@ -1,42 +1,61 @@
 
+<div class="container" id="contador_form">
+
+    <h4><i class="fa fa-dashboard"></i> Contador</h4>
+    <br>
+
+
 <!--    <div class="form-group">
-        <label for="num" class="col-sm-2 control-label">Número:</label>
-        <div class="col-sm-10">
+        <label for="num" class="col-md-2 control-label">Número:</label>
+        <div class="col-md-10">
             <input type="text" class="form-control" id="numero" name="contador[codigo]" value="<%= contador.codigo %>" placeholder="código"/>
         </div>
     </div> -->
 
     <div class="form-group">
-        <label for="nombre" class="col-sm-2 control-label">Nombre:</label>
-        <div class="col-sm-10">
+        <label for="nombre" class="col-md-3 control-label">Nombre:</label>
+        <div class="col-md-9">
             <input type="text" class="form-control" id="nombre" name="contador[nombre]" value="<%= contador.nombre %>" placeholder="nombre"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="marca" class="col-sm-2 control-label">Marca:</label>
-        <div class="col-sm-10">
+        <label for="marca" class="col-md-3 control-label">Marca:</label>
+        <div class="col-md-9">
             <input type="text" class="form-control" id="marca" name="contador[marca]" value="<%= contador.marca %>" placeholder="marca"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="modelo" class="col-sm-2 control-label">Modelo:</label>
-        <div class="col-sm-10">
+        <label for="modelo" class="col-md-3 control-label">Modelo:</label>
+        <div class="col-md-9">
             <input type="text" class="form-control" id="modelo" name="contador[modelo]" value="<%= contador.modelo %>" placeholder="modelo"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="ubicacion" class="col-sm-2 control-label">Ubicación:</label>
-        <div class="col-sm-10">
+        <label for="deposito" class="col-md-3 control-label">Depósito:</label>
+        <div class="col-md-1">
+            <% if (contador.deposito) { %>
+                <input type="checkbox" class="form-control" checked id="deposito" name="contador[deposito]" value="<%= contador.deposito %>" placeholder="deposito"/>
+            <%} else { %>
+                <input type="checkbox" class="form-control" id="deposito" name="contador[deposito]" value="<%= contador.deposito %>" placeholder="deposito"/>
+            <%}%>
+
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ubicacion" class="col-md-3 control-label">Ubicación:</label>
+        <div class="col-md-9">
             <input type="text" class="form-control" id="ubicacion" name="contador[ubicacion]" value="<%= contador.ubicacion %>" placeholder="ubicacion"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="fecha_revision" class="col-sm-2 control-label">Fecha última revisión:</label>
-        <div class="col-sm-10">
+        <label for="fecha_revision" class="col-md-3 control-label">Ültima revisión:</label>
+        <div class="col-md-9">
             <input type="text" class="form-control" id="fecha_revision" name="contador[fecha_revision]" value="<%= contador.fecha_revision %>" placeholder="fecha ultima revision"/>
         </div>
     </div>
@@ -47,7 +66,7 @@
 
 
     <div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-md-10" style="margin-left: 18vw;">
 			<a href="/contadores">
 				<button class="btn btn-danger btn-sm">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
@@ -58,3 +77,6 @@
 			</button>
 		</div>
 	</div>
+
+
+</div>

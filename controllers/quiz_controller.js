@@ -1,6 +1,7 @@
 
 	var models = require('../models/models.js');
 	var fs = require('fs-extra');       						//File System - for file manipulation
+	var Sequelize = require('sequelize');
 
 	exports.ownershipRequired = function(req, res, next){   	// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
 	    var objQuizOwner = req.quiz.UserId;						// userId del quiz
@@ -43,13 +44,10 @@
 		var mes = fecha.getUTCMonth() + 1;
 		var anio = fecha.getUTCFullYear();
 
-
 		var options = {
 			where: {mes: mes, anio: anio},
 			order: [['fecha', 'ASC']]
 		};
-
-
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
@@ -82,9 +80,10 @@
 
 		res.render('quizes/mes_index', {mes_index: mes_index, errors: []});
 
-
-
 	};
+
+
+
 
 
 	// GET /quizes   										--->>> GET sin req.user
@@ -151,7 +150,7 @@
 
 	exports.resumen = function(req, res, next) {
 
-		var Sequelize = require('sequelize');
+
 
 		var mes = parseInt(req.body.resumen.mes),
 			anio = parseInt(req.body.resumen.anio);
@@ -163,7 +162,7 @@
 //					{dia: 1, mes: mes + 1, anio}],
 
 
-		where: Sequelize.or(
+		where: Sequelize.or(				// segun la version de Sequelize he de usar una u otra estructura de consulta
 			Sequelize.and(
 				{mes: mes},
 				{anio: anio}
@@ -215,23 +214,6 @@
 			}, */
 
 
-
-
-
-/*			where: {
-  				mes, anio,
-  					$and: {
-    					anio,
-    					dia: 1,
-    					mes: mes + 1
-  					}
-				}, */
-
-
-
-
-
-
 			include: [{model: models.Comment}],
 
 			order: [['fecha', 'ASC'], [models.Comment, 'codigo', 'ASC' ]]
@@ -256,7 +238,18 @@
 					for (let x in quizes[i].comments) {
 
 						if (quizes[anterior].comments[x]) {			// por si no hay lectura anterior. para que no dé error undefined
-							quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+
+							if (!quizes[anterior].comments[x].deposito){
+
+								quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+
+							} else {
+
+								quizes[anterior].comments[x].consumo = quizes[anterior].comments[x].lectura_actual - quizes[i].comments[x].lectura_actual + quizes[i].comments[anterior].carga;
+
+							}
+
+
 							if (quizes[anterior].comments[x].consumo > quizes[anterior].comments[x].maximo) { quizes[anterior].comments[x].cumple = false };
 
 						};
@@ -363,6 +356,8 @@
 								codigo: contador[i].id,
 								nombre: contador[i].nombre,
 								ubicacion: contador[i].ubicacion,
+								deposito: contador[i].deposito,
+								carga: 0,
 								lectura_actual: 0,
 								maximo: criterio.max,									// le pasa el comsumo maximo previsto
 								texto: '',

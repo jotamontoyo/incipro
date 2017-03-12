@@ -20,6 +20,12 @@
 
             },
 
+            deposito: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+
+            },
+
             ubicacion: {
                 type: DataTypes.STRING
             },

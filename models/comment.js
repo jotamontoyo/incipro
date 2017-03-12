@@ -33,6 +33,14 @@
 
             },
 
+			deposito: {						// indica si es deposito o contador
+                type: DataTypes.BOOLEAN
+            },
+
+			carga: {						// para introducir las compras de suministros en depositos
+				type: DataTypes.FLOAT
+			},
+
             ubicacion: {
                 type: DataTypes.STRING
             },

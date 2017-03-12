@@ -45,6 +45,7 @@
                 nombre: "",
                 marca: "",
                 modelo: "",
+                deposito: false,
                 ubicacion: "",
                 fecha_revision: "",
                 lectura_anterior: 0
@@ -100,19 +101,24 @@
 
     exports.edit = function(req, res) {															// carga formulario edit.ejs
 
-		res.render('contadores/edit', {contador: req.contador, errors: []});   		// renderiza la vista quizes/edit junto con la lista de todos los proveedores
+		res.render('contadores/edit', {contador: req.contador, errors: []});   		// renderiza la vista contadores/edit junto con la lista de todos los proveedores
 
 	};
 
 
 
 
-    exports.update = function(req, res) {										// modifica un quiz
+    exports.update = function(req, res) {										     // modifica un contador
 
 //        req.contador.codigo = req.body.contador.codigo;
         req.contador.nombre = req.body.contador.nombre;
         req.contador.marca = req.body.contador.marca;
         req.contador.modelo = req.body.contador.modelo;
+        if (req.body.contador.deposito) {
+            req.contador.deposito = true;
+        } else {
+            req.contador.deposito = false;
+        };
         req.contador.ubicacion = req.body.contador.ubicacion;
         req.contador.fecha_revision = req.body.contador.fecha_revision;
 
@@ -124,7 +130,7 @@
             res.render('contadores/edit', {contador: req.contador, errors: errores});
         } else {
             req.contador 															// save: guarda en DB campos pregunta y respuesta de quiz
-            .save({fields: ["nombre", "marca", "modelo", "ubicacion", "fecha_revision"]})
+            .save({fields: ["nombre", "marca", "modelo", "deposito", "ubicacion", "fecha_revision"]})
             .then(function() {res.redirect('/contadores')});
         };
     };
