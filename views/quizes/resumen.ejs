@@ -1,7 +1,7 @@
 
 <div class="container-fluid animated animated-fast fadeIn">
 
-    <h4>Consumos</h4>
+    <h4><i class="fa fa-calculator"></i> Consumos</h4>
 
     <div class="panel panel-default table-responsive">
 
@@ -21,11 +21,11 @@
 
             <tbody>
 
-                <% for (var i in quizes) { %>
+                <% for (var i=0; i < quizes.length - 1; i++) { %>
 
                     <tr>
 
-                        <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].any %></a></td>
+                        <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].anio %></a></td>
                         <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
                         <td class="text-center"><%= quizes[i].UserName %></td>
 

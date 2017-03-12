@@ -78,7 +78,7 @@
 				type: DataTypes.INTEGER
 			},
 
-			any: {
+			anio: {
 				type: DataTypes.INTEGER
 			}
 

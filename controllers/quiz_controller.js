@@ -38,45 +38,27 @@
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.index = function(req, res, next) {
 
-//		var qty_pagina = 31;
 		var fecha = new Date();
 
 		var mes = fecha.getUTCMonth() + 1;
-		var any = fecha.getUTCFullYear();
-
-
-/*		if (req.body.mes_index.mes) {
-			mes = req.body.mes_index.mes;
-		} else {
-			mes = fecha.getUTCMonth() + 1;
-		};
-		if (req.body.mes_index.any) {
-			any = req.body.mes_index.any;
-		} else {
-			any = fecha.getUTCFullYear();
-		}; */
-
-
+		var anio = fecha.getUTCFullYear();
 
 
 		var options = {
-
-//			where: {mes: fecha.getUTCMonth() + 1, any: fecha.getUTCFullYear()},
-
-			where: {mes: mes, any: any},
-
+			where: {mes: mes, anio: anio},
 			order: [['fecha', 'ASC']]
-
 		};
+
+
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
-				where: {UserId: req.user.id, mes: mes, any: any},
+				where: {UserId: req.user.id, mes: mes, anio: anio},
 				order: [['fecha', 'ASC']]
 			};
 	  	};
 
-	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function(quizes) {
 	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	    	}
@@ -95,7 +77,7 @@
 
 		var mes_index = {
 			mes: fecha.getUTCMonth() + 1,
-			any: fecha.getUTCFullYear()
+			anio: fecha.getUTCFullYear()
 		};
 
 		res.render('quizes/mes_index', {mes_index: mes_index, errors: []});
@@ -109,45 +91,27 @@
 	// GET /users/:userId/quizes							--->>> GET con req.user
 	exports.mes_index_show = function(req, res, next) {
 
-//		var qty_pagina = 31;
-		var fecha = new Date();
-
-		var mes = fecha.getUTCMonth() + 1;
-		var any = fecha.getUTCFullYear();
-
-
-		if (req.body.mes_index.mes) {
-			mes = req.body.mes_index.mes;
-		} else {
-			mes = fecha.getUTCMonth() + 1;
-		};
-		if (req.body.mes_index.any) {
-			any = req.body.mes_index.any;
-		} else {
-			any = fecha.getUTCFullYear();
-		};
-
-
+		var mes = Number(req.body.mes_index.mes);
+		var anio = Number(req.body.mes_index.anio);
 
 
 		var options = {
-
-//			where: {mes: fecha.getUTCMonth() + 1, any: fecha.getUTCFullYear()},
-
-			where: {mes: mes, any: any},
-
+			where: {mes: mes, anio: anio},
 			order: [['fecha', 'ASC']]
-
 		};
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
 			options = {
-				where: {UserId: req.user.id, mes: mes, any: any},
+				where: {
+					UserId: req.user.id,
+					mes: mes,
+					anio: anio
+				},
 				order: [['fecha', 'ASC']]
 			};
 	  	};
 
-	  	models.Quiz.findAll( options ).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
+	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
 	    	function(quizes) {
 	      		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	    	}
@@ -168,7 +132,7 @@
 
 		var resumen = {
 			mes: fecha.getUTCMonth() + 1,
-			any: fecha.getUTCFullYear()
+			anio: fecha.getUTCFullYear()
 		};
 
 		res.render('quizes/resumen_index', {resumen: resumen, errors: []});
@@ -187,38 +151,85 @@
 
 	exports.resumen = function(req, res, next) {
 
-		var mes = req.body.resumen.mes,
-			any = req.body.resumen.any;
+		var Sequelize = require('sequelize');
+
+		var mes = parseInt(req.body.resumen.mes),
+			anio = parseInt(req.body.resumen.anio);
 
 
 		var options = {
 
-			where: [{mes: req.body.resumen.mes, any: req.body.resumen.any}],
-//					{mes: req.body.resumen.mes + 1, any: req.body.resumen.any, dia: 1}],
+//			where: [{mes, anio}],
+//					{dia: 1, mes: mes + 1, anio}],
 
-/*			where: {
-				$or: {
+
+		where: Sequelize.or(
+			Sequelize.and(
+				{mes: mes},
+				{anio: anio}
+			),
+			Sequelize.and(
+				{dia: 1},
+				{mes: 1 + mes},
+				{anio: anio}
+			)
+		),
+
+
+/*		where: {
+			$or: [
+				{
 					$and: {
-						mes: req.body.resumen.mes,
-						any: req.body.resumen.any
-					},
+		  				mes: 3,
+		  				anio: 2017
+					}
+				},
+				{
 					$and: {
-						dia: 1,
-						mes: (1 + Number(req.body.resumen.mes)),
-						any: req.body.resumen.any
+		  				dia: 1,
+		  				mes: 4,
+		  				anio: 2017
 					}
 				}
+			]
+		}, */
+
+
+
+
+
+/*			where: {
+  				$or: [
+    				$and: {
+      					mes: 3,
+      					anio: 2017
+    				},
+    				{
+      					$and: {
+        					dia: 1,
+        					mes: 4,
+        					anio: 2017
+      					}
+    				}
+  				]
 			}, */
 
 
+
+
+
 /*			where: {
-			  	mes, any,
-			  		$and: {
-			    		any,
-			    		dia: 1,
-			    		mes: (1 + Number(mes))
-			  		}
+  				mes, anio,
+  					$and: {
+    					anio,
+    					dia: 1,
+    					mes: mes + 1
+  					}
 				}, */
+
+
+
+
 
 
 			include: [{model: models.Comment}],
@@ -294,10 +305,10 @@
 		var fecha = new Date();
 		var dia = ("0" + fecha.getUTCDate()).slice(-2);
 		var mes = ("0" + (fecha.getUTCMonth() + 1)).slice(-2);														// se le añade 1 porque van de 0 a 11
-		var any = fecha.getUTCFullYear();
+		var anio = fecha.getUTCFullYear();
 
 		var quiz = models.Quiz.build( 																				// crea el objeto quiz, lo construye con buid() metodo de sequilize
-			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", dia: dia, mes: mes, any: any}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
+			{pregunta: "Motivo", respuesta: "Respuesta", proveedor: "Proveedor", dia: dia, mes: mes, anio: anio}		// asigna literales a los campos pregunta y respuestas para que se vea el texto en el <input> cuando creemos el formulario
 		);
 
 		models.Proveedor.findAll().then(function(proveedor) {
@@ -320,7 +331,7 @@
 		req.body.quiz.UserName = req.session.user.username;
 
 		var quiz = models.Quiz.build( req.body.quiz );											// construccion de objeto quiz para luego introducir en la tabla
-		quiz.fecha = new Date(req.body.quiz.any, req.body.quiz.mes - 1, req.body.quiz.dia);     // captura la fecha del form y la añade al quiz con clase Date()
+		quiz.fecha = new Date(req.body.quiz.anio, req.body.quiz.mes - 1, req.body.quiz.dia);     // captura la fecha del form y la añade al quiz con clase Date()
 
 		var errors = quiz.validate();															// objeto errors no tiene then(
 		if (errors) {
@@ -330,7 +341,7 @@
 			res.render('quizes/new', {quiz: quiz, errors: errores});
 		} else {
 			quiz
-			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha", "dia", "mes", "any"]})
+			.save({fields: ["pregunta", "respuesta", "tema", "UserId", "UserName", "proveedor", "fecha", "dia", "mes", "anio"]})
 			.then(function() {
 
 				models.Contador.findAll({
@@ -359,7 +370,7 @@
 								fecha: quiz.fecha,
 								dia: quiz.dia,
 								mes: quiz.mes,
-								any: quiz.any,
+								anio: quiz.anio,
 								QuizId: quiz.id											// al comment se le pasa el quizId del quiz para establecer la integridad referencial entre Quiz y Comment. indice secundario de Comment
 
 							});
@@ -418,10 +429,10 @@
 	exports.update = function(req, res) {										// modifica un quiz
 //		req.quiz.fecha = req.body.quiz.fecha;
 
-		req.quiz.fecha = new Date(req.body.quiz.any, req.body.quiz.mes - 1, req.body.quiz.dia);
+		req.quiz.fecha = new Date(req.body.quiz.anio, req.body.quiz.mes - 1, req.body.quiz.dia);
 		req.quiz.dia = req.body.quiz.dia;
 		req.quiz.mes = req.body.quiz.mes;
-		req.quiz.any = req.body.quiz.any;
+		req.quiz.anio = req.body.quiz.anio;
 
 		req.quiz.pregunta = req.body.quiz.pregunta;
 		req.quiz.respuesta = req.body.quiz.respuesta;
@@ -441,7 +452,7 @@
 			res.render('quizes/edit', {quiz: req.quiz, errors: errores});
 		} else {
 			req.quiz 															// save: guarda en DB campos pregunta y respuesta de quiz
-			.save({fields: ["fecha", "pregunta", "respuesta", "tema", "proveedor", "proceso", "fecha", "dia", "mes", "any"]})
+			.save({fields: ["fecha", "pregunta", "respuesta", "tema", "proveedor", "proceso", "fecha", "dia", "mes", "anio"]})
 			.then(function() {res.redirect('/quizes')});
 		};
 	};

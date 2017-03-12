@@ -1,5 +1,5 @@
 
-	process.env.DATABASE_URL = "postgres://cskhzchbcgyqnx:5a9d6331b29e8332a9975678b89d74f6ec506b3032c3e130b7df28dfc4235d90@ec2-176-34-186-178.eu-west-1.compute.amazonaws.com:5432/d5vssvajfmbdbo?ssl=true"; // URL HerokuPostgres
+	process.env.DATABASE_URL = "postgres://kjgxvlavatvico:642025771b8ced5ce703d82238c7937443174c6e17c3a46f5883bb922d39f154@ec2-54-75-249-162.eu-west-1.compute.amazonaws.com:5432/d61bjp18tlpo7l?ssl=true"; // URL HerokuPostgres
 	process.env.DATABASE_STORAGE = "quiz.sqlite";
 	process.env.PASSWORD_ENCRYPTION_KEY= "asdfghjklzxcvbnmqwertyuiop"
 
