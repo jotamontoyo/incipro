@@ -87,7 +87,18 @@
 														<input type="text" class="form-control" id="carga" name="comment[carga]" value="<%=quiz.comments[index].carga%>" step="0.01"/>
 													</div>
 												</div>
+											<%} else {%>
+												<div class="form-group">
+
+													<div class="col-md-3" style="margin-top: 6px;">
+
+													</div>
+													<div class="col-md-9">
+
+													</div>
+												</div>
 											<%}%>
+
 
 
 											<div class="col-md-12">
@@ -98,7 +109,14 @@
 					                                    <div class="panel-heading" role="tab" id="agregar">
 					                                        <h4 class="panel-title">
 					                                            <a id="ver-textaera" role="button" data-toggle="collapse" data-parent="#agregar-comentario" href="#<%=quiz.comments[index].id%>" aria-expanded="true" aria-controls="collapseOne">
-					                                                Añadir comentarios&nbsp;&nbsp;<i class="fa fa-arrow-down"></i>
+																	<% if (!quiz.comments[index].texto) { %>
+																		<i class="fa fa-plus"></i> Añadir comentarios
+																	<%} else {%>
+																		<i class="fa fa-arrow-down"></i> Ver comentarios
+
+																	<%}%>
+
+
 					                                            </a>
 					                                        </h4>
 					                                    </div>

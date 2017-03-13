@@ -32,9 +32,10 @@
 
 	.comment-panel {
 
+		min-height: 370px;
 		margin-bottom: 20px;
 		padding-bottom: 10px;
-		background-color: 	rgba(238, 238, 238, 0.8);
+/*		background-color: 	rgba(238, 238, 238, 0.8); */
 		border: 		1px solid #D8D8D8;
 	}
 

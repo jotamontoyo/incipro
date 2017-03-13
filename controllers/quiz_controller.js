@@ -237,18 +237,17 @@
 
 					for (let x in quizes[i].comments) {
 
-						if (quizes[anterior].comments[x]) {			// por si no hay lectura anterior. para que no dé error undefined
+						if (quizes[anterior].comments[x]) {						// por si no hay lectura anterior. para que no dé error undefined
 
-							if (!quizes[anterior].comments[x].deposito){
+							if (!quizes[anterior].comments[x].deposito) {		// pregunta si es o no deposito para hacer el calculo
 
 								quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
 
 							} else {
 
-								quizes[anterior].comments[x].consumo = quizes[anterior].comments[x].lectura_actual - quizes[i].comments[x].lectura_actual + quizes[i].comments[anterior].carga;
+								quizes[anterior].comments[x].consumo = quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga);
 
-							}
-
+							};
 
 							if (quizes[anterior].comments[x].consumo > quizes[anterior].comments[x].maximo) { quizes[anterior].comments[x].cumple = false };
 

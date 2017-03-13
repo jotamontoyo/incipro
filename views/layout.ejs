@@ -32,6 +32,18 @@
 
 <body>
 
+	<script>
+		window.onload = function() {
+			var pos = window.name || 0;
+			window.scrollTo(0, pos);
+		};
+
+		window.onunload = function() {
+			window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+		};
+
+	</script>
+
 <div class="container">
 	<nav class="navbar navbar-inverse" id="menu-inicio">
 
@@ -101,9 +113,9 @@
 	</div>
 
 
-	<div class="footer">
+<!--	<div class="row"  style="position: relative; bottom: 10px;">
 		<p class="text-center">&copy; 2017 jotaCompany, Inc. &middot; <a href="https://github.com/jotamontoyo/incipro">GitHub</a> &middot; <a href="#">Terms</a></p>
-	</div>
+	</div> -->
 
 </div>
 
