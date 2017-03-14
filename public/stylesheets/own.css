@@ -3,10 +3,18 @@
 /*		background: url(/images/fondo01.jpg) no-repeat fixed center; */
 	}
 
+	a:hover {
+		cursor: pointer;
+	}
 
 	.centrado-v-h {
+
+
+
+
 		display: flex;							/* necesario para alineacion */
 		align-items: center; 					/* alineacion vertical */
+		vertical-align: middle;
 		justify-content: center;				/* alineacion horizontal */
 	}
 
@@ -15,11 +23,51 @@
 		align-items: center; 					/* alineacion vertical */
 	}
 
+	#inicio {
+
+		height: 70vh;
+
+	}
 
 
-	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
-/*		background-color: 	rgba(238, 238, 238, 0.6);
-		box-shadow: 		10px 10px 5px #D7D7D7; */
+	#inicio-panel {
+
+		max-width: 600px;
+		position: relative;
+		text-align: center;
+
+
+	}
+
+	.titulo-secciones {
+		padding: 8px 5px 8px 5px;
+/*		padding-top: 5px;        activar si fuente Kalinga    */
+
+/*		color: #eb9837;
+		background-color: #000; */
+
+
+
+	}
+
+
+	#ver-mas-modal, #lopd-modal {
+
+		text-align: justify;
+	}
+
+
+
+
+	.ocultar {																/* a esta esta clase le cambio css desde autoscroll.js */
+    	opacity: 0;
+	}
+
+
+
+/*	#front-panel, #quizes-panel, #temas-panel, #showbytema-panel, #stats-panel, #db-panel {
+		background-color: 	rgba(238, 238, 238, 0.6);
+		box-shadow: 		10px 10px 5px #D7D7D7;
 	}
 
 	.comment-row {
@@ -28,9 +76,11 @@
 		margin-bottom: 		10px;
 		background-color: 	rgba(238, 238, 238, 0.4);
 		box-shadow: 		5px 5px 5px #D7D7D7;
-	}
+	} */
 
-	.comment-panel {
+
+
+	.comment-panel {						/* estilo de las lecturas */
 
 		min-height: 370px;
 		margin-bottom: 20px;
@@ -45,6 +95,11 @@
 
 
 
+	}
+
+	#login input-group {
+		margin-right: 20px;
+		margin-left: 20px;
 	}
 
 	#login-panel {
@@ -73,6 +128,7 @@
 
 	#menu-inicio {
 
+		position: relative;
 
 	}
 
