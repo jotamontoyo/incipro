@@ -4,9 +4,9 @@
 	<form class="form-horizontal">
 		<div class="form-group">
 
-			<h4>Parte nº: <%= quiz.id %> </h4>
-			<h4>Fecha: <%= quiz.dia %>-<%= quiz.mes %>-<%= quiz.anio %> </h4>
-			<h4>Usuario: <%= quiz.UserName %> </h4>
+			<h5>Parte nº: <strong><%= quiz.id %></strong></h5>
+			<h5>Fecha: <strong><%= quiz.dia %>-<%= quiz.mes %>-<%= quiz.anio %></strong></h5>
+			<h5>Usuario: <strong><%= quiz.UserName %></strong></h5>
 <!--			<h4>Proveedor: <%= quiz.proveedor %> </h4>
 			<h4>Status: <%= quiz.proceso %> </h4> -->
 
@@ -16,7 +16,7 @@
 
 	<div class="container">
 
-		<h3>Lecturas:</h3>
+		<h4>Lecturas:</h4>
 
 		<br>
 
@@ -59,9 +59,8 @@
 
 
 										<h5><span class="badge">#<%=quiz.comments[index].id%></span></h5>
-										<h4 class="text-center"><%= quiz.comments[index].nombre %></h4>
-										<h5>Número: <%= quiz.comments[index].codigo %></h5>
-										<h5>Ubicación: <%= quiz.comments[index].ubicacion %></h5>
+										<h4 class="text-center"><strong><%= quiz.comments[index].codigo %> - <%= quiz.comments[index].nombre %></strong></h4>
+										<h5>Ubicación: <strong><%= quiz.comments[index].ubicacion %></strong></h5>
 
 
 										<form class="form-horizontal" method="post" action="/quizes/<%=quiz.id%>/comments/<%=quiz.comments[index].id%>/update?_method=put">
@@ -73,7 +72,7 @@
 													<label for="lectura_actual">Lectura</label>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%=quiz.comments[index].lectura_actual%>" step="0.01"/>
+													<input type="text" class="form-control" id="lectura_actual" name="comment[lectura_actual]" value="<%= (quiz.comments[index].lectura_actual).toFixed(2) %>" step="0.01"/>
 												</div>
 											</div>
 
@@ -84,7 +83,7 @@
 														<label for="carga">Carga</label>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" id="carga" name="comment[carga]" value="<%=quiz.comments[index].carga%>" step="0.01"/>
+														<input type="text" class="form-control" id="carga" name="comment[carga]" value="<%= (quiz.comments[index].carga).toFixed(2) %>" step="0.01"/>
 													</div>
 												</div>
 											<%} else {%>
@@ -148,7 +147,7 @@
 										<h5><span class="badge">#<%=quiz.comments[index].id%></span></h5>
 										<h5>Código: <%= quiz.comments[index].codigo %></h5>
 										<h5>Nombre: <%= quiz.comments[index].nombre %></h5>
-										<h5>Lectura: <%= quiz.comments[index].lectura_actual %></h5>
+										<h5>Lectura: <%= (quiz.comments[index].lectura_actual).toFixed(2) %></h5>
 
 
 

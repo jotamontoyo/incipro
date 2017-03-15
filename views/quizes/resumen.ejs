@@ -13,7 +13,7 @@
                     <th class="text-center">Parte</th>
                     <th class="text-center">Usuario</th>
                     <% for (var i in contadores) { %>
-                        <th class="text-center"><%= contadores[i].nombre %></th>
+                        <th style="text-align:right"><%= contadores[i].nombre %></th>
                     <%}%>
 
                 </tr>
@@ -35,7 +35,7 @@
 
                             <% if (quizes[i].comments[x].cumple) {%>
 
-                                <td class="text-center" style="color:black">
+                                <td class="" style="color:black">
 
                                     <% if (quizes[i].comments[x].texto) {%>
 
@@ -44,7 +44,7 @@
                                             <%= quizes[i].comments[x].consumo %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
                                         </a>
 
-                                        <div id="<%= quizes[i].comments[x].id %>" class="panel-collapse collapse" role="tabpanel" style="min-width:200px">
+                                        <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
                                             <div class="panel-body">
                                                 <pre><%= quizes[i].comments[x].texto %></pre>
 
@@ -66,7 +66,7 @@
 
                             <% if (!quizes[i].comments[x].cumple) {%>
 
-                                <td class="text-center" style="color:red">
+                                <td class="" style="color:red">
 
                                     <% if (quizes[i].comments[x].texto) {%>
 
@@ -75,7 +75,7 @@
                                             <%= quizes[i].comments[x].consumo %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
                                         </a>
 
-                                        <div id="<%= quizes[i].comments[x].id %>" class="panel-collapse collapse" role="tabpanel" style="min-width:200px">
+                                        <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
                                             <div class="panel-body">
                                                 <pre><%= quizes[i].comments[x].texto %></pre>
 

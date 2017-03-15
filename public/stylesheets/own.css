@@ -79,10 +79,15 @@
 	} */
 
 
+	#partes_index {
+
+		max-width: 1080px;
+
+	}
 
 	.comment-panel {						/* estilo de las lecturas */
 
-		min-height: 370px;
+		min-height: 340px;
 		margin-bottom: 20px;
 		padding-bottom: 10px;
 /*		background-color: 	rgba(238, 238, 238, 0.8); */
@@ -154,9 +159,9 @@
 
 
 
-	/* ========= FORMULARIO CONTADOR ===================== */
+	/* ========= FORMULARIO CONTADOR y PARTE ===================== */
 
-	#contador_form {
+	#contador_form, #parte_form {
 
 		max-width: 600px;
 		padding: 20px 20px 20px 20px;
@@ -168,7 +173,7 @@
 
 	#contadores-panel th, td {
 
-		text-align: center;
+		text-align: right;
 
 
 
@@ -229,7 +234,7 @@
 		outline: none;
 	}
 
-	#resumen_index {
+	#resumen_index {				/* formulario para elejir mes para el informe de consumos  */
 
 		max-width: 500px;
 		margin-top: 10vh;
@@ -237,6 +242,17 @@
 		border: 1px solid #ccc;
 
 	}
+
+	.comentario_resumen {			/* estilo del comentario desplegable en el informe de consumos  */
+
+
+		margin-right: -10vw;
+		min-width:150px;
+		max-width: 200px;
+		text-align:center
+	}
+
+
 
 	.form-group {
 
