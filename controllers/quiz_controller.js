@@ -241,11 +241,11 @@
 
 							if (!quizes[anterior].comments[x].deposito) {		// pregunta si es o no deposito para hacer el calculo
 
-								quizes[anterior].comments[x].consumo = quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual;
+								quizes[anterior].comments[x].consumo = (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual).toFixed(2);
 
 							} else {
 
-								quizes[anterior].comments[x].consumo = quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga);
+								quizes[anterior].comments[x].consumo = (quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga)).toFixed(2);
 
 							};
 
