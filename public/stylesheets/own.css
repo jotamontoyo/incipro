@@ -234,14 +234,17 @@
 		outline: none;
 	}
 
-	#resumen_index {				/* formulario para elejir mes para el informe de consumos  */
+	#resumen_index, #mes_index {				/* formulario para elejir mes para el informe de consumos  */
 
-		max-width: 500px;
+		max-width: 600px;
 		margin-top: 10vh;
 
 		border: 1px solid #ccc;
 
 	}
+
+
+
 
 	.comentario_resumen {			/* estilo del comentario desplegable en el informe de consumos  */
 

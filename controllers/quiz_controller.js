@@ -100,14 +100,20 @@
 		};
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
+
 			options = {
+
 				where: {
 					UserId: req.user.id,
 					mes: mes,
 					anio: anio
 				},
+
+				columnDefs: [{ "type": "numeric-comma", targets: 3 }],
+
 				order: [['fecha', 'ASC']]
 			};
+
 	  	};
 
 	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
@@ -131,8 +137,23 @@
 
 		var resumen = {
 			mes: fecha.getUTCMonth() + 1,
+			nombre_mes: '',
 			anio: fecha.getUTCFullYear()
 		};
+
+		if (resumen.mes === 1) {resumen.nombre_mes = 'Enero'};
+		if (resumen.mes === 2) {resumen.nombre_mes = 'Febrero'};
+		if (resumen.mes === 3) {resumen.nombre_mes = 'Marzo'};
+		if (resumen.mes === 4) {resumen.nombre_mes = 'Abril'};
+		if (resumen.mes === 5) {resumen.nombre_mes = 'Mayo'};
+		if (resumen.mes === 6) {resumen.nombre_mes = 'Junio'};
+		if (resumen.mes === 7) {resumen.nombre_mes = 'Julio'};
+		if (resumen.mes === 8) {resumen.nombre_mes = 'Agosto'};
+		if (resumen.mes === 9) {resumen.nombre_mes = 'Septiembre'};
+		if (resumen.mes === 10) {resumen.nombre_mes = 'Octubre'};
+		if (resumen.mes === 10) {resumen.nombre_mes = 'Nomviembre'};
+		if (resumen.mes === 11) {resumen.nombre_mes = 'Diciembre'};
+
 
 		res.render('quizes/resumen_index', {resumen: resumen, errors: []});
 
@@ -151,9 +172,15 @@
 	exports.resumen = function(req, res, next) {
 
 
-
 		var mes = parseInt(req.body.resumen.mes),
-			anio = parseInt(req.body.resumen.anio);
+			mes_siguiente = mes + 1,
+			anio = parseInt(req.body.resumen.anio),
+			anio_siguiente = anio;
+
+		if (mes === 12) {
+			mes_siguiente = 1;
+			anio_siguiente = anio + 1;
+		};
 
 
 		var options = {
@@ -169,10 +196,12 @@
 			),
 			Sequelize.and(
 				{dia: 1},
-				{mes: 1 + mes},
-				{anio: anio}
+				{mes: mes_siguiente},
+				{anio: anio_siguiente}
 			)
 		),
+
+		columnDefs: [{type: "numeric-comma", targets: 3}],
 
 
 /*		where: {
