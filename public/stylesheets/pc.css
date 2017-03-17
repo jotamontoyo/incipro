@@ -9,9 +9,6 @@
 
 	.centrado-v-h {
 
-
-
-
 		display: flex;							/* necesario para alineacion */
 		align-items: center; 					/* alineacion vertical */
 		vertical-align: middle;
@@ -23,21 +20,7 @@
 		align-items: center; 					/* alineacion vertical */
 	}
 
-	#inicio {
 
-		height: 70vh;
-
-	}
-
-
-	#inicio-panel {
-
-		max-width: 600px;
-		position: relative;
-		text-align: center;
-
-
-	}
 
 	.titulo-secciones {
 		padding: 8px 5px 8px 5px;
@@ -79,6 +62,12 @@
 	} */
 
 
+
+
+
+
+	/* PARTES ===========================================================================*/
+
 	#partes_index {
 
 		max-width: 1080px;
@@ -90,10 +79,16 @@
 		min-height: 340px;
 		margin-bottom: 20px;
 		padding-bottom: 10px;
-/*		background-color: 	rgba(238, 238, 238, 0.8); */
+		color: #fff;
+		background-color: 	rgba(0, 0, 0, 0.8); */
 		border: 		1px solid #D8D8D8;
 	}
 
+
+
+
+
+	/* LOGIN =======================================================================================*/
 
 	#login {
 
@@ -129,11 +124,27 @@
 
 
 
-	/***************************************************************************************************/
+	/* INICIO ******************************************************************************************/
 
 	#menu-inicio {
 
 		position: relative;
+
+	}
+
+	#inicio {
+
+		height: 70vh;
+
+	}
+
+
+	#inicio-panel {
+
+		max-width: 600px;
+		position: relative;
+		text-align: center;
+
 
 	}
 
@@ -159,6 +170,33 @@
 
 
 
+
+
+	/* RESUMEN CONSUMOS ===========================================================  */
+
+	.dato_consumo {					/* estilo del dato que se muestra en el informe */
+
+		text-align: right;
+
+
+	}
+
+	.comentario_resumen {			/* estilo del comentario desplegable en el informe de consumos  */
+
+
+		margin-right: -10vw;
+		min-width:150px;
+		max-width: 200px;
+		text-align:center
+	}
+
+
+
+
+
+
+
+
 	/* ========= FORMULARIO CONTADOR y PARTE ===================== */
 
 	#contador_form, #parte_form {
@@ -171,18 +209,24 @@
 
 	}
 
-	#contadores-panel th, td {
-
-		text-align: right;
 
 
+
+	/*  CONTADORES ================================================================= */
+
+	#contadores-panel tr th, #contadores-panel tr td {
+
+		text-align: center;
 
 	}
+
 
 	#criterios {
 
 		margin-bottom: 20px;
 		padding: 20px;
+		color: #fff;
+		background-color: 	rgba(0, 0, 0, 0.8);
 		border: 		1px solid #D8D8D8;
 	}
 
@@ -191,6 +235,7 @@
 		max-width: 500px;
 		margin-bottom: 20px;
 		padding: 20px;
+
 
 		border: 1px solid #D8D8D8;
 	}
@@ -246,14 +291,7 @@
 
 
 
-	.comentario_resumen {			/* estilo del comentario desplegable en el informe de consumos  */
 
-
-		margin-right: -10vw;
-		min-width:150px;
-		max-width: 200px;
-		text-align:center
-	}
 
 
 

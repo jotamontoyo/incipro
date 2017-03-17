@@ -109,7 +109,7 @@
 					anio: anio
 				},
 
-				columnDefs: [{ "type": "numeric-comma", targets: 3 }],
+//				columnDefs: [{ "type": "numeric-comma", targets: 3 }],
 
 				order: [['fecha', 'ASC']]
 			};
@@ -141,18 +141,17 @@
 			anio: fecha.getUTCFullYear()
 		};
 
-		if (resumen.mes === 1) {resumen.nombre_mes = 'Enero'};
-		if (resumen.mes === 2) {resumen.nombre_mes = 'Febrero'};
-		if (resumen.mes === 3) {resumen.nombre_mes = 'Marzo'};
-		if (resumen.mes === 4) {resumen.nombre_mes = 'Abril'};
-		if (resumen.mes === 5) {resumen.nombre_mes = 'Mayo'};
-		if (resumen.mes === 6) {resumen.nombre_mes = 'Junio'};
-		if (resumen.mes === 7) {resumen.nombre_mes = 'Julio'};
-		if (resumen.mes === 8) {resumen.nombre_mes = 'Agosto'};
-		if (resumen.mes === 9) {resumen.nombre_mes = 'Septiembre'};
-		if (resumen.mes === 10) {resumen.nombre_mes = 'Octubre'};
-		if (resumen.mes === 10) {resumen.nombre_mes = 'Nomviembre'};
-		if (resumen.mes === 11) {resumen.nombre_mes = 'Diciembre'};
+/*		switch (resumen.mes) {
+			case 1:
+				resumen.nombre_mes = 'Enero';
+				break;
+			case 2:
+				resumen.nombre_mes = 'Febrero';
+				break;
+			case 3:
+				resumen.nombre_mes = 'Marzo';
+				break;
+		}; */
 
 
 		res.render('quizes/resumen_index', {resumen: resumen, errors: []});
