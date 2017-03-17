@@ -16,7 +16,15 @@
     /* ======= PARTES =============================================  */
     /* ============================================================  */
 
-    .comment-panel {						/* estilo de las lecturas */
+
+    .comments {
+
+        padding: 0px;
+    }
+
+
+
+    .comment-panel {						/* estilo de cada lectura */
 
 
 /*        color: #fff;
