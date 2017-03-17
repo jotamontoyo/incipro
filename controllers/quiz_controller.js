@@ -188,38 +188,38 @@
 //					{dia: 1, mes: mes + 1, anio}],
 
 
-		where: Sequelize.or(				// segun la version de Sequelize he de usar una u otra estructura de consulta
-			Sequelize.and(
-				{mes: mes},
-				{anio: anio}
+			where: Sequelize.or(				// segun la version de Sequelize he de usar una u otra estructura de consulta
+				Sequelize.and(
+					{mes: mes},
+					{anio: anio}
+				),
+				Sequelize.and(
+					{dia: 1},
+					{mes: mes_siguiente},
+					{anio: anio_siguiente}
+				)
 			),
-			Sequelize.and(
-				{dia: 1},
-				{mes: mes_siguiente},
-				{anio: anio_siguiente}
-			)
-		),
 
-		columnDefs: [{type: "numeric-comma", targets: 3}],
+//			columnDefs: [{type: "numeric-comma", targets: 3}],
 
 
-/*		where: {
-			$or: [
-				{
-					$and: {
-		  				mes: 3,
-		  				anio: 2017
+	/*		where: {
+				$or: [
+					{
+						$and: {
+			  				mes: 3,
+			  				anio: 2017
+						}
+					},
+					{
+						$and: {
+			  				dia: 1,
+			  				mes: 4,
+			  				anio: 2017
+						}
 					}
-				},
-				{
-					$and: {
-		  				dia: 1,
-		  				mes: 4,
-		  				anio: 2017
-					}
-				}
-			]
-		}, */
+				]
+			}, */
 
 
 
@@ -378,7 +378,7 @@
 
 						}).then(function(criterio) {
 
-							var comment = models.Comment.build({
+							var comment = models.Comment.build({						// se crea la lectura
 
 								codigo: contador[i].id,
 								nombre: contador[i].nombre,
