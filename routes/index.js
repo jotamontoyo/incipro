@@ -42,15 +42,13 @@
 
 	// Definición de rutas de quizes
 	router.get('/quizes',			 					sessionController.loginRequired, quizController.index);				// accede a la lista completa de partes /quizes/index.ejs
-	router.get('/quizes/mes_index',	 					sessionController.loginRequired, quizController.mes_index);			// accede a la lista completa de partes /quizes/index.ejs
-	router.post('/quizes/mes_index_show',				sessionController.loginRequired, quizController.mes_index_show);	// accede a la lista completa de partes /quizes/index.ejs
+	router.get('/quizes/mes_index',	 					sessionController.loginRequired, quizController.mes_index);			// formulario para seleccionar mes y año
+	router.post('/quizes/mes_index_show',				sessionController.loginRequired, quizController.mes_index_show);	// accede a la lista de partes /quizes/index.ejs selecionando mes y año
 	router.get('/quizes/resumen_index',			 		sessionController.loginRequired, quizController.resumen_index);		// formulario para seleccionar mes y año del resumen
 	router.post('/quizes/resumen',			 			sessionController.loginRequired, quizController.resumen);			// genera el informe
-	router.get('/quizes/mes_index',			 			sessionController.loginRequired, quizController.mes_index);		// formulario para seleccionar mes y año del resumen
 	router.get('/quizes/opened',			 			quizController.opened);												// accede a la lista de partes abiertos /quizes/index.ejs
 	router.get('/quizes/closed',			 			quizController.closed);												// accede a la lista de partes cerrados /quizes/index.ejs
 	router.get('/quizes/:quizId(\\d+)',					sessionController.loginRequired, quizController.show);				// accede a una pregunta en concreto. envia al quizController la peticion GET con el parametro quizId (indice)
-//	router.get('/quizes/:claveinvitado/response',		invitadoController.show);											// si la ruta lleva claveinvitado
 	router.get('/quizes/:quizId(\\d+)/answer',			quizController.answer);												// se dispara cuando submit del form question.ejs hacia la ruta /quizes/answer. le pasa el id en la peticion GET req
 	router.get('/quizes/new',							sessionController.loginRequired, quizController.new);				// carga el formulario /quizes/new si sessionController.loginRequired()
 	router.post('/quizes/create',						sessionController.loginRequired, upload, quizController.create);	// dispara controlador create cuando el boton <salvar> del formulario new.js
@@ -59,7 +57,6 @@
 	router.delete('/quizes/:quizId(\\d+)',				sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
 	router.get('/quizes/statistics',					statisticsController.calculate, statisticsController.show);
 	router.get('/quizes/:quizId(\\d+)/image', 			quizController.image);												// se dispara cuando se carga una img en el formulario show
-//	router.get('/quizes/page',                     		quizController.page);
 	router.post('/quizes/uploadimg',                    quizController.uploadimg);
 	router.get('/quizes?search',                    	quizController.search);
 

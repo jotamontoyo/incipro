@@ -22,6 +22,7 @@
                     <th class="text-center">Fecha</th>
                     <th class="text-center">Parte</th>
                     <th class="text-center">Usuario</th>
+                    <th class="text-center">Revisado</th>
                     <% for (var i in contadores) { %>
                         <th style="text-align:right"><%= contadores[i].nombre %></th>
                     <%}%>
@@ -38,6 +39,11 @@
                         <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].anio %></a></td>
                         <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
                         <td class="text-center"><%= quizes[i].UserName %></td>
+                        <% if (quizes[i].proceso) {%>
+							<td class="text-center"><span class="" aria-hidden="true"></span></td>
+						<%} else {%>
+							<td class="text-center"><i class="fa fa-check"></i></td>
+						<%}%>
 
 
 

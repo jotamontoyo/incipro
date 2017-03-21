@@ -18,7 +18,7 @@
 		models.Quiz.find({										// carga de registro quiz
 			where: 		{id: Number(quizId)},					// where indice principal id <-- quizId recibido del GET
 			include: 	[{model: models.Comment}],				// incluye la tabla Comment como hijo
-			order:		[[models.Comment, 'codigo', 'ASC']]
+			order:		[[models.Comment, 'codigo', 'ASC']]		// y la ordena por codigo
 			}).then(function(quiz) {
 				if (quiz) {
 					req.quiz = quiz;
@@ -40,7 +40,6 @@
 	exports.index = function(req, res, next) {
 
 		var fecha = new Date();
-
 		var mes = fecha.getUTCMonth() + 1;
 		var anio = fecha.getUTCFullYear();
 
@@ -93,27 +92,20 @@
 		var mes = Number(req.body.mes_index.mes);
 		var anio = Number(req.body.mes_index.anio);
 
-
 		var options = {
 			where: {mes: mes, anio: anio},
 			order: [['fecha', 'ASC']]
 		};
 
 	  	if (req.user) {									// req.user se crea en autoload de user_controller si hay un GET con un user logueado
-
 			options = {
-
 				where: {
 					UserId: req.user.id,
 					mes: mes,
 					anio: anio
 				},
-
-//				columnDefs: [{ "type": "numeric-comma", targets: 3 }],
-
 				order: [['fecha', 'ASC']]
 			};
-
 	  	};
 
 	  	models.Quiz.findAll(options).then(					// si hubo req.user ---> options contiene el SQL where UserId: req.user.id
@@ -141,21 +133,7 @@
 			anio: fecha.getUTCFullYear()
 		};
 
-/*		switch (resumen.mes) {
-			case 1:
-				resumen.nombre_mes = 'Enero';
-				break;
-			case 2:
-				resumen.nombre_mes = 'Febrero';
-				break;
-			case 3:
-				resumen.nombre_mes = 'Marzo';
-				break;
-		}; */
-
-
 		res.render('quizes/resumen_index', {resumen: resumen, errors: []});
-
 
 	};
 
@@ -170,7 +148,6 @@
 
 	exports.resumen = function(req, res, next) {
 
-
 		var mes = parseInt(req.body.resumen.mes),
 			mes_siguiente = mes + 1,
 			anio = parseInt(req.body.resumen.anio),
@@ -181,13 +158,7 @@
 			anio_siguiente = anio + 1;
 		};
 
-
 		var options = {
-
-//			where: [{mes, anio}],
-//					{dia: 1, mes: mes + 1, anio}],
-
-
 			where: Sequelize.or(				// segun la version de Sequelize he de usar una u otra estructura de consulta
 				Sequelize.and(
 					{mes: mes},
@@ -199,104 +170,33 @@
 					{anio: anio_siguiente}
 				)
 			),
-
-//			columnDefs: [{type: "numeric-comma", targets: 3}],
-
-
-	/*		where: {
-				$or: [
-					{
-						$and: {
-			  				mes: 3,
-			  				anio: 2017
-						}
-					},
-					{
-						$and: {
-			  				dia: 1,
-			  				mes: 4,
-			  				anio: 2017
-						}
-					}
-				]
-			}, */
-
-
-
-
-
-/*			where: {
-  				$or: [
-    				$and: {
-      					mes: 3,
-      					anio: 2017
-    				},
-    				{
-      					$and: {
-        					dia: 1,
-        					mes: 4,
-        					anio: 2017
-      					}
-    				}
-  				]
-			}, */
-
-
 			include: [{model: models.Comment}],
-
 			order: [['fecha', 'ASC'], [models.Comment, 'codigo', 'ASC' ]]
-
 		};
 
-
 		models.Quiz.findAll(options).then(function(quizes) {
-
 			models.Contador.findAll({
-
 				order: [['id', 'ASC']]
-
 			}).then(function(contadores) {
-
 				var anterior = 0;
-
 				for (let i in quizes) {								// hallar consumo
-
 					if (i > 0) {anterior = i - 1};
-
 					for (let x in quizes[i].comments) {
-
 						if (quizes[anterior].comments[x]) {						// por si no hay lectura anterior. para que no dé error undefined
-
 							if (!quizes[anterior].comments[x].deposito) {		// pregunta si es o no deposito para hacer el calculo
-
 								quizes[anterior].comments[x].consumo = (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual).toFixed(2);
-
 							} else {
-
-								quizes[anterior].comments[x].consumo = (quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga)).toFixed(2);
-
+								quizes[anterior].comments[x].consumo = (quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga)).toFixed(2); // .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 							};
-
 							if (quizes[anterior].comments[x].consumo > quizes[anterior].comments[x].maximo) { quizes[anterior].comments[x].cumple = false };
-
 						};
-
 					};
-
 				};
-
 				res.render('quizes/resumen', {quizes: quizes, contadores: contadores, errors: []});
-
 			}).catch(function(error){next(error)});
-
 		}).catch(function(error){next(error)});
 
 	};
-
-
-
-
-
 
 
 
@@ -523,14 +423,6 @@
 		res.send(req.quiz.image);
 	};
 
-/*	exports.page = function(req, res, next) {
-		qty_pagina += 10;
-		models.Quiz.findAll()
-			.then(function(quizes) {
-	      		res.render('quizes/index.ejs', {quizes: quizes, qty_pagina: qty_pagina, errors: []});
-	    	}
-	  	).catch(function(error){next(error)});
-	}; */
 
 	exports.uploadimg = function(req, res, next) {
         var fstream;
@@ -674,3 +566,43 @@
 						});
 
 					}; */
+
+
+
+					/*		where: {
+								$or: [
+									{
+										$and: {
+							  				mes: 3,
+							  				anio: 2017
+										}
+									},
+									{
+										$and: {
+							  				dia: 1,
+							  				mes: 4,
+							  				anio: 2017
+										}
+									}
+								]
+							}, */
+
+
+
+
+
+				/*			where: {
+				  				$or: [
+				    				$and: {
+				      					mes: 3,
+				      					anio: 2017
+				    				},
+				    				{
+				      					$and: {
+				        					dia: 1,
+				        					mes: 4,
+				        					anio: 2017
+				      					}
+				    				}
+				  				]
+							}, */
