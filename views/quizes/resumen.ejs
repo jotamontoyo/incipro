@@ -57,7 +57,7 @@
 
 
                                         <a style="color:black; margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= quizes[i].comments[x].consumo %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
+                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
                                         </a>
 
                                         <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
@@ -71,7 +71,7 @@
 
                                     <%} else { %>
 
-                                        <%= quizes[i].comments[x].consumo %>
+                                        <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
 
                                     <%}%>
 
@@ -86,9 +86,8 @@
 
                                     <% if (quizes[i].comments[x].texto) {%>
 
-
                                         <a style="color:red; margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= quizes[i].comments[x].consumo %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
+                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
                                         </a>
 
                                         <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
@@ -102,7 +101,7 @@
 
                                     <%} else { %>
 
-                                        <%= quizes[i].comments[x].consumo %>
+                                        <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
 
                                     <%}%>
 

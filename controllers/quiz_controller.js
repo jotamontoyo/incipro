@@ -184,9 +184,9 @@
 					for (let x in quizes[i].comments) {
 						if (quizes[anterior].comments[x]) {						// por si no hay lectura anterior. para que no dé error undefined
 							if (!quizes[anterior].comments[x].deposito) {		// pregunta si es o no deposito para hacer el calculo
-								quizes[anterior].comments[x].consumo = (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual).toFixed(2);
+								quizes[anterior].comments[x].consumo = (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].lectura_actual);
 							} else {
-								quizes[anterior].comments[x].consumo = (quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga)).toFixed(2); // .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+								quizes[anterior].comments[x].consumo = (quizes[anterior].comments[x].lectura_actual - (quizes[i].comments[x].lectura_actual - quizes[anterior].comments[x].carga)); // .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 							};
 							if (quizes[anterior].comments[x].consumo > quizes[anterior].comments[x].maximo) { quizes[anterior].comments[x].cumple = false };
 						};
@@ -198,6 +198,17 @@
 
 	};
 
+
+	Number.prototype.formatNumber = function(c, d, t) {
+		var n = this,
+			c = isNaN(c = Math.abs(c)) ? 2 : c,
+			d = d == undefined ? "," : d,					// en caso de no pasar parametro d
+			t = t == undefined ? "." : t,					// en caso de no pasar parametro t
+			s = n < 0 ? "-" : "",							// si es negativo
+			i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+			j = (j = i.length) > 3 ? j % 3 : 0;
+			return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+		};
 
 
 

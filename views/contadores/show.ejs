@@ -78,8 +78,8 @@
 								<div class="container-fluid">
 
 										<h5>Mes: <strong><%= criterios[index].mes %></strong></h5>
-										<h5>Máximo: <strong><%= (criterios[index].max).toFixed(2) %></strong></h5>
-										<h5>Mínimo: <strong><%= (criterios[index].min).toFixed(2) %></strong></h5>
+										<h5>Máximo: <strong><%= (criterios[index].max).formatNumber(2, ',', '.') %></strong></h5>
+										<h5>Mínimo: <strong><%= (criterios[index].min).formatNumber(2, ',', '.') %></strong></h5>
 
 								</div>
 
