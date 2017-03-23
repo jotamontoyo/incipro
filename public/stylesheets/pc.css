@@ -181,7 +181,15 @@
 
 	}
 
-	.comentario_resumen {			/* estilo del comentario desplegable en el informe de consumos  */
+	#tabla_resumen {
+
+		padding-right: 15px;
+		padding-left: 15px;
+
+
+	}
+
+	.info_desvio {				/* estilo del comentario desplegable en el informe de consumos  */
 
 
 		margin-right: -10vw;
@@ -190,7 +198,8 @@
 		min-width:150px;
 		max-width: 200px;
 
-		text-align:center
+		color: black;
+		text-align: center;
 	}
 
 

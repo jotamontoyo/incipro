@@ -1,19 +1,10 @@
 
-<!-- <script type="text/javascript">
-
-    $(document).ready(function() {
-        $('.table').dataTable({
-            'columnDefs': [{'type': "numeric-comma", targets: 3}]
-        });
-    }); -->
-
-</script>
 
 <div class="container-fluid animated animated-fast fadeIn" id="resumen">
 
     <h4><i class="fa fa-calculator"></i> Consumos</h4>
 
-    <div class="panel panel-default table-responsive">
+    <div class="panel panel-default table-responsive" id="tabla_resumen">
 
         <table class="table table-striped table-hover">
 
@@ -60,9 +51,13 @@
                                             <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
                                         </a>
 
-                                        <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
+                                        <div id="<%= quizes[i].comments[x].id %>" class="info_desvio panel-collapse collapse" role="tabpanel">
                                             <div class="panel-body">
-                                                <pre><%= quizes[i].comments[x].texto %></pre>
+
+
+                                                    <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
+
+
 
                                             </div>
                                         </div>
@@ -84,26 +79,46 @@
 
                                 <td class="dato_consumo" style="color:red">
 
-                                    <% if (quizes[i].comments[x].texto) {%>
 
-                                        <a style="color:red; margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
+
+                                        <a class="btn-ver-comentario" style="color: rgba(178, 34, 34, 1.0); margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
+                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
+                                            <% if (quizes[i].comments[x].texto) {%>
+                                                <i class="fa fa-comment" style="color: rgba(139, 0, 0, 1.0)"></i>
+                                            <%} else {%>
+                                                <i class="fa fa-info-circle" style="color: rgba(139, 0, 0, 1.0)"></i>
+                                            <%}%>
                                         </a>
 
-                                        <div id="<%= quizes[i].comments[x].id %>" class="comentario_resumen panel-collapse collapse" role="tabpanel">
-                                            <div class="panel-body">
-                                                <pre><%= quizes[i].comments[x].texto %></pre>
+                                        <div id="<%= quizes[i].comments[x].id %>" class="info_desvio panel-collapse collapse" role="tabpanel">
+                                            <div class="panel-body panel_info_desvio">
+
+
+                                                    <h6>Máximo: <%= quizes[i].comments[x].maximo %></h6>
+
+                                                    <h6>Desvío: +<%= (((quizes[i].comments[x].consumo - quizes[i].comments[x].maximo) / quizes[i].comments[x].maximo)*100).formatNumber(2, ',', '.') %>%</h6>
+
+                                                    <% if (quizes[i].comments[x].texto) {%>
+                                                        <hr>
+                                                        <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
+                                                    <%}%>
+
 
                                             </div>
                                         </div>
 
+                                        <script type="text/javascript">
+                                            $(document).ready(function() {
+                                                $('.btn-ver-comentario a').click(function() {						// cierra el modal cuando click
+                                                    console.log('entra');
+                                                    $('.info_desvio').modal('hide');
+                                                });
+                                            };
+                                        </script>
 
 
-                                    <%} else { %>
 
-                                        <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
 
-                                    <%}%>
 
                                 </td>
 
