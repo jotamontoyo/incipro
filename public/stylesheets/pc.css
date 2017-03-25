@@ -74,6 +74,18 @@
 
 	}
 
+	#partes_index a, button {
+
+		opacity: 1;
+
+	}
+
+	#partes_index, td:hover {
+
+		opacity: 1;
+
+	}
+
 	.comment-panel {						/* estilo de las lecturas */
 
 		min-height: 340px;
@@ -176,7 +188,16 @@
 
 	.dato_consumo {					/* estilo del dato que se muestra en el informe */
 
+
 		text-align: right;
+
+
+	}
+
+	.dato_consumo img {
+
+		width: 12px;
+		margin-bottom: 5px;
 
 
 	}
@@ -189,6 +210,8 @@
 
 	}
 
+
+
 	.info_desvio {				/* estilo del comentario desplegable en el informe de consumos  */
 
 
@@ -200,6 +223,8 @@
 
 		color: black;
 		text-align: center;
+
+		border: 1px solid #D8D8D8;
 	}
 
 

@@ -47,26 +47,23 @@
                                     <% if (quizes[i].comments[x].texto) {%>
 
 
-                                        <a style="color:black; margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %> <i class="fa fa-commenting-o" style="color:#BDBDBD"></i>
+                                        <a style="color:black;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
+                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
+                                            <img src="/images/info5.png" />
                                         </a>
 
                                         <div id="<%= quizes[i].comments[x].id %>" class="info_desvio panel-collapse collapse" role="tabpanel">
                                             <div class="panel-body">
 
-
-                                                    <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
-
-
+                                                <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
 
                                             </div>
                                         </div>
 
-
-
                                     <%} else { %>
 
                                         <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
+                                        <img src="/images/ok.png" />
 
                                     <%}%>
 
@@ -75,54 +72,42 @@
                             <%}%>
 
 
+
+
                             <% if (!quizes[i].comments[x].cumple) {%>
 
                                 <td class="dato_consumo" style="color:red">
 
+                                    <a class="btn-ver-comentario" style="color: rgba(178, 34, 34, 1.0);" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
+                                        <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
+                                        <% if (quizes[i].comments[x].texto) {%>
+<!--                                            <i class="fa fa-comment" style="color: rgba(139, 0, 0, 1.0)"></i> -->
+                                            <img src="/images/alert2.png" />
 
+                                        <%} else {%>
+<!--                                            <i class="fa fa-info-circle" style="color: rgba(139, 0, 0, 1.0)"></i> -->
+                                            <img width="16px" src="/images/info4.png" />
+                                        <%}%>
+                                    </a>
 
-                                        <a class="btn-ver-comentario" style="color: rgba(178, 34, 34, 1.0); margin-right: -18px;" role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= quizes[i].comments[x].id %>" aria-expanded="true" aria-controls="collapseOne">
-                                            <%= (quizes[i].comments[x].consumo).formatNumber(2, ',', '.') %>
+                                    <div id="<%= quizes[i].comments[x].id %>" class="info_desvio panel-collapse collapse" role="tabpanel">
+                                        <div class="panel-body panel_info_desvio">
+
+                                            <h6>Máximo: <%= quizes[i].comments[x].maximo %></h6>
+                                            <h6>Desvío: +<%= (((quizes[i].comments[x].consumo - quizes[i].comments[x].maximo) / quizes[i].comments[x].maximo)*100).formatNumber(2, ',', '.') %>%</h6>
                                             <% if (quizes[i].comments[x].texto) {%>
-                                                <i class="fa fa-comment" style="color: rgba(139, 0, 0, 1.0)"></i>
-                                            <%} else {%>
-                                                <i class="fa fa-info-circle" style="color: rgba(139, 0, 0, 1.0)"></i>
+                                                <hr>
+                                                <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
                                             <%}%>
-                                        </a>
 
-                                        <div id="<%= quizes[i].comments[x].id %>" class="info_desvio panel-collapse collapse" role="tabpanel">
-                                            <div class="panel-body panel_info_desvio">
-
-
-                                                    <h6>Máximo: <%= quizes[i].comments[x].maximo %></h6>
-
-                                                    <h6>Desvío: +<%= (((quizes[i].comments[x].consumo - quizes[i].comments[x].maximo) / quizes[i].comments[x].maximo)*100).formatNumber(2, ',', '.') %>%</h6>
-
-                                                    <% if (quizes[i].comments[x].texto) {%>
-                                                        <hr>
-                                                        <h6><%= quizes[i].UserName %>: "<%= quizes[i].comments[x].texto %>"</h6>
-                                                    <%}%>
-
-
-                                            </div>
                                         </div>
-
-                                        <script type="text/javascript">
-                                            $(document).ready(function() {
-                                                $('.btn-ver-comentario a').click(function() {						// cierra el modal cuando click
-                                                    console.log('entra');
-                                                    $('.info_desvio').modal('hide');
-                                                });
-                                            };
-                                        </script>
-
-
-
-
+                                    </div>
 
                                 </td>
 
                             <%}%>
+
+
 
                         <%}%>
 
