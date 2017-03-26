@@ -11,7 +11,7 @@
 
 
 
-    #principal {               añadir los index y los shows de partes, contadores, resumen.................... 
+    #principal {               añadir los index y los shows de partes, contadores, resumen....................
         padding-right: 0px;
         padding-left: 0px;
     }
@@ -38,6 +38,20 @@
 		background-color: 	rgba(0, 0, 0, 0.8);
 		border: 		1px solid #D8D8D8; */
 	}
+
+
+
+
+    /* ============================================================  */
+    /* ======= RESUMEN =============================================  */
+    /* ============================================================  */
+
+
+    #leyenda {
+        text-align: left;
+    }
+
+
 
 
 

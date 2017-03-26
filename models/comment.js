@@ -49,6 +49,10 @@
                 type: DataTypes.STRING
             },
 
+			tolerancia: {
+                type: DataTypes.FLOAT
+            },
+
             lectura_actual: {
                 type: DataTypes.FLOAT
             },

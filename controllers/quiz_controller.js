@@ -295,6 +295,7 @@
 								nombre: contador[i].nombre,
 								ubicacion: contador[i].ubicacion,
 								deposito: contador[i].deposito,
+								tolerancia: contador[i].tolerancia,
 								carga: 0,
 								lectura_actual: 0,
 								maximo: criterio.max,									// le pasa el comsumo maximo previsto

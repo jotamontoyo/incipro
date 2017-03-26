@@ -48,6 +48,7 @@
                 deposito: false,
                 ubicacion: "",
                 fecha_revision: "",
+                tolerancia: 0,
                 lectura_anterior: 0
             }
 		);
@@ -121,6 +122,7 @@
         };
         req.contador.ubicacion = req.body.contador.ubicacion;
         req.contador.fecha_revision = req.body.contador.fecha_revision;
+        req.contador.tolerancia = req.body.contador.tolerancia;
 
         var errors = req.contador.validate();
         if (errors) {
@@ -130,7 +132,7 @@
             res.render('contadores/edit', {contador: req.contador, errors: errores});
         } else {
             req.contador 															// save: guarda en DB campos pregunta y respuesta de quiz
-            .save({fields: ["nombre", "marca", "modelo", "deposito", "ubicacion", "fecha_revision"]})
+            .save({fields: ["nombre", "marca", "modelo", "deposito", "ubicacion", "fecha_revision", "tolerancia"]})
             .then(function() {res.redirect('/contadores')});
         };
     };

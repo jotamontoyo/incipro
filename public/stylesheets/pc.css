@@ -127,7 +127,7 @@
 		padding-top: 10vh;
 		padding-bottom: 10vh;
 
-		border: 		1px solid #D8D8D8
+		border: 		1px solid #D8D8D8;
 
 /*		margin-top: 20vh; */
 
@@ -186,6 +186,38 @@
 
 	/* RESUMEN CONSUMOS ===========================================================  */
 
+
+	#head_consumos h4 {
+
+
+		display: inline-block;
+
+
+	}
+
+	#head_consumos img {
+
+		margin-bottom: 6px;
+		margin-left: 0px;
+
+	}
+
+	#leyenda {
+
+		width: auto;
+		max-width: 1100px;
+
+		margin-left: auto;
+		margin: auto;
+
+		font-size: 12px;
+
+		border: 1px solid #D8D8D8;
+
+	}
+
+
+
 	.dato_consumo {					/* estilo del dato que se muestra en el informe */
 
 
@@ -197,7 +229,7 @@
 	.dato_consumo img {
 
 		width: 12px;
-		margin-bottom: 5px;
+		margin-bottom: 4px;
 
 
 	}

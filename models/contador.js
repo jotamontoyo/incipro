@@ -34,7 +34,7 @@
                 type: DataTypes.STRING
             },
 
-            lectura_anterior: {
+            tolerancia: {
                 type: DataTypes.FLOAT
             },
 
