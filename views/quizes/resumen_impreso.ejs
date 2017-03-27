@@ -1,19 +1,15 @@
 
 
-<div class="container-fluid animated animated-fast fadeIn" id="resumen">
+<div class="container-fluid animated animated-fast fadeIn" id="resumen_impreso" onload="window.print()">
 
     <div class="row" id="head_consumos">
 
-        <h4><i class="fa fa-calculator"></i> Consumos</h4>
+        <h4><i class="fa fa-calculator"></i> Consumos Impreso</h4>
 
-
-        <a class="noprint" role="button" data-toggle="collapse" data-parent="#accordion" href="#leyenda" aria-expanded="true" aria-controls="collapseOne">
-            <img src="/images/info8.png"/>
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#leyenda" aria-expanded="true" aria-controls="collapseOne">
+            <img src="/images/help.png" style="width: 22px"/>
         </a>
 
-        <a class="noprint" type="button" name="imprimir" value="imprimir" onclick="doPrint();">
-            <img src="/images/printer.png"/>
-        </a>
 
 
         <div id="leyenda" class="panel-collapse collapse text-center" role="tabpanel">
@@ -114,7 +110,7 @@
             <thead>
                 <tr>
                     <th class="text-center">Fecha</th>
-                    <th class="text-center noprint">Parte</th>
+                    <th class="text-center">Parte</th>
                     <th class="text-center">Usuario</th>
                     <th class="text-center">Revisado</th>
                     <% for (var i in contadores) { %>
@@ -131,7 +127,7 @@
                     <tr>
 
                         <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].dia %>-<%= quizes[i].mes %>-<%= quizes[i].anio %></a></td>
-                        <td class="text-center noprint"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
+                        <td class="text-center"><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].id %></a></td>
                         <td class="text-center"><%= quizes[i].UserName %></td>
                         <% if (quizes[i].proceso) {%>
 							<td class="text-center"><span class="" aria-hidden="true"></span></td>
@@ -249,13 +245,7 @@
         </table>
     </div>
 
-    <script language="JavaScript">
-        function doPrint() {
-            $(".noprint").css('visibility', 'hidden');
-            window.print();
-            $(".noprint").css('visibility', 'visible');
-        }
-    </script>
+
 
 
 </div>

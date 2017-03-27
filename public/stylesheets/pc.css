@@ -195,10 +195,12 @@
 
 	}
 
-	#head_consumos img {
+	#head_consumos a img {
 
+		width: 24px;
 		margin-bottom: 6px;
-		margin-left: 0px;
+		margin-right: 18px;
+		float: right;
 
 	}
 
@@ -214,6 +216,11 @@
 
 		border: 1px solid #D8D8D8;
 
+	}
+
+	#leyenda img {
+
+		margin-bottom: 6px;
 	}
 
 
