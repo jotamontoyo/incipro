@@ -11,7 +11,11 @@
             <img src="/images/info8.png"/>
         </a>
 
-        <a class="noprint" type="button" name="imprimir" value="imprimir" onclick="doPrint();">
+<!--        <a class="noprint" type="button" name="imprimir" value="imprimir" onclick="doPrint();">
+            <img src="/images/printer.png"/>
+        </a> -->
+
+        <a type="button" name="imprimir" value="imprimir" href="/quizes/imprimir_resumen">
             <img src="/images/printer.png"/>
         </a>
 
@@ -251,9 +255,10 @@
 
     <script language="JavaScript">
         function doPrint() {
-            $(".noprint").css('visibility', 'hidden');
+/*            $(".noprint").css('visibility', 'hidden');
             window.print();
-            $(".noprint").css('visibility', 'visible');
+            $(".noprint").css('visibility', 'visible'); */
+
         }
     </script>
 
