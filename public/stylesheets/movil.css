@@ -9,12 +9,18 @@
 
 @media handheld, only screen and (max-width: 767px) {			/* movil */
 
+    .container-fluid {
+
+        padding-right: 5px;
+        padding-left: 5px;
 
 
-    #principal {               añadir los index y los shows de partes, contadores, resumen....................
+    }
+
+/*    #principal, #partes_index,  {               añadir los index y los shows de partes, contadores, resumen....................
         padding-right: 0px;
         padding-left: 0px;
-    }
+    } */
 
 
 
