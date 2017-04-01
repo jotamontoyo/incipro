@@ -1,5 +1,17 @@
 
 
+	html {
+
+		margin: 0;
+		padding: 0;
+
+	}
+
+	.table-responsive {
+
+
+
+	}
 
 
 	.table-striped > tbody > tr:nth-of-type(2n+1) {			/* estilo de los row impares de todas las tablas */
@@ -322,14 +334,6 @@
 
 		width: 12px;
 		margin-bottom: 4px;
-
-
-	}
-
-	#tabla_resumen {
-
-		padding-right: 15px;
-		padding-left: 15px;
 
 
 	}

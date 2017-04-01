@@ -111,7 +111,7 @@
 
 
 
-    <div class="panel panel-default table-responsive" id="tabla_resumen">
+    <div class="panel panel-default table-responsive">
 
         <table class="table table-striped table-hover">
 
@@ -191,10 +191,12 @@
 
                                         <% if (quizes[i].comments[x].texto) {%>
 
+                                            <!-- no cumple y esta fuera de la tolerancia  -->
                                             <% if (quizes[i].comments[x].consumo >= (quizes[i].comments[x].maximo + ((quizes[i].comments[x].consumo * quizes[i].comments[x].tolerancia)/100))) {%>
                                                 <img src="/images/alert2.png" />
                                             <%}%>
 
+                                            <!-- no cumple pero esta dentro de la tolerancia  -->
                                             <% if ((quizes[i].comments[x].consumo < (quizes[i].comments[x].maximo + ((quizes[i].comments[x].consumo * quizes[i].comments[x].tolerancia)/100))) && (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo)) {%>
                                                 <img src="/images/alert1.png" />
                                             <%}%>
@@ -213,7 +215,7 @@
 
                                             <% if ((quizes[i].comments[x].consumo < (quizes[i].comments[x].maximo + ((quizes[i].comments[x].consumo * quizes[i].comments[x].tolerancia)/100))) && (quizes[i].comments[x].consumo > quizes[i].comments[x].maximo)) {%>
 
-                                                <img src="/images/info7.png" style="width: 15px" />
+                                                <img src="/images/info7.png" style="width: 14px" />
 
                                             <%}%>
 

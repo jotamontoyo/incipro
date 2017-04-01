@@ -56,7 +56,7 @@
 						<% if (session.user) {
 							if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 								<td style="width:40px"><a class="" href="/quizes/<%= quizes[i].id %>/edit">
-									<img src="/images/edit.png"/>
+									<img src="/images/edit3.png" style="width: 20px;"/>
 								</a></td>
 								<td style="width:40px">
 									<form method="post" action="/quizes/<%= quizes[i].id %>?_method=delete">
