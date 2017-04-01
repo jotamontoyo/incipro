@@ -128,6 +128,12 @@
 
 	}
 
+	#partes_index img {
+
+		width: 30px;
+
+	}
+
 	#partes_index a, button {
 
 		opacity: 1;
@@ -197,6 +203,12 @@
 	#menu-inicio {
 
 		position: relative;
+
+	}
+
+	#menu-inicio img {
+
+		width: 18px;
 
 	}
 
@@ -291,6 +303,12 @@
 
 	}
 
+	#head_consumos h4 img {
+
+		width: 34px;
+
+	}
+
 
 	#head_consumos a img {
 
@@ -302,15 +320,12 @@
 	}
 
 	#leyenda {
-
+		
 		width: auto;
 		max-width: 1100px;
-
 		margin-left: auto;
 		margin: auto;
-
 		font-size: 12px;
-
 		border: 1px solid #D8D8D8;
 
 	}
@@ -378,6 +393,12 @@
 
 
 	/*  CONTADORES ================================================================= */
+
+	#contadores img {
+
+		width: 30px;
+
+	}
 
 	#contadores-panel tr th, #contadores-panel tr td {
 
